@@ -1,5 +1,22 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-brand: #bf1000;
+  --color-brand-deep: #a00e18;
+  --color-accent: #f56d1b;
+  --color-sand: #f5d5ae;
+  --color-ink: #1d1d1d;
+  --color-charcoal: #212121;
+  --color-slate: #404040;
+  --color-gray: #666666;
+  --color-placeholder: #999999;
+  --color-line: #e2e2e2;
+  --color-mist: #f4f4f4;
+  --font-sans: 'Nunito Sans', sans-serif;
+  --radius-control: 0px;
+  --radius-panel: 4px;
+}
+
 :root {
   --font-mono: 'Roboto Mono', monospace;
 }
@@ -12,7 +29,7 @@ html {
   font-size: 18px;
   line-height: 32px;
 
-  background: rgb(0, 0, 0);
+  background: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -28,7 +45,7 @@ body {
   line-height: 32px;
 
   margin: 0;
-  color: rgb(1000, 1000, 1000);
+  color: #1d1d1d;
 
   @media (max-width: 1024px) {
     font-size: 15px;
