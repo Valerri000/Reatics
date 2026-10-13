@@ -10,6 +10,8 @@ import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const databaseUrl = process.env.DATABASE_URL || ''
+const hostedDatabase = !/@(localhost|127\.0\.0\.1)(:|\/|$)/.test(databaseUrl)
 
 export default buildConfig({
   admin: {
@@ -27,7 +29,8 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: databaseUrl,
+      ...(hostedDatabase && databaseUrl ? { ssl: { rejectUnauthorized: false } } : {}),
     },
   }),
   sharp,
