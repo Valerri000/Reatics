@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
 
+import { Button } from '@/components/Button'
 import config from '@/payload.config'
 import './styles.css'
 
@@ -30,14 +31,9 @@ export default async function HomePage() {
         {!user && <h1>Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <Button href={payloadConfig.routes.admin} rel="noopener noreferrer" target="_blank">
             Go to admin panel
-          </a>
+          </Button>
           <a
             className="docs"
             href="https://payloadcms.com/docs"

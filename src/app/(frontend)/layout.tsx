@@ -1,6 +1,9 @@
 import { Nunito_Sans } from 'next/font/google'
 import React from 'react'
 
+import { PhoneNumber } from '@/components/PhoneNumber'
+import { Wordmark } from '@/components/Wordmark'
+
 import './styles.css'
 
 const nunitoSans = Nunito_Sans({
@@ -10,8 +13,8 @@ const nunitoSans = Nunito_Sans({
 })
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'Commercial real estate listings, brokers, and coworking.',
+  title: 'Reatics',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -20,6 +23,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html className={nunitoSans.variable} lang="en">
       <body className={`${nunitoSans.className} font-sans`}>
+        <header className="flex items-center justify-between px-4 py-6 md:px-16">
+          <Wordmark />
+          <PhoneNumber />
+        </header>
         <main>{children}</main>
       </body>
     </html>
