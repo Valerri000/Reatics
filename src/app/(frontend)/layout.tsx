@@ -1,8 +1,11 @@
 import { Nunito_Sans } from 'next/font/google'
-import React from 'react'
+import { headers as getHeaders } from 'next/headers'
+import { getPayload } from 'payload'
+import React, { Suspense } from 'react'
 
-import { PhoneNumber } from '@/components/PhoneNumber'
-import { Wordmark } from '@/components/Wordmark'
+import { SiteShell } from '@/components/SiteShell'
+import config from '@/payload.config'
+import type { AccountUser } from '@/lib/account'
 
 import './styles.css'
 
@@ -19,15 +22,26 @@ export const metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const headers = await getHeaders()
+  const payload = await getPayload({ config: await config })
+  const { user } = await payload.auth({ headers })
+  const account: AccountUser | null = user
+    ? {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        verified: user.verified,
+      }
+    : null
 
   return (
     <html className={nunitoSans.variable} lang="en">
       <body className={`${nunitoSans.className} font-sans`}>
-        <header className="flex items-center justify-between px-4 py-6 md:px-16">
-          <Wordmark />
-          <PhoneNumber />
-        </header>
-        <main>{children}</main>
+        <Suspense>
+          <SiteShell user={account}>{children}</SiteShell>
+        </Suspense>
       </body>
     </html>
   )
