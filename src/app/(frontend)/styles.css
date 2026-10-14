@@ -15,6 +15,24 @@
   --font-sans: 'Nunito Sans', sans-serif;
   --radius-control: 0px;
   --radius-panel: 4px;
+  --text-hero: 70px;
+  --text-hero--line-height: 75px;
+  --text-display: 60px;
+  --text-display--line-height: 72px;
+  --text-title: 40px;
+  --text-title--line-height: 48px;
+  --text-card: 25px;
+  --text-card--line-height: 32px;
+  --text-body: 22px;
+  --text-body--line-height: 32px;
+  --text-ui: 21px;
+  --text-ui--line-height: 28px;
+  --text-button: 16px;
+  --text-button--line-height: 20px;
+  --text-label: 16px;
+  --text-label--line-height: 24px;
+  --text-small: 18px;
+  --text-small--line-height: 24px;
 }
 
 :root {
