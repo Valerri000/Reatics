@@ -123,6 +123,18 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  firstName?: string | null;
+  lastName?: string | null;
+  role?: ('space-seeker' | 'broker' | 'owner' | 'broker-owner' | 'coworking') | null;
+  company?: string | null;
+  jobTitle?: string | null;
+  mobilePhone?: string | null;
+  officePhone?: string | null;
+  phone?: string | null;
+  dreNumber?: string | null;
+  listsProperties?: boolean | null;
+  referralAccepted?: boolean | null;
+  verified?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -241,6 +253,18 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  role?: T;
+  company?: T;
+  jobTitle?: T;
+  mobilePhone?: T;
+  officePhone?: T;
+  phone?: T;
+  dreNumber?: T;
+  listsProperties?: T;
+  referralAccepted?: T;
+  verified?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
