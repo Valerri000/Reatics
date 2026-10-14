@@ -33,6 +33,14 @@
   --text-label--line-height: 24px;
   --text-small: 18px;
   --text-small--line-height: 24px;
+  --spacing-inset-wide: 96px;
+  --spacing-inset-desktop: 64px;
+  --spacing-inset-tablet: 40px;
+  --spacing-inset-phone: 16px;
+  --spacing-section: 64px;
+  --spacing-section-phone: 40px;
+  --spacing-stack: 16px;
+  --spacing-cards: 24px;
 }
 
 :root {
