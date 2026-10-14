@@ -20,7 +20,7 @@ export function Button({
   className = '',
   ...props
 }: ButtonProps) {
-  const classes = `inline-flex h-12 items-center justify-center rounded-none px-6 text-base font-bold md:h-14 ${variants[variant]} ${className}`
+  const classes = `inline-flex h-12 items-center justify-center rounded-none px-6 text-base font-bold disabled:cursor-not-allowed disabled:border-0 disabled:bg-line disabled:text-placeholder disabled:hover:bg-line md:h-14 ${variants[variant]} ${className}`
 
   if (href) {
     return (
