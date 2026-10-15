@@ -26,8 +26,10 @@ type ListingCardProps = {
   propertyType: string
   saved?: boolean
   signedIn?: boolean
+  highlighted?: boolean
   onFavorite?: () => void
   onSignIn?: () => void
+  onHoverChange?: (active: boolean) => void
 }
 
 export function ListingCard({
@@ -41,9 +43,20 @@ export function ListingCard({
   propertyType,
   saved = false,
   signedIn = false,
+  highlighted = false,
   onFavorite,
   onSignIn,
+  onHoverChange,
 }: ListingCardProps) {
+  const [hovered, setHovered] = useState(false)
+  const marked = highlighted || hovered
+
+  function hover(active: boolean) {
+    if (!window.matchMedia('(min-width: 768px)').matches) return
+    setHovered(active)
+    onHoverChange?.(active)
+  }
+
   function saveListing() {
     if (!signedIn) {
       onSignIn?.()
@@ -53,7 +66,11 @@ export function ListingCard({
   }
 
   return (
-    <article className="relative border border-line bg-white">
+    <article
+      className={`relative bg-white ${marked ? 'cursor-pointer border-2 border-brand' : 'border border-line'}`}
+      onMouseEnter={() => hover(true)}
+      onMouseLeave={() => hover(false)}
+    >
       <Link href={href}>
         <span className="relative block">
           <img src={imageUrl} alt={imageAlt} className="aspect-[3/2] w-full object-cover" />
