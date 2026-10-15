@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     pages: Page;
+    listings: Listing;
     media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    listings: ListingsSelect<false> | ListingsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -172,6 +174,23 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listings".
+ */
+export interface Listing {
+  id: number;
+  title: string;
+  kind: 'sale' | 'lease' | 'coworking';
+  price?: number | null;
+  street?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postalCode?: string | null;
+  propertyType?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -220,6 +239,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'listings';
+        value: number | Listing;
       } | null)
     | ({
         relationTo: 'media';
@@ -311,6 +334,22 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listings_select".
+ */
+export interface ListingsSelect<T extends boolean = true> {
+  title?: T;
+  kind?: T;
+  price?: T;
+  street?: T;
+  city?: T;
+  state?: T;
+  postalCode?: T;
+  propertyType?: T;
   updatedAt?: T;
   createdAt?: T;
 }
