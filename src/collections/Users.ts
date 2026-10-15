@@ -1,5 +1,6 @@
 import { ValidationError, type CollectionBeforeChangeHook, type CollectionConfig } from 'payload'
 
+import { isOwner } from '@/lib/roles'
 import {
   LOCK_DURATION_MS,
   MAX_LOGIN_ATTEMPTS,
@@ -12,6 +13,11 @@ const guardAccount: CollectionBeforeChangeHook = ({ data, operation, req }) => {
 
   if (operation === 'create' && !req.user) {
     data.verified = false
+  }
+
+  if (!isOwner(req.user)) {
+    if (operation === 'create') data.adminRole = null
+    else delete data.adminRole
   }
 
   if (
@@ -81,6 +87,10 @@ export const Users: CollectionConfig = {
         { label: 'Content manager', value: 'content-manager' },
         { label: 'Moderator', value: 'moderator' },
       ],
+      access: {
+        create: ({ req: { user } }) => isOwner(user),
+        update: ({ req: { user } }) => isOwner(user),
+      },
     },
     {
       name: 'company',
