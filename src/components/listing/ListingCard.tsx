@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { Button } from '@/components/Button'
 import { TextField } from '@/components/auth/TextField'
 import { CloseIcon, HeartIcon } from '@/components/icons'
+import { PhoneNumber } from '@/components/PhoneNumber'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
 
 const labels: Record<ListingKind, string> = {
@@ -78,7 +79,7 @@ export function ListingCard({
         >
           <HeartIcon filled={saved} />
         </button>
-        <ContactPanel />
+        {kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel />}
       </div>
     </article>
   )
