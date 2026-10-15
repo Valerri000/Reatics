@@ -7,7 +7,7 @@ import { Button } from '@/components/Button'
 import { TextField } from '@/components/auth/TextField'
 import { CloseIcon, HeartIcon } from '@/components/icons'
 import { PhoneNumber } from '@/components/PhoneNumber'
-import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
+import { formatListingPrice, formatRate, type ListingKind } from '@/lib/listingPrice'
 
 const labels: Record<ListingKind, string> = {
   sale: 'For sale',
@@ -21,6 +21,7 @@ type ListingCardProps = {
   imageAlt: string
   kind: ListingKind
   price: number | null
+  rate?: number | null
   street: string
   cityLine: string
   propertyType: string
@@ -38,6 +39,7 @@ export function ListingCard({
   imageAlt,
   kind,
   price,
+  rate = null,
   street,
   cityLine,
   propertyType,
@@ -49,7 +51,9 @@ export function ListingCard({
   onHoverChange,
 }: ListingCardProps) {
   const [hovered, setHovered] = useState(false)
+  const [ratePeriod, setRatePeriod] = useState<'year' | 'month'>('year')
   const marked = highlighted || hovered
+  const showRate = (kind === 'lease' || kind === 'coworking') && rate != null
 
   function hover(active: boolean) {
     if (!window.matchMedia('(min-width: 768px)').matches) return
@@ -78,15 +82,31 @@ export function ListingCard({
             {labels[kind]}
           </span>
         </span>
-        <span className="block p-4">
+      </Link>
+      <div className="p-4">
+        <Link href={href} className="block">
           <span className="block text-[22px] font-extrabold leading-8 text-ink md:text-[25px]">
             {formatListingPrice(kind, price)}
           </span>
           <span className="mt-2 block text-base text-slate">{street}</span>
           <span className="block text-base text-slate">{cityLine}</span>
           <span className="mt-2 block text-base text-gray">{propertyType}</span>
-        </span>
-      </Link>
+        </Link>
+        {showRate && rate != null ? (
+          <button
+            type="button"
+            className="mt-1 block text-sm text-gray"
+            onClick={() => setRatePeriod((period) => (period === 'year' ? 'month' : 'year'))}
+          >
+            {formatRate(rate, ratePeriod)}
+          </button>
+        ) : null}
+        {kind === 'lease' || kind === 'coworking' ? (
+          <Link href={`${href}#availabilities`} className="mt-2 block text-base text-brand">
+            Availabilities
+          </Link>
+        ) : null}
+      </div>
       <div className="flex items-center justify-between border-t border-line p-4">
         <button
           type="button"
