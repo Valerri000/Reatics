@@ -41,6 +41,22 @@ export function MailIcon({ className = 'h-6 w-6' }: IconProps) {
   )
 }
 
+export function HeartIcon({
+  filled = false,
+  className = 'h-5 w-5',
+}: IconProps & { filled?: boolean }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"
+        fill={filled ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+    </svg>
+  )
+}
+
 export function ChevronIcon({ className = 'h-4 w-4' }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
