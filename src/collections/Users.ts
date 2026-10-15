@@ -1,6 +1,6 @@
 import { ValidationError, type CollectionBeforeChangeHook, type CollectionConfig } from 'payload'
 
-import { isOwner } from '@/lib/roles'
+import { isOwner, ownRecord } from '@/lib/roles'
 import {
   LOCK_DURATION_MS,
   MAX_LOGIN_ATTEMPTS,
@@ -50,9 +50,15 @@ export const Users: CollectionConfig = {
   },
   access: {
     create: () => true,
-    read: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
+    read: ({ req: { user } }) => {
+      if (!user) return false
+      return ownRecord(user)
+    },
+    update: ({ req: { user } }) => {
+      if (!user) return false
+      return ownRecord(user)
+    },
+    delete: () => false,
   },
   hooks: {
     beforeChange: [guardAccount],
