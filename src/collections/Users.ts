@@ -1,6 +1,6 @@
 import { ValidationError, type CollectionBeforeChangeHook, type CollectionConfig } from 'payload'
 
-import { canModerate, isOwner, ownRecord } from '@/lib/roles'
+import { canModerate, isOwner, isStaff, ownRecord } from '@/lib/roles'
 import {
   LOCK_DURATION_MS,
   MAX_LOGIN_ATTEMPTS,
@@ -49,6 +49,7 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
+    admin: ({ req: { user } }) => isStaff(user),
     create: () => true,
     read: ({ req: { user } }) => {
       if (!user) return false
