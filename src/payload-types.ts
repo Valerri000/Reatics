@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     pages: Page;
     listings: Listing;
+    billing: Billing;
     media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -81,6 +82,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     listings: ListingsSelect<false> | ListingsSelect<true>;
+    billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -191,6 +193,18 @@ export interface Listing {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "billing".
+ */
+export interface Billing {
+  id: number;
+  action: 'refund';
+  amount: number;
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -243,6 +257,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'listings';
         value: number | Listing;
+      } | null)
+    | ({
+        relationTo: 'billing';
+        value: number | Billing;
       } | null)
     | ({
         relationTo: 'media';
@@ -350,6 +368,17 @@ export interface ListingsSelect<T extends boolean = true> {
   state?: T;
   postalCode?: T;
   propertyType?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "billing_select".
+ */
+export interface BillingSelect<T extends boolean = true> {
+  action?: T;
+  amount?: T;
+  note?: T;
   updatedAt?: T;
   createdAt?: T;
 }
