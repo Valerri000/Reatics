@@ -31,7 +31,7 @@ export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
-    defaultColumns: ['email', 'firstName', 'lastName', 'role'],
+    defaultColumns: ['email', 'firstName', 'lastName', 'role', 'adminRole'],
   },
   auth: {
     tokenExpiration: TOKEN_EXPIRATION_SECONDS,
@@ -70,6 +70,16 @@ export const Users: CollectionConfig = {
         { label: 'Owner with listings', value: 'owner' },
         { label: 'Broker and owner', value: 'broker-owner' },
         { label: 'Coworking provider', value: 'coworking' },
+      ],
+    },
+    {
+      name: 'adminRole',
+      type: 'select',
+      label: 'Admin role',
+      options: [
+        { label: 'Owner', value: 'owner' },
+        { label: 'Content manager', value: 'content-manager' },
+        { label: 'Moderator', value: 'moderator' },
       ],
     },
     {

@@ -126,6 +126,7 @@ export interface User {
   firstName?: string | null;
   lastName?: string | null;
   role?: ('space-seeker' | 'broker' | 'owner' | 'broker-owner' | 'coworking') | null;
+  adminRole?: ('owner' | 'content-manager' | 'moderator') | null;
   company?: string | null;
   jobTitle?: string | null;
   mobilePhone?: string | null;
@@ -256,6 +257,7 @@ export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   role?: T;
+  adminRole?: T;
   company?: T;
   jobTitle?: T;
   mobilePhone?: T;
