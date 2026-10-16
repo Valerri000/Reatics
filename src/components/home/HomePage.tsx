@@ -1,8 +1,10 @@
 import React from 'react'
 
+import { AboutSection } from '@/components/home/AboutSection'
 import { FeaturedListings } from '@/components/home/FeaturedListings'
 import { HeroSearch } from '@/components/home/HeroSearch'
 import { HomeSection } from '@/components/home/HomeSection'
+import { ServicesSection } from '@/components/home/ServicesSection'
 
 export function HomePage() {
   return (
@@ -14,6 +16,8 @@ export function HomePage() {
         <HeroSearch />
       </HomeSection>
       <FeaturedListings />
+      <AboutSection />
+      <ServicesSection />
     </div>
   )
 }
