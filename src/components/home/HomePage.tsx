@@ -8,6 +8,7 @@ import { HeroSearch } from '@/components/home/HeroSearch'
 import { HomeSection } from '@/components/home/HomeSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
 import { SignupSection } from '@/components/home/SignupSection'
+import { SiteFooter } from '@/components/home/SiteFooter'
 import { StepsSection } from '@/components/home/StepsSection'
 
 export function HomePage() {
@@ -26,6 +27,7 @@ export function HomePage() {
       <BlogSection />
       <SignupSection />
       <AreaLinks />
+      <SiteFooter />
     </div>
   )
 }
