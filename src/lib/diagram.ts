@@ -43,6 +43,33 @@ export const inquiryFields = ['name', 'email', 'message', 'listing'] as const
 
 export const inquiryExcluded = ['providerPhone', 'providerEmail'] as const
 
+export const heldBack = [
+  'companies',
+  'company-members',
+  'deals',
+  'deal-participants',
+  'screening-requests',
+  'lease-drafts',
+  'signed-documents',
+  'saved-searches',
+  'alerts',
+  'favorites',
+  'prospects',
+  'ads',
+  'referrals',
+] as const
+
+export const relationships = [
+  { from: 'users', to: 'listings', label: 'lists' },
+  { from: 'users', to: 'billing', label: 'records' },
+  { from: 'users', to: 'inquiries', label: 'sends' },
+  { from: 'listings', to: 'inquiries', label: 'receives' },
+  { from: 'listings', to: 'media', label: 'shows' },
+  { from: 'pages', to: 'media', label: 'shows' },
+  { from: 'pages', to: 'redirects', label: 'replaces' },
+  { from: 'listings', to: 'redirects', label: 'replaces' },
+] as const
+
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
