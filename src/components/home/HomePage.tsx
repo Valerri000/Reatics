@@ -1,10 +1,12 @@
 import React from 'react'
 
 import { AboutSection } from '@/components/home/AboutSection'
+import { BlogSection } from '@/components/home/BlogSection'
 import { FeaturedListings } from '@/components/home/FeaturedListings'
 import { HeroSearch } from '@/components/home/HeroSearch'
 import { HomeSection } from '@/components/home/HomeSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
+import { StepsSection } from '@/components/home/StepsSection'
 
 export function HomePage() {
   return (
@@ -18,6 +20,8 @@ export function HomePage() {
       <FeaturedListings />
       <AboutSection />
       <ServicesSection />
+      <StepsSection />
+      <BlogSection />
     </div>
   )
 }
