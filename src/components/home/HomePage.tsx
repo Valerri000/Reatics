@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { AboutSection } from '@/components/home/AboutSection'
+import { AreaLinks } from '@/components/home/AreaLinks'
 import { BlogSection } from '@/components/home/BlogSection'
 import { FeaturedListings } from '@/components/home/FeaturedListings'
 import { HeroSearch } from '@/components/home/HeroSearch'
@@ -24,6 +25,7 @@ export function HomePage() {
       <StepsSection />
       <BlogSection />
       <SignupSection />
+      <AreaLinks />
     </div>
   )
 }
