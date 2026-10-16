@@ -39,6 +39,10 @@ export const redirectFields = ['fromPath', 'toPath', 'statusCode'] as const
 
 export const redirectStatusCode = 301
 
+export const inquiryFields = ['name', 'email', 'message', 'listing'] as const
+
+export const inquiryExcluded = ['providerPhone', 'providerEmail'] as const
+
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
