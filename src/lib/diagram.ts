@@ -23,6 +23,18 @@ export const adminRoles = [
   { value: 'moderator', field: 'adminRole', label: 'Moderator' },
 ] as const
 
+export const seoFields = [
+  'slug',
+  'pageTitle',
+  'metaDescription',
+  'robots',
+  'canonicalUrl',
+  'h1',
+  'imageAlt',
+  'socialTitle',
+  'sitemap',
+] as const
+
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
@@ -31,4 +43,5 @@ export const entities: DiagramEntity[] = [
   { name: 'billing', storage: 'table', status: 'present' },
   { name: 'redirects', storage: 'table', status: 'planned' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
+  { name: 'seo', storage: 'fields', status: 'planned', on: ['pages', 'listings'] },
 ]
