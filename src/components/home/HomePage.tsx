@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { FeaturedListings } from '@/components/home/FeaturedListings'
 import { HeroSearch } from '@/components/home/HeroSearch'
 import { HomeSection } from '@/components/home/HomeSection'
 
@@ -12,6 +13,7 @@ export function HomePage() {
         </h1>
         <HeroSearch />
       </HomeSection>
+      <FeaturedListings />
     </div>
   )
 }
