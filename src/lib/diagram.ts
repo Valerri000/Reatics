@@ -9,6 +9,20 @@ export type DiagramEntity = {
   on?: string[]
 }
 
+export const productRoles = [
+  { value: 'space-seeker', label: 'Space seeker' },
+  { value: 'broker', label: 'Broker' },
+  { value: 'owner', label: 'Owner with listings' },
+  { value: 'broker-owner', label: 'Broker and owner' },
+  { value: 'coworking', label: 'Coworking provider' },
+] as const
+
+export const adminRoles = [
+  { value: 'owner', field: 'adminRole', label: 'Owner' },
+  { value: 'content-manager', field: 'adminRole', label: 'Content manager' },
+  { value: 'moderator', field: 'adminRole', label: 'Moderator' },
+] as const
+
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
