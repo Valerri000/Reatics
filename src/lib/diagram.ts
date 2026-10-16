@@ -35,6 +35,10 @@ export const seoFields = [
   'sitemap',
 ] as const
 
+export const redirectFields = ['fromPath', 'toPath', 'statusCode'] as const
+
+export const redirectStatusCode = 301
+
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
