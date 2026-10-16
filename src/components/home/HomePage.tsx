@@ -6,6 +6,7 @@ import { FeaturedListings } from '@/components/home/FeaturedListings'
 import { HeroSearch } from '@/components/home/HeroSearch'
 import { HomeSection } from '@/components/home/HomeSection'
 import { ServicesSection } from '@/components/home/ServicesSection'
+import { SignupSection } from '@/components/home/SignupSection'
 import { StepsSection } from '@/components/home/StepsSection'
 
 export function HomePage() {
@@ -22,6 +23,7 @@ export function HomePage() {
       <ServicesSection />
       <StepsSection />
       <BlogSection />
+      <SignupSection />
     </div>
   )
 }
