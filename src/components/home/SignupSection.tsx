@@ -28,13 +28,16 @@ export function SignupSection() {
         Connect with us
       </h2>
       <p className="m-0 mt-4 max-w-3xl text-[16px] font-light leading-6 text-ink md:text-body">
-        Reatics will continue to improve. If you are interested in the latest news, updates and
-        blog posts, leave us your email and we&apos;ll keep you in the loop!
+        Reatics will continue to improve. If you are interested in the latest news, updates and blog
+        posts, leave us your email and we&apos;ll keep you in the loop!
       </p>
       {saved ? (
         <p className="m-0 mt-6 text-base font-bold text-ink">Your email has been saved.</p>
       ) : (
-        <form onSubmit={submit} className="mt-6 flex max-w-xl flex-col gap-4 md:flex-row md:items-start">
+        <form
+          onSubmit={submit}
+          className="mt-6 flex max-w-xl flex-col gap-4 md:flex-row md:items-start"
+        >
           <label className="block flex-1">
             <span className="sr-only">Email</span>
             <input

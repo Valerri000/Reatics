@@ -1,5 +1,5 @@
 import { createRoot, type Root } from 'react-dom/client'
-import { act, createElement, type ReactNode } from 'react'
+import { act, createElement, Fragment, type ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { AuthModal } from '@/components/auth/AuthModal'
@@ -31,7 +31,9 @@ async function mount(node: ReactNode) {
 }
 
 function clickText(container: HTMLElement, text: string) {
-  const node = [...container.querySelectorAll('button')].find((button) => button.textContent === text)
+  const node = [...container.querySelectorAll('button')].find(
+    (button) => button.textContent === text,
+  )
   if (!node) throw new Error(`missing ${text}`)
   act(() => {
     node.dispatchEvent(new MouseEvent('click', { bubbles: true }))
@@ -41,7 +43,10 @@ function clickText(container: HTMLElement, text: string) {
 describe('shared tokens', () => {
   it('keeps the header and sign-in modal on the style board', async () => {
     const view = await mount(
-      createElement(AuthProvider, { user: null }, createElement(Header), createElement(AuthModal)),
+      createElement(AuthProvider, {
+        user: null,
+        children: createElement(Fragment, null, createElement(Header), createElement(AuthModal)),
+      }),
     )
 
     const addListing = [...view.container.querySelectorAll('button')].find(

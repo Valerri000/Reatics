@@ -17,7 +17,12 @@ async function mount() {
   document.body.appendChild(container)
   const root: Root = createRoot(container)
   await act(async () => {
-    root.render(createElement(AuthProvider, { user: null }, createElement(HomePage)))
+    root.render(
+      createElement(AuthProvider, {
+        user: null,
+        children: createElement(HomePage),
+      }),
+    )
   })
   return {
     container,

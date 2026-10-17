@@ -64,9 +64,9 @@ describe('entity diagram', () => {
     expect([...redirectFields]).toEqual(['fromPath', 'toPath', 'statusCode'])
     expect(redirectStatusCode).toBe(301)
     expect([...inquiryFields]).toEqual(['name', 'email', 'message', 'listing'])
-    expect(inquiryFields.some((field) => (inquiryExcluded as readonly string[]).includes(field))).toBe(
-      false,
-    )
+    expect(
+      inquiryFields.some((field) => (inquiryExcluded as readonly string[]).includes(field)),
+    ).toBe(false)
   })
 
   it('does not draw the later tables', () => {
