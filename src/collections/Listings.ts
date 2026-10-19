@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { seoFieldList } from '@/fields/seo'
 import { canModerate } from '@/lib/roles'
 
 export const Listings: CollectionConfig = {
@@ -62,5 +63,6 @@ export const Listings: CollectionConfig = {
       type: 'text',
       label: 'Property type',
     },
+    ...seoFieldList,
   ],
 }
