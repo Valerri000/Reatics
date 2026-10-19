@@ -76,7 +76,7 @@ export const entities: DiagramEntity[] = [
   { name: 'listings', storage: 'table', status: 'present' },
   { name: 'media', storage: 'table', status: 'present' },
   { name: 'billing', storage: 'table', status: 'present' },
-  { name: 'redirects', storage: 'table', status: 'planned' },
+  { name: 'redirects', storage: 'table', status: 'present' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
-  { name: 'seo', storage: 'fields', status: 'planned', on: ['pages', 'listings'] },
+  { name: 'seo', storage: 'fields', status: 'present', on: ['pages', 'listings'] },
 ]

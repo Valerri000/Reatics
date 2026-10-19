@@ -5,6 +5,7 @@ import { Billing } from '@/collections/Billing'
 import { Listings } from '@/collections/Listings'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
+import { Redirects } from '@/collections/Redirects'
 import { Users } from '@/collections/Users'
 import {
   adminRoles,
@@ -19,7 +20,7 @@ import {
   seoFields,
 } from '@/lib/diagram'
 
-const present = [Users, Pages, Listings, Media, Billing]
+const present = [Users, Pages, Listings, Media, Billing, Redirects]
 
 function options(name: string) {
   const field = Users.fields.find((item) => 'name' in item && item.name === name)
@@ -33,12 +34,16 @@ describe('entity diagram', () => {
   it('matches the collections that already exist', () => {
     const names = present.map((collection) => collection.slug)
     const drawn = entities
-      .filter((entity) => entity.status === 'present')
+      .filter((entity) => entity.status === 'present' && entity.storage === 'table')
       .map((entity) => entity.name)
     expect([...drawn].sort()).toEqual([...names].sort())
-    for (const name of ['redirects', 'inquiries', 'seo']) {
-      expect(names).not.toContain(name)
-    }
+    expect(entities.find((entity) => entity.name === 'seo')).toMatchObject({
+      storage: 'fields',
+      status: 'present',
+    })
+    expect(entities.find((entity) => entity.name === 'inquiries')?.status).toBe('planned')
+    expect(names).not.toContain('inquiries')
+    expect(names).not.toContain('seo')
   })
 
   it('uses the role values already stored on users', () => {
