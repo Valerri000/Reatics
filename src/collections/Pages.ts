@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { seoFieldList } from '@/fields/seo'
 import { canEditPages } from '@/lib/roles'
 
 export const Pages: CollectionConfig = {
@@ -30,5 +31,6 @@ export const Pages: CollectionConfig = {
       name: 'content',
       type: 'textarea',
     },
+    ...seoFieldList,
   ],
 }
