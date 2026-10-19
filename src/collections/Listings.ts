@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { seoFieldList } from '@/fields/seo'
 import { canModerate } from '@/lib/roles'
+import { storeSlugRedirect } from '@/lib/slugRedirect'
 
 export const Listings: CollectionConfig = {
   slug: 'listings',
@@ -14,6 +15,9 @@ export const Listings: CollectionConfig = {
     create: ({ req: { user } }) => canModerate(user),
     update: ({ req: { user } }) => canModerate(user),
     delete: ({ req: { user } }) => canModerate(user),
+  },
+  hooks: {
+    afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'listings' })],
   },
   fields: [
     {
