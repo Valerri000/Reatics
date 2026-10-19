@@ -46,10 +46,46 @@ export async function storeSlugRedirect({
     req,
   })
 
-  if (!existing.docs[0]) {
+  if (existing.docs[0]) {
+    await req.payload.update({
+      collection: 'redirects',
+      id: existing.docs[0].id,
+      data: { toPath: change.toPath, statusCode: 301 },
+      overrideAccess: true,
+      req,
+    })
+  } else {
     await req.payload.create({
       collection: 'redirects',
       data: change,
+      overrideAccess: true,
+      req,
+    })
+  }
+
+  const pointing = await req.payload.find({
+    collection: 'redirects',
+    where: { toPath: { equals: change.fromPath } },
+    limit: 100,
+    depth: 0,
+    overrideAccess: true,
+    req,
+  })
+
+  for (const row of pointing.docs) {
+    if (row.fromPath === change.toPath) {
+      await req.payload.delete({
+        collection: 'redirects',
+        id: row.id,
+        overrideAccess: true,
+        req,
+      })
+      continue
+    }
+    await req.payload.update({
+      collection: 'redirects',
+      id: row.id,
+      data: { toPath: change.toPath, statusCode: 301 },
       overrideAccess: true,
       req,
     })
