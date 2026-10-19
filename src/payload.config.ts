@@ -9,6 +9,7 @@ import { Billing } from './collections/Billing'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Redirects } from './collections/Redirects'
 import { Users } from './collections/Users'
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Pages, Listings, Billing, Media],
+  collections: [Users, Pages, Listings, Billing, Media, Redirects],
   editor: lexicalEditor(),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   secret: process.env.PAYLOAD_SECRET || '',
