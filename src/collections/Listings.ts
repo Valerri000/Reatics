@@ -63,6 +63,11 @@ export const Listings: CollectionConfig = {
       type: 'text',
       label: 'Property type',
     },
+    {
+      name: 'photo',
+      type: 'upload',
+      relationTo: 'media',
+    },
     ...seoFieldList,
   ],
 }
