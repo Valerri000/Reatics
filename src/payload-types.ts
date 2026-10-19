@@ -72,6 +72,7 @@ export interface Config {
     listings: Listing;
     billing: Billing;
     media: Media;
+    redirects: Redirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     listings: ListingsSelect<false> | ListingsSelect<true>;
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -171,6 +173,14 @@ export interface Page {
   title: string;
   slug: string;
   content?: string | null;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  sitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -181,6 +191,7 @@ export interface Page {
 export interface Listing {
   id: number;
   title: string;
+  slug: string;
   kind: 'sale' | 'lease' | 'coworking';
   price?: number | null;
   street?: string | null;
@@ -188,6 +199,27 @@ export interface Listing {
   state?: string | null;
   postalCode?: string | null;
   propertyType?: string | null;
+  photo?: (number | null) | Media;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  fromPath: string;
+  toPath: string;
+  statusCode: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -265,6 +297,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -352,6 +388,14 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  sitemap?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -361,6 +405,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface ListingsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   kind?: T;
   price?: T;
   street?: T;
@@ -368,6 +413,15 @@ export interface ListingsSelect<T extends boolean = true> {
   state?: T;
   postalCode?: T;
   propertyType?: T;
+  photo?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  sitemap?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -379,6 +433,17 @@ export interface BillingSelect<T extends boolean = true> {
   action?: T;
   amount?: T;
   note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  fromPath?: T;
+  toPath?: T;
+  statusCode?: T;
   updatedAt?: T;
   createdAt?: T;
 }
