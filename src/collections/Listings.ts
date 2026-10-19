@@ -21,6 +21,13 @@ export const Listings: CollectionConfig = {
       required: true,
     },
     {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+      index: true,
+    },
+    {
       name: 'kind',
       type: 'select',
       required: true,
