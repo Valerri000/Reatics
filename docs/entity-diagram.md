@@ -1,6 +1,6 @@
 # Reatics 1.0 entity diagram
 
-Reviewed October 16, 2026, against the approved scope. Names below are the names to use when the remaining tables are added. No new tables are created with this diagram.
+Reviewed October 19, 2026, against the approved scope. SEO fields are stored on pages and listings. A changed slug is stored in redirects as a 301. Inquiries are named here and are not a table yet.
 
 ```mermaid
 erDiagram
@@ -42,6 +42,7 @@ erDiagram
     string state
     string postalCode
     string propertyType
+    int photo
     string slug
     string pageTitle
     string metaDescription
@@ -93,4 +94,4 @@ erDiagram
 
 companies, company-members, deals, deal-participants, screening-requests, lease-drafts, signed-documents, saved-searches, alerts, favorites, prospects, ads, referrals.
 
-`users`, `pages`, `listings`, `media`, and `billing` already exist. `redirects`, `inquiries`, and the SEO fields are named here and are not tables yet.
+`users`, `pages`, `listings`, `media`, `billing`, and `redirects` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet.
