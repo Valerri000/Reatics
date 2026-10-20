@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Billing } from './collections/Billing'
+import { Companies } from './collections/Companies'
+import { Deals } from './collections/Deals'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -24,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Pages, Listings, Billing, Media, Redirects],
+  collections: [Users, Pages, Listings, Billing, Media, Redirects, Companies, Deals],
   editor: lexicalEditor(),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   secret: process.env.PAYLOAD_SECRET || '',
