@@ -73,6 +73,13 @@ export interface Config {
     billing: Billing;
     media: Media;
     redirects: Redirect;
+    companies: Company;
+    'company-members': CompanyMember;
+    deals: Deal;
+    'deal-participants': DealParticipant;
+    'screening-requests': ScreeningRequest;
+    'lease-drafts': LeaseDraft;
+    'signed-documents': SignedDocument;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +93,13 @@ export interface Config {
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    companies: CompaniesSelect<false> | CompaniesSelect<true>;
+    'company-members': CompanyMembersSelect<false> | CompanyMembersSelect<true>;
+    deals: DealsSelect<false> | DealsSelect<true>;
+    'deal-participants': DealParticipantsSelect<false> | DealParticipantsSelect<true>;
+    'screening-requests': ScreeningRequestsSelect<false> | ScreeningRequestsSelect<true>;
+    'lease-drafts': LeaseDraftsSelect<false> | LeaseDraftsSelect<true>;
+    'signed-documents': SignedDocumentsSelect<false> | SignedDocumentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -256,6 +270,84 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "companies".
+ */
+export interface Company {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-members".
+ */
+export interface CompanyMember {
+  id: number;
+  company: number | Company;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deals".
+ */
+export interface Deal {
+  id: number;
+  title: string;
+  company?: (number | null) | Company;
+  listing?: (number | null) | Listing;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deal-participants".
+ */
+export interface DealParticipant {
+  id: number;
+  deal: number | Deal;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "screening-requests".
+ */
+export interface ScreeningRequest {
+  id: number;
+  deal?: (number | null) | Deal;
+  note?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lease-drafts".
+ */
+export interface LeaseDraft {
+  id: number;
+  title?: string | null;
+  deal?: (number | null) | Deal;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signed-documents".
+ */
+export interface SignedDocument {
+  id: number;
+  title?: string | null;
+  leaseDraft?: (number | null) | LeaseDraft;
+  file?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -301,6 +393,34 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'redirects';
         value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'companies';
+        value: number | Company;
+      } | null)
+    | ({
+        relationTo: 'company-members';
+        value: number | CompanyMember;
+      } | null)
+    | ({
+        relationTo: 'deals';
+        value: number | Deal;
+      } | null)
+    | ({
+        relationTo: 'deal-participants';
+        value: number | DealParticipant;
+      } | null)
+    | ({
+        relationTo: 'screening-requests';
+        value: number | ScreeningRequest;
+      } | null)
+    | ({
+        relationTo: 'lease-drafts';
+        value: number | LeaseDraft;
+      } | null)
+    | ({
+        relationTo: 'signed-documents';
+        value: number | SignedDocument;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -444,6 +564,77 @@ export interface RedirectsSelect<T extends boolean = true> {
   fromPath?: T;
   toPath?: T;
   statusCode?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "companies_select".
+ */
+export interface CompaniesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company-members_select".
+ */
+export interface CompanyMembersSelect<T extends boolean = true> {
+  company?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deals_select".
+ */
+export interface DealsSelect<T extends boolean = true> {
+  title?: T;
+  company?: T;
+  listing?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "deal-participants_select".
+ */
+export interface DealParticipantsSelect<T extends boolean = true> {
+  deal?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "screening-requests_select".
+ */
+export interface ScreeningRequestsSelect<T extends boolean = true> {
+  deal?: T;
+  note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lease-drafts_select".
+ */
+export interface LeaseDraftsSelect<T extends boolean = true> {
+  title?: T;
+  deal?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "signed-documents_select".
+ */
+export interface SignedDocumentsSelect<T extends boolean = true> {
+  title?: T;
+  leaseDraft?: T;
+  file?: T;
   updatedAt?: T;
   createdAt?: T;
 }
