@@ -13,6 +13,7 @@ import {
   heldBack,
   inquiryExcluded,
   inquiryFields,
+  phase2Tables,
   productRoles,
   redirectFields,
   redirectStatusCode,
@@ -78,6 +79,24 @@ describe('entity diagram', () => {
     const drawn = entities.map((entity) => entity.name)
     for (const name of heldBack) {
       expect(drawn).not.toContain(name)
+    }
+  })
+
+  it('marks the Phase 2 tables empty', () => {
+    const drawn = entities.map((entity) => entity.name)
+    for (const name of phase2Tables) {
+      expect(entities.find((entity) => entity.name === name)).toMatchObject({
+        storage: 'table',
+        status: 'empty',
+      })
+      expect(heldBack as readonly string[]).not.toContain(name)
+    }
+    const present = entities
+      .filter((entity) => entity.status === 'present' && entity.storage === 'table')
+      .map((entity) => entity.name)
+    for (const name of phase2Tables) {
+      expect(present).not.toContain(name)
+      expect(drawn).toContain(name)
     }
   })
 

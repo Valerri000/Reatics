@@ -1,6 +1,6 @@
 export type EntityStorage = 'table' | 'fields'
 
-export type EntityStatus = 'present' | 'planned'
+export type EntityStatus = 'present' | 'planned' | 'empty'
 
 export type DiagramEntity = {
   name: string
@@ -43,7 +43,7 @@ export const inquiryFields = ['name', 'email', 'message', 'listing'] as const
 
 export const inquiryExcluded = ['providerPhone', 'providerEmail'] as const
 
-export const heldBack = [
+export const phase2Tables = [
   'companies',
   'company-members',
   'deals',
@@ -51,6 +51,9 @@ export const heldBack = [
   'screening-requests',
   'lease-drafts',
   'signed-documents',
+] as const
+
+export const heldBack = [
   'saved-searches',
   'alerts',
   'favorites',
@@ -79,4 +82,5 @@ export const entities: DiagramEntity[] = [
   { name: 'redirects', storage: 'table', status: 'present' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
   { name: 'seo', storage: 'fields', status: 'present', on: ['pages', 'listings'] },
+  ...phase2Tables.map((name) => ({ name, storage: 'table' as const, status: 'empty' as const })),
 ]
