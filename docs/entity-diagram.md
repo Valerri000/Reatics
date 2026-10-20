@@ -1,6 +1,6 @@
 # Reatics 1.0 entity diagram
 
-Reviewed October 19, 2026, against the approved scope. SEO fields are stored on pages and listings. A changed slug is stored in redirects as a 301. Inquiries are named here and are not a table yet.
+Reviewed October 19, 2026, against the approved scope. SEO fields are stored on pages and listings. A changed slug is stored in redirects as a 301. Inquiries are named here and are not a table yet. The Phase 2 tables were added empty on October 20, 2026.
 
 ```mermaid
 erDiagram
@@ -90,8 +90,66 @@ erDiagram
 - `redirects.statusCode` is 301. A changed slug and a later move from the old domain use this one table.
 - `inquiries` stores name, email, message, and an optional listing. It does not store providerPhone or providerEmail.
 
+## Phase 2, empty
+
+companies, company-members, deals, deal-participants, screening-requests, lease-drafts, signed-documents.
+
+These tables are empty. A deal can be created by hand in the admin. There are no landlord or applicant screens.
+
+```mermaid
+erDiagram
+  companies ||--o{ company_members : includes
+  users ||--o{ company_members : joins
+  companies ||--o{ deals : opens
+  listings ||--o{ deals : concerns
+  deals ||--o{ deal_participants : includes
+  users ||--o{ deal_participants : joins
+  deals ||--o{ screening_requests : requests
+  deals ||--o{ lease_drafts : drafts
+  lease_drafts ||--o{ signed_documents : files
+  signed_documents }o--o| media : stores
+
+  companies {
+    string name
+  }
+
+  company_members {
+    int company
+    int user
+  }
+
+  deals {
+    string title
+    int company
+    int listing
+  }
+
+  deal_participants {
+    int deal
+    int user
+  }
+
+  screening_requests {
+    int deal
+    string note
+  }
+
+  lease_drafts {
+    string title
+    int deal
+  }
+
+  signed_documents {
+    string title
+    int leaseDraft
+    int file
+  }
+```
+
+`company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
+
+`users`, `pages`, `listings`, `media`, `billing`, and `redirects` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+
 ## Not in this diagram
 
-companies, company-members, deals, deal-participants, screening-requests, lease-drafts, signed-documents, saved-searches, alerts, favorites, prospects, ads, referrals.
-
-`users`, `pages`, `listings`, `media`, `billing`, and `redirects` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet.
+saved-searches, alerts, favorites, prospects, ads, referrals.

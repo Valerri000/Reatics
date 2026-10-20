@@ -71,6 +71,16 @@ export const relationships = [
   { from: 'pages', to: 'media', label: 'shows' },
   { from: 'pages', to: 'redirects', label: 'replaces' },
   { from: 'listings', to: 'redirects', label: 'replaces' },
+  { from: 'companies', to: 'company-members', label: 'includes' },
+  { from: 'users', to: 'company-members', label: 'joins' },
+  { from: 'companies', to: 'deals', label: 'opens' },
+  { from: 'listings', to: 'deals', label: 'concerns' },
+  { from: 'deals', to: 'deal-participants', label: 'includes' },
+  { from: 'users', to: 'deal-participants', label: 'joins' },
+  { from: 'deals', to: 'screening-requests', label: 'requests' },
+  { from: 'deals', to: 'lease-drafts', label: 'drafts' },
+  { from: 'lease-drafts', to: 'signed-documents', label: 'files' },
+  { from: 'signed-documents', to: 'media', label: 'stores' },
 ] as const
 
 export const entities: DiagramEntity[] = [
