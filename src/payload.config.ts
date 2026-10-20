@@ -53,6 +53,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
+    migrationDir: path.resolve(dirname, 'migrations'),
     pool: {
       connectionString: databaseUrl,
       ...(hostedDatabase && databaseUrl ? { ssl: { rejectUnauthorized: false } } : {}),
