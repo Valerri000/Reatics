@@ -7,11 +7,16 @@ import sharp from 'sharp'
 
 import { Billing } from './collections/Billing'
 import { Companies } from './collections/Companies'
+import { CompanyMembers } from './collections/CompanyMembers'
+import { DealParticipants } from './collections/DealParticipants'
 import { Deals } from './collections/Deals'
+import { LeaseDrafts } from './collections/LeaseDrafts'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Redirects } from './collections/Redirects'
+import { ScreeningRequests } from './collections/ScreeningRequests'
+import { SignedDocuments } from './collections/SignedDocuments'
 import { Users } from './collections/Users'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,7 +31,21 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Pages, Listings, Billing, Media, Redirects, Companies, Deals],
+  collections: [
+    Users,
+    Pages,
+    Listings,
+    Billing,
+    Media,
+    Redirects,
+    Companies,
+    CompanyMembers,
+    Deals,
+    DealParticipants,
+    ScreeningRequests,
+    LeaseDrafts,
+    SignedDocuments,
+  ],
   editor: lexicalEditor(),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   secret: process.env.PAYLOAD_SECRET || '',
