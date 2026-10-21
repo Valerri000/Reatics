@@ -1,4 +1,9 @@
-import type { CollectionAfterChangeHook, CollectionAfterLoginHook, PayloadRequest } from 'payload'
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  CollectionAfterLoginHook,
+  PayloadRequest,
+} from 'payload'
 
 type RoleDoc = { id?: number | string; role?: string | null; adminRole?: string | null }
 
@@ -45,6 +50,14 @@ export const recordRoleChange: CollectionAfterChangeHook = async ({
     actor: req.user?.id,
   })
   return doc
+}
+
+export const recordDelete: CollectionAfterDeleteHook = async ({ collection, doc, req }) => {
+  await writeAudit(req, {
+    action: 'delete',
+    target: auditTarget(collection.slug, doc.id),
+    actor: req.user?.id,
+  })
 }
 
 export const recordSignIn: CollectionAfterLoginHook = async ({ req, user }) => {

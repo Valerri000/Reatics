@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { seoFieldList } from '@/fields/seo'
+import { recordDelete } from '@/lib/audit'
 import { canModerate } from '@/lib/roles'
 import { storeSlugRedirect } from '@/lib/slugRedirect'
 
@@ -18,6 +19,7 @@ export const Listings: CollectionConfig = {
   },
   hooks: {
     afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'listings' })],
+    afterDelete: [recordDelete],
   },
   fields: [
     {

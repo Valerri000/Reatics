@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { recordDelete } from '@/lib/audit'
 import { canBill } from '@/lib/roles'
 
 export const Billing: CollectionConfig = {
@@ -17,6 +18,9 @@ export const Billing: CollectionConfig = {
     create: ({ req: { user } }) => canBill(user),
     update: ({ req: { user } }) => canBill(user),
     delete: ({ req: { user } }) => canBill(user),
+  },
+  hooks: {
+    afterDelete: [recordDelete],
   },
   fields: [
     {
