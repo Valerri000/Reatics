@@ -269,6 +269,8 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -684,6 +686,8 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  prefix?: T;
+  _objectKey?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

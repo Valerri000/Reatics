@@ -19,6 +19,7 @@ import { Redirects } from './collections/Redirects'
 import { ScreeningRequests } from './collections/ScreeningRequests'
 import { SignedDocuments } from './collections/SignedDocuments'
 import { Users } from './collections/Users'
+import { mediaStorage } from './lib/storage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -62,5 +63,5 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [mediaStorage()],
 })
