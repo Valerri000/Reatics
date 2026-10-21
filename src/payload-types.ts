@@ -80,6 +80,7 @@ export interface Config {
     'screening-requests': ScreeningRequest;
     'lease-drafts': LeaseDraft;
     'signed-documents': SignedDocument;
+    'audit-log': AuditLog;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -100,6 +101,7 @@ export interface Config {
     'screening-requests': ScreeningRequestsSelect<false> | ScreeningRequestsSelect<true>;
     'lease-drafts': LeaseDraftsSelect<false> | LeaseDraftsSelect<true>;
     'signed-documents': SignedDocumentsSelect<false> | SignedDocumentsSelect<true>;
+    'audit-log': AuditLogSelect<false> | AuditLogSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -348,6 +350,18 @@ export interface SignedDocument {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-log".
+ */
+export interface AuditLog {
+  id: number;
+  actor?: (number | null) | User;
+  action: 'sign-in' | 'role-change' | 'delete';
+  target: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -421,6 +435,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'signed-documents';
         value: number | SignedDocument;
+      } | null)
+    | ({
+        relationTo: 'audit-log';
+        value: number | AuditLog;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -635,6 +653,17 @@ export interface SignedDocumentsSelect<T extends boolean = true> {
   title?: T;
   leaseDraft?: T;
   file?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-log_select".
+ */
+export interface AuditLogSelect<T extends boolean = true> {
+  actor?: T;
+  action?: T;
+  target?: T;
   updatedAt?: T;
   createdAt?: T;
 }
