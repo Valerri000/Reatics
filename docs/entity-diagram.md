@@ -90,6 +90,10 @@ erDiagram
 - `redirects.statusCode` is 301. A changed slug and a later move from the old domain use this one table.
 - `inquiries` stores name, email, message, and an optional listing. It does not store providerPhone or providerEmail.
 
+## Audit log
+
+`audit-log` stores the time, actor, action, and target for a sign-in, a role change, and a deleted record. The Owner can read it.
+
 ## Phase 2, empty
 
 companies, company-members, deals, deal-participants, screening-requests, lease-drafts, signed-documents.
@@ -148,7 +152,7 @@ erDiagram
 
 `company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
 
-`users`, `pages`, `listings`, `media`, `billing`, and `redirects` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+`users`, `pages`, `listings`, `media`, `billing`, `redirects`, and `audit-log` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
 
 ## Not in this diagram
 

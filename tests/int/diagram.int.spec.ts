@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 
+import { AuditLog } from '@/collections/AuditLog'
 import { Billing } from '@/collections/Billing'
 import { Listings } from '@/collections/Listings'
 import { Media } from '@/collections/Media'
@@ -21,7 +22,7 @@ import {
   seoFields,
 } from '@/lib/diagram'
 
-const present = [Users, Pages, Listings, Media, Billing, Redirects]
+const present = [Users, Pages, Listings, Media, Billing, Redirects, AuditLog]
 
 function options(name: string) {
   const field = Users.fields.find((item) => 'name' in item && item.name === name)

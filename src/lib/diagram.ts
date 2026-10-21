@@ -90,6 +90,7 @@ export const entities: DiagramEntity[] = [
   { name: 'media', storage: 'table', status: 'present' },
   { name: 'billing', storage: 'table', status: 'present' },
   { name: 'redirects', storage: 'table', status: 'present' },
+  { name: 'audit-log', storage: 'table', status: 'present' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
   { name: 'seo', storage: 'fields', status: 'present', on: ['pages', 'listings'] },
   ...phase2Tables.map((name) => ({ name, storage: 'table' as const, status: 'empty' as const })),
