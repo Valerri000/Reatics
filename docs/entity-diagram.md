@@ -94,6 +94,19 @@ erDiagram
 
 `audit-log` stores the time, actor, action, and target for a sign-in, a role change, and a deleted record. The Owner can read it.
 
+```mermaid
+erDiagram
+  users ||--o{ audit_log : audits
+
+  audit_log {
+    int actor
+    string action
+    string target
+  }
+```
+
+`audit-log` is `audit_log` in the drawing.
+
 ## Phase 2, empty
 
 companies, company-members, deals, deal-participants, screening-requests, lease-drafts, signed-documents.
