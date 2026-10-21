@@ -5,6 +5,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { AuditLog } from './collections/AuditLog'
 import { Billing } from './collections/Billing'
 import { Companies } from './collections/Companies'
 import { CompanyMembers } from './collections/CompanyMembers'
@@ -45,6 +46,7 @@ export default buildConfig({
     ScreeningRequests,
     LeaseDrafts,
     SignedDocuments,
+    AuditLog,
   ],
   editor: lexicalEditor(),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
