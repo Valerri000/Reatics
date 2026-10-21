@@ -1,6 +1,6 @@
 import { ValidationError, type CollectionBeforeChangeHook, type CollectionConfig } from 'payload'
 
-import { recordSignIn } from '@/lib/audit'
+import { recordRoleChange, recordSignIn } from '@/lib/audit'
 import { canModerate, isOwner, isStaff, ownRecord } from '@/lib/roles'
 import {
   LOCK_DURATION_MS,
@@ -66,6 +66,7 @@ export const Users: CollectionConfig = {
   },
   hooks: {
     beforeChange: [guardAccount],
+    afterChange: [recordRoleChange],
     afterLogin: [recordSignIn],
   },
   fields: [

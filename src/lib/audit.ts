@@ -1,4 +1,6 @@
-import type { CollectionAfterLoginHook, PayloadRequest } from 'payload'
+import type { CollectionAfterChangeHook, CollectionAfterLoginHook, PayloadRequest } from 'payload'
+
+type RoleDoc = { id?: number | string; role?: string | null; adminRole?: string | null }
 
 export function auditTarget(collection: string, id: number | string) {
   return `${collection}/${id}`
@@ -23,6 +25,26 @@ export async function writeAudit(
     overrideAccess: true,
     req,
   })
+}
+
+export function roleChanged(previous: RoleDoc | undefined, next: RoleDoc) {
+  if (!previous) return false
+  return previous.role !== next.role || previous.adminRole !== next.adminRole
+}
+
+export const recordRoleChange: CollectionAfterChangeHook = async ({
+  doc,
+  operation,
+  previousDoc,
+  req,
+}) => {
+  if (operation !== 'update' || !roleChanged(previousDoc, doc)) return doc
+  await writeAudit(req, {
+    action: 'role-change',
+    target: auditTarget('users', doc.id),
+    actor: req.user?.id,
+  })
+  return doc
 }
 
 export const recordSignIn: CollectionAfterLoginHook = async ({ req, user }) => {
