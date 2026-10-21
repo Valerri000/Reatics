@@ -71,6 +71,7 @@ export const relationships = [
   { from: 'pages', to: 'media', label: 'shows' },
   { from: 'pages', to: 'redirects', label: 'replaces' },
   { from: 'listings', to: 'redirects', label: 'replaces' },
+  { from: 'users', to: 'audit-log', label: 'audits' },
   { from: 'companies', to: 'company-members', label: 'includes' },
   { from: 'users', to: 'company-members', label: 'joins' },
   { from: 'companies', to: 'deals', label: 'opens' },
