@@ -34,7 +34,7 @@ export function Header() {
 
   return (
     <>
-      <header className="hidden h-20 items-center border-b border-line bg-white px-inset-wide md:flex">
+      <header className="hidden h-[80px] items-center border-b border-line bg-white md:flex md:px-inset-tablet xl:px-inset-desktop 2xl:px-inset-wide">
         <button
           className="flex h-[54px] w-[54px] items-center justify-center text-ink"
           aria-label="Open menu"
