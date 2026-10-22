@@ -16,7 +16,7 @@ type PageMenuProps = {
   onSignOut: () => void
 }
 
-const rowClass = 'flex h-12 w-full items-center px-4 text-left text-lg font-bold text-ink'
+const rowClass = 'flex h-[48px] w-full items-center px-4 text-left text-[18px] font-bold text-ink'
 
 export function PageMenu({
   open,
