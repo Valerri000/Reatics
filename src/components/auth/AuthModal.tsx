@@ -31,6 +31,15 @@ export function AuthModal() {
     return () => window.removeEventListener('keydown', onKey)
   }, [auth])
 
+  useEffect(() => {
+    if (!auth.view) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [auth.view])
+
   if (!auth.view) return null
 
   return (
