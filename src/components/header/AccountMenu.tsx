@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { ChevronIcon } from '@/components/icons'
 import { accountLinks } from '@/lib/access'
@@ -14,10 +14,20 @@ type AccountMenuProps = {
 
 export function AccountMenu({ user, onSignOut }: AccountMenuProps) {
   const [open, setOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
   const links = accountLinks(user)
 
+  useEffect(() => {
+    if (!open) return
+    function onPointer(event: MouseEvent) {
+      if (!menuRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    window.addEventListener('mousedown', onPointer)
+    return () => window.removeEventListener('mousedown', onPointer)
+  }, [open])
+
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <button
         className="inline-flex items-center gap-1 text-[16px] font-bold text-ink"
         onClick={() => setOpen((value) => !value)}
