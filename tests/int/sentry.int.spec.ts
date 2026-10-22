@@ -11,7 +11,7 @@ describe('sentry', () => {
         headers: { authorization: 'secret' },
         data: 'password',
       },
-    } as Parameters<typeof scrubEvent>[0])
+    } as unknown as Parameters<typeof scrubEvent>[0])
     expect(event?.request?.cookies).toBeUndefined()
     expect(event?.request?.headers).toBeUndefined()
     expect(event?.request?.data).toBeUndefined()

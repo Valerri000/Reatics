@@ -26,7 +26,7 @@ describe('audit role change', () => {
       operation: 'update',
       previousDoc: { id: 12, role: 'space-seeker', adminRole: null },
       req,
-    } as Parameters<typeof recordRoleChange>[0])
+    } as unknown as Parameters<typeof recordRoleChange>[0])
     expect(created).toHaveLength(1)
     expect(created[0]?.data).toMatchObject({
       action: 'role-change',

@@ -18,7 +18,7 @@ describe('audit delete', () => {
       collection: { slug: 'listings' },
       doc: { id: 8 },
       req,
-    } as Parameters<typeof recordDelete>[0])
+    } as unknown as Parameters<typeof recordDelete>[0])
     expect(created).toHaveLength(1)
     expect(created[0]?.data).toMatchObject({ action: 'delete', target: 'listings/8', actor: 2 })
   })

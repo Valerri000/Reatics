@@ -20,12 +20,18 @@ export async function writeAudit(
   },
 ) {
   const actor = entry.actor === undefined ? req.user?.id : entry.actor
+  const actorId =
+    typeof actor === 'number'
+      ? actor
+      : typeof actor === 'string' && actor !== ''
+        ? Number(actor)
+        : undefined
   await req.payload.create({
     collection: 'audit-log',
     data: {
       action: entry.action,
       target: entry.target,
-      ...(actor ? { actor } : {}),
+      ...(Number.isInteger(actorId) ? { actor: actorId } : {}),
     },
     overrideAccess: true,
     req,

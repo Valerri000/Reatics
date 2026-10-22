@@ -1,10 +1,12 @@
 import { s3Storage } from '@payloadcms/storage-s3'
 
-export function objectStorageEnabled(env: NodeJS.ProcessEnv = process.env) {
+type StorageEnv = Record<string, string | undefined>
+
+export function objectStorageEnabled(env: StorageEnv = process.env) {
   return Boolean(env.S3_BUCKET)
 }
 
-export function mediaStorage(env: NodeJS.ProcessEnv = process.env) {
+export function mediaStorage(env: StorageEnv = process.env) {
   const bucket = env.S3_BUCKET || ''
   const enabled = objectStorageEnabled(env)
   return s3Storage({
