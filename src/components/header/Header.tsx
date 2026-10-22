@@ -47,17 +47,17 @@ export function Header() {
         </Link>
         <div className="ml-auto flex items-center gap-6">
           {!user || listing ? (
-            <button className="text-base font-bold text-accent" onClick={addListing}>
+            <button className="text-[16px] font-bold text-accent" onClick={addListing}>
               Add a Listing
             </button>
           ) : null}
-          <Link className="text-base font-bold text-accent" href="/brokers">
+          <Link className="text-[16px] font-bold text-accent" href="/brokers">
             Find a broker
           </Link>
           {user ? (
             <AccountMenu user={user} onSignOut={() => void auth.signOutUser()} />
           ) : (
-            <button className="text-base font-bold text-ink" onClick={auth.openSignIn}>
+            <button className="text-[16px] font-bold text-ink" onClick={auth.openSignIn}>
               Login
             </button>
           )}
@@ -79,13 +79,13 @@ export function Header() {
           </Link>
           {user ? (
             <button
-              className="ml-auto text-base font-bold text-ink"
+              className="ml-auto text-[16px] font-bold text-ink"
               onClick={() => setMenuOpen(true)}
             >
               {user.firstName || 'Account'}
             </button>
           ) : (
-            <button className="ml-auto text-base font-bold text-ink" onClick={auth.openSignIn}>
+            <button className="ml-auto text-[16px] font-bold text-ink" onClick={auth.openSignIn}>
               Login
             </button>
           )}
