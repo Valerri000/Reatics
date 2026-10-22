@@ -154,16 +154,6 @@ export function SiteFooter() {
               info@reatics.com
             </a>
           </p>
-          <div className="mt-6 flex gap-3">
-            {Array.from({ length: 5 }, (_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Social ${index + 1}`}
-                className="h-10 w-10 border border-white"
-              />
-            ))}
-          </div>
           <p className="m-0 mt-8 text-base font-bold">Join our newsletter for news!</p>
           {newsletterSaved ? (
             <p className="m-0 mt-4 text-base">Your email has been saved.</p>
