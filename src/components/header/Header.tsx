@@ -66,7 +66,7 @@ export function Header() {
         </div>
       </header>
       <div className="bg-white md:hidden">
-        <div className="relative flex h-14 items-center px-inset-phone">
+        <div className="relative flex h-[56px] items-center px-inset-phone">
           <button
             className="flex h-10 w-10 items-center justify-center text-ink"
             aria-label="Open menu"

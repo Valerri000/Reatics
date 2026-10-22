@@ -96,7 +96,7 @@ export function MailPanel() {
 
 export function PhoneBar() {
   return (
-    <div className="flex h-12 items-center gap-2 border-b border-line px-inset-phone md:hidden">
+    <div className="flex h-[48px] items-center gap-2 border-b border-line px-inset-phone md:hidden">
       <PhoneIcon className="h-5 w-5 text-brand" />
       <PhoneNumber size="md" />
     </div>
