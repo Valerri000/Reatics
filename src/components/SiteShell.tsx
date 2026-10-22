@@ -7,6 +7,7 @@ import { AuthModal } from '@/components/auth/AuthModal'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { SessionGuard } from '@/components/auth/SessionGuard'
 import { Header } from '@/components/header/Header'
+import { SiteFooter } from '@/components/home/SiteFooter'
 import type { AccountUser } from '@/lib/account'
 
 export function SiteShell({
@@ -24,6 +25,7 @@ export function SiteShell({
       <SessionGuard user={user} />
       <Header />
       <main>{children}</main>
+      <SiteFooter />
       <AuthModal />
     </AuthProvider>
   )
