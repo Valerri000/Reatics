@@ -17,3 +17,17 @@ export const sampleListing = {
   socialTitle: '201 N Brand, Glendale',
   sitemap: false,
 }
+
+export const sampleCity = {
+  title: 'Glendale',
+  slug: 'glendale',
+  content: 'Sample city page for the staging review. The public city layout is not in this phase.',
+  pageTitle: 'Commercial real estate in Glendale',
+  metaDescription: 'A sample city record so the SEO fields can be reviewed.',
+  robots: 'index' as const,
+  canonicalUrl: '/glendale',
+  h1: 'Glendale',
+  imageAlt: 'Glendale, California',
+  socialTitle: 'Glendale commercial real estate',
+  sitemap: false,
+}
