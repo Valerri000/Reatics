@@ -2,8 +2,8 @@ import { createRoot, type Root } from 'react-dom/client'
 import { act, createElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { AuthProvider } from '@/components/auth/AuthProvider'
 import { HomePage } from '@/components/home/HomePage'
+import { SiteShell } from '@/components/SiteShell'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
@@ -17,12 +17,7 @@ async function mount() {
   document.body.appendChild(container)
   const root: Root = createRoot(container)
   await act(async () => {
-    root.render(
-      createElement(AuthProvider, {
-        user: null,
-        children: createElement(HomePage),
-      }),
-    )
+    root.render(createElement(SiteShell, { user: null, children: createElement(HomePage) }))
   })
   return {
     container,
