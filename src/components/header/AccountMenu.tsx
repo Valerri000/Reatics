@@ -19,7 +19,7 @@ export function AccountMenu({ user, onSignOut }: AccountMenuProps) {
   return (
     <div className="relative">
       <button
-        className="inline-flex items-center gap-1 text-base font-bold text-ink"
+        className="inline-flex items-center gap-1 text-[16px] font-bold text-ink"
         onClick={() => setOpen((value) => !value)}
       >
         {user.firstName || 'Account'}
@@ -29,7 +29,7 @@ export function AccountMenu({ user, onSignOut }: AccountMenuProps) {
         <div className="absolute right-0 top-full z-30 mt-2 w-60 border border-line bg-white">
           {links.map((item) => (
             <Link
-              className="flex h-11 items-center px-4 text-base text-ink"
+              className="flex h-[44px] items-center px-4 text-[16px] text-ink"
               href={item.href}
               key={item.href}
               onClick={() => setOpen(false)}
@@ -38,7 +38,7 @@ export function AccountMenu({ user, onSignOut }: AccountMenuProps) {
             </Link>
           ))}
           <button
-            className="flex h-11 w-full items-center border-t border-line px-4 text-left text-base text-slate"
+            className="flex h-[44px] w-full items-center border-t border-line px-4 text-left text-[16px] text-slate"
             onClick={onSignOut}
           >
             Sign out
