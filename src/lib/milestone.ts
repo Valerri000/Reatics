@@ -56,3 +56,12 @@ export const reviewRecords = {
 export const phase2WorkflowFields = ['status', 'workflow'] as const
 
 export const emptyPhase2Tables = phase2Tables
+
+export const designScreens = [
+  { id: 'homepage', surface: 'staging home' },
+  { id: 'navigation', surface: 'header and footer' },
+  { id: 'search', surface: 'after this phase' },
+  { id: 'listing', surface: 'admin listing' },
+  { id: 'city', surface: 'admin city page' },
+  { id: 'broker', surface: 'brokers page' },
+] as const
