@@ -65,3 +65,11 @@ export const designScreens = [
   { id: 'city', surface: 'admin city page' },
   { id: 'broker', surface: 'brokers page' },
 ] as const
+
+export const directionTokens = [
+  '--color-brand: #bf1000',
+  '--color-brand-deep: #a00e18',
+  '--color-accent: #f56d1b',
+  "--font-sans: 'Nunito Sans', sans-serif",
+  '--radius-control: 0px',
+] as const
