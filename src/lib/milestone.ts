@@ -13,22 +13,28 @@ import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
 export const stagingUrl = 'https://18.118.84.127'
 
 export const milestoneItems = [
-  { id: 'staging-url', label: 'Staging URL opens' },
+  { id: 'staging-url', label: 'Staging URL opens', status: 'ready' },
   {
     id: 'company-github',
     label: 'Repository is in the company GitHub organization, with the company email as owner',
+    status: 'waiting',
   },
-  { id: 'sign-in', label: 'Sign-in, sign-out, lockout, and session timeout work' },
-  { id: 'roles', label: 'Owner, Content manager, and Moderator roles are enforced' },
-  { id: 'diagram', label: 'Database diagram is in the repository' },
-  { id: 'records', label: 'Listing, SEO, and redirect records exist' },
-  { id: 'phase-2', label: 'Phase 2 tables exist and are empty of workflow' },
+  { id: 'sign-in', label: 'Sign-in, sign-out, lockout, and session timeout work', status: 'ready' },
+  {
+    id: 'roles',
+    label: 'Owner, Content manager, and Moderator roles are enforced',
+    status: 'ready',
+  },
+  { id: 'diagram', label: 'Database diagram is in the repository', status: 'ready' },
+  { id: 'records', label: 'Listing, SEO, and redirect records exist', status: 'ready' },
+  { id: 'phase-2', label: 'Phase 2 tables exist and are empty of workflow', status: 'ready' },
   {
     id: 'design',
     label:
       'Design direction is confirmed for homepage, navigation, search, listing, city, and broker',
+    status: 'ready',
   },
-  { id: 'tokens', label: 'Tailwind tokens match that direction' },
+  { id: 'tokens', label: 'Tailwind tokens match that direction', status: 'ready' },
 ] as const
 
 export function stagingOpens(status: number) {
@@ -73,3 +79,7 @@ export const directionTokens = [
   "--font-sans: 'Nunito Sans', sans-serif",
   '--radius-control: 0px',
 ] as const
+
+export function waitingMilestones() {
+  return milestoneItems.filter((item) => item.status === 'waiting')
+}
