@@ -31,3 +31,9 @@ export const sampleCity = {
   socialTitle: 'Glendale commercial real estate',
   sitemap: false,
 }
+
+export const sampleRedirect = {
+  fromPath: '/listings/brand-glendale',
+  toPath: '/listings/201-n-brand',
+  statusCode: 301,
+}
