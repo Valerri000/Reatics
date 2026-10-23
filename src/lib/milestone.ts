@@ -83,3 +83,9 @@ export const directionTokens = [
 export function waitingMilestones() {
   return milestoneItems.filter((item) => item.status === 'waiting')
 }
+
+export const stagingCheck = {
+  day: '2026-10-23',
+  path: '/health',
+  status: 200,
+}

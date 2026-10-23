@@ -26,3 +26,20 @@ Homepage and navigation are on the staging site. Search, the public listing page
 Waiting on the company email
 
 The repository is not yet in a company GitHub organization with the company email as owner. Phase B should not treat the repository as company-owned until that transfer is done. Nothing else in this phase is waiting on the company email.
+
+Checked on the staging URL
+
+Checked on October 23, 2026. https://18.118.84.127/health returned 200. The response includes X-Frame-Options SAMEORIGIN and strict transport security. About shows the header, the footer, 201 N Brand Suite 200, and 1-888-518-9168.
+
+Sign-in and sign-out were checked with the space seeker account. The owner can open the audit log. The content manager and the moderator cannot. The moderator can open the 201 N Brand listing. The content manager and the space seeker cannot. The owner can open billing. The content manager cannot. The Glendale page is present. The sample redirect is saved from /listings/brand-glendale to /listings/201-n-brand with status 301.
+
+Companies, company members, deals, deal participants, screening requests, lease drafts, and signed documents are empty.
+
+Still outside these 10 days
+
+Public marketing pages, blog, glossary, and city copy.
+Map search, filters, and Mapbox.
+Stripe subscriptions and the $129 plans.
+Favorites, alerts, and dashboards.
+Drupal migration and redirects from myperfectworkplace.com.
+Screening, leases, and e-signature.
