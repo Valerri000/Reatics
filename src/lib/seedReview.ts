@@ -1,7 +1,7 @@
 import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
-import { sampleCity, sampleListing } from '@/lib/samples'
+import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 export async function ensureSampleListing(payload: Payload) {
@@ -78,4 +78,28 @@ export async function ensureStagingAccounts(payload: Payload) {
       sql`update "users" set "admin_role" = ${account.adminRole} where "id" = ${current.id}`,
     )
   }
+}
+
+export async function ensureSampleRedirect(payload: Payload) {
+  const existing = await payload.find({
+    collection: 'redirects',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { fromPath: { equals: sampleRedirect.fromPath } },
+  })
+  const current = existing.docs[0]
+  if (current) {
+    return payload.update({
+      collection: 'redirects',
+      id: current.id,
+      data: sampleRedirect,
+      overrideAccess: true,
+    })
+  }
+  return payload.create({
+    collection: 'redirects',
+    data: sampleRedirect,
+    overrideAccess: true,
+  })
 }
