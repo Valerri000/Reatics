@@ -1,3 +1,11 @@
+import {
+  IDLE_TIMEOUT_MS,
+  LOCK_DURATION_MS,
+  MAX_LOGIN_ATTEMPTS,
+  MAX_SESSION_MS,
+  MIN_PASSWORD_LENGTH,
+} from '@/lib/session'
+
 export const stagingUrl = 'https://18.118.84.127'
 
 export const milestoneItems = [
@@ -21,4 +29,12 @@ export const milestoneItems = [
 
 export function stagingOpens(status: number) {
   return status === 200
+}
+
+export const sessionRules = {
+  idleMs: IDLE_TIMEOUT_MS,
+  maxMs: MAX_SESSION_MS,
+  lockMs: LOCK_DURATION_MS,
+  attempts: MAX_LOGIN_ATTEMPTS,
+  passwordLength: MIN_PASSWORD_LENGTH,
 }
