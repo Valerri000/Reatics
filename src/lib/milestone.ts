@@ -6,6 +6,8 @@ import {
   MIN_PASSWORD_LENGTH,
 } from '@/lib/session'
 
+import { adminRoles } from '@/lib/diagram'
+
 export const stagingUrl = 'https://18.118.84.127'
 
 export const milestoneItems = [
@@ -38,3 +40,5 @@ export const sessionRules = {
   attempts: MAX_LOGIN_ATTEMPTS,
   passwordLength: MIN_PASSWORD_LENGTH,
 }
+
+export const staffRoles = adminRoles.map((role) => role.label)
