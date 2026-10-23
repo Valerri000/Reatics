@@ -8,6 +8,8 @@ import {
 
 import { adminRoles } from '@/lib/diagram'
 
+import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
+
 export const stagingUrl = 'https://18.118.84.127'
 
 export const milestoneItems = [
@@ -44,3 +46,9 @@ export const sessionRules = {
 export const staffRoles = adminRoles.map((role) => role.label)
 
 export const diagramPath = 'docs/entity-diagram.md'
+
+export const reviewRecords = {
+  listing: sampleListing.slug,
+  city: sampleCity.slug,
+  redirect: sampleRedirect.fromPath,
+}
