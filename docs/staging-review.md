@@ -2,7 +2,7 @@
 
 The staging site is [https://18.118.84.127](https://18.118.84.127). The browser warning about the certificate is expected. The admin is [https://18.118.84.127/admin](https://18.118.84.127/admin).
 
-This revision puts the header, the footer, the buttons, and the sign-in modal on every page. The live site shows that shell after this revision is pulled and rebuilt.
+This revision puts the header, the footer, the buttons, and the sign-in modal on every page. The live site is serving that shell.
 
 ## Samples
 
