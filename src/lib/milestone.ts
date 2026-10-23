@@ -6,7 +6,7 @@ import {
   MIN_PASSWORD_LENGTH,
 } from '@/lib/session'
 
-import { adminRoles } from '@/lib/diagram'
+import { adminRoles, phase2Tables } from '@/lib/diagram'
 
 import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
 
@@ -52,3 +52,7 @@ export const reviewRecords = {
   city: sampleCity.slug,
   redirect: sampleRedirect.fromPath,
 }
+
+export const phase2WorkflowFields = ['status', 'workflow'] as const
+
+export const emptyPhase2Tables = phase2Tables
