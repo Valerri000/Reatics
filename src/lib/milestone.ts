@@ -42,3 +42,5 @@ export const sessionRules = {
 }
 
 export const staffRoles = adminRoles.map((role) => role.label)
+
+export const diagramPath = 'docs/entity-diagram.md'
