@@ -14,3 +14,7 @@ Owner: staging-owner@example.com
 Content manager: staging-content@example.com
 Moderator: staging-moderator@example.com
 Space seeker: staging-member@example.com
+
+Database diagram
+
+The diagram is docs/entity-diagram.md.
