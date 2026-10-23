@@ -22,3 +22,7 @@ The diagram is docs/entity-diagram.md.
 Design walkthrough
 
 Homepage and navigation are on the staging site. Search, the public listing page, the public city page, and the broker profile stay as direction for the next phase. The sample listing is 201 N Brand. The sample city page is Glendale. Brokers is https://18.118.84.127/brokers.
+
+Waiting on the company email
+
+The repository is not yet in a company GitHub organization with the company email as owner. Phase B should not treat the repository as company-owned until that transfer is done. Nothing else in this phase is waiting on the company email.
