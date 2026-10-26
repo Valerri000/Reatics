@@ -45,6 +45,9 @@ describe('SEO fields', () => {
         type: 'checkbox',
         defaultValue: true,
       })
+      expect(fieldByName(fields, 'socialDescription')).toMatchObject({
+        type: 'textarea',
+      })
     }
   })
 
