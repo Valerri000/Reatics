@@ -42,6 +42,11 @@ export const seoFieldList: Field[] = [
     label: 'Social title',
   },
   {
+    name: 'socialDescription',
+    type: 'textarea',
+    label: 'Social description',
+  },
+  {
     name: 'sitemap',
     type: 'checkbox',
     label: 'Include in sitemap',
