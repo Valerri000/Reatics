@@ -27,6 +27,10 @@ export function canEditPages(user: RoleUser) {
   return isOwner(user) || isContentManager(user)
 }
 
+export function canEditMarketing(user: RoleUser) {
+  return canEditPages(user)
+}
+
 export function canModerate(user: RoleUser) {
   return isOwner(user) || isModerator(user)
 }
