@@ -32,6 +32,7 @@ export const seoFields = [
   'h1',
   'imageAlt',
   'socialTitle',
+  'socialDescription',
   'sitemap',
 ] as const
 
@@ -87,12 +88,21 @@ export const relationships = [
 export const entities: DiagramEntity[] = [
   { name: 'users', storage: 'table', status: 'present' },
   { name: 'pages', storage: 'table', status: 'present' },
+  { name: 'posts', storage: 'table', status: 'present' },
+  { name: 'glossary', storage: 'table', status: 'present' },
+  { name: 'cities', storage: 'table', status: 'present' },
+  { name: 'property-types', storage: 'table', status: 'present' },
   { name: 'listings', storage: 'table', status: 'present' },
   { name: 'media', storage: 'table', status: 'present' },
   { name: 'billing', storage: 'table', status: 'present' },
   { name: 'redirects', storage: 'table', status: 'present' },
   { name: 'audit-log', storage: 'table', status: 'present' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
-  { name: 'seo', storage: 'fields', status: 'present', on: ['pages', 'listings'] },
+  {
+    name: 'seo',
+    storage: 'fields',
+    status: 'present',
+    on: ['pages', 'listings', 'posts', 'glossary', 'cities', 'property-types'],
+  },
   ...phase2Tables.map((name) => ({ name, storage: 'table' as const, status: 'empty' as const })),
 ]
