@@ -7,14 +7,18 @@ import sharp from 'sharp'
 
 import { AuditLog } from './collections/AuditLog'
 import { Billing } from './collections/Billing'
+import { Cities } from './collections/Cities'
 import { Companies } from './collections/Companies'
 import { CompanyMembers } from './collections/CompanyMembers'
 import { DealParticipants } from './collections/DealParticipants'
 import { Deals } from './collections/Deals'
+import { Glossary } from './collections/Glossary'
 import { LeaseDrafts } from './collections/LeaseDrafts'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Posts } from './collections/Posts'
+import { PropertyTypes } from './collections/PropertyTypes'
 import { Redirects } from './collections/Redirects'
 import { ScreeningRequests } from './collections/ScreeningRequests'
 import { SignedDocuments } from './collections/SignedDocuments'
@@ -36,6 +40,10 @@ export default buildConfig({
   collections: [
     Users,
     Pages,
+    Posts,
+    Glossary,
+    Cities,
+    PropertyTypes,
     Listings,
     Billing,
     Media,
