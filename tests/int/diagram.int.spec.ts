@@ -3,9 +3,13 @@ import { describe, expect, it } from 'vitest'
 
 import { AuditLog } from '@/collections/AuditLog'
 import { Billing } from '@/collections/Billing'
+import { Cities } from '@/collections/Cities'
+import { Glossary } from '@/collections/Glossary'
 import { Listings } from '@/collections/Listings'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
+import { Posts } from '@/collections/Posts'
+import { PropertyTypes } from '@/collections/PropertyTypes'
 import { Redirects } from '@/collections/Redirects'
 import { Users } from '@/collections/Users'
 import {
@@ -22,7 +26,19 @@ import {
   seoFields,
 } from '@/lib/diagram'
 
-const present = [Users, Pages, Listings, Media, Billing, Redirects, AuditLog]
+const present = [
+  Users,
+  Pages,
+  Posts,
+  Glossary,
+  Cities,
+  PropertyTypes,
+  Listings,
+  Media,
+  Billing,
+  Redirects,
+  AuditLog,
+]
 
 function options(name: string) {
   const field = Users.fields.find((item) => 'name' in item && item.name === name)
@@ -56,7 +72,10 @@ describe('entity diagram', () => {
 
   it('keeps SEO, redirects, and inquiries on the reviewed names', () => {
     const seo = entities.find((entity) => entity.name === 'seo')
-    expect(seo).toMatchObject({ storage: 'fields', on: ['pages', 'listings'] })
+    expect(seo).toMatchObject({
+      storage: 'fields',
+      on: ['pages', 'listings', 'posts', 'glossary', 'cities', 'property-types'],
+    })
     expect([...seoFields]).toEqual([
       'slug',
       'pageTitle',
@@ -66,6 +85,7 @@ describe('entity diagram', () => {
       'h1',
       'imageAlt',
       'socialTitle',
+      'socialDescription',
       'sitemap',
     ])
     expect([...redirectFields]).toEqual(['fromPath', 'toPath', 'statusCode'])
