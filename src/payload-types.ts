@@ -69,6 +69,10 @@ export interface Config {
   collections: {
     users: User;
     pages: Page;
+    posts: Post;
+    glossary: Glossary;
+    cities: City;
+    'property-types': PropertyType;
     listings: Listing;
     billing: Billing;
     media: Media;
@@ -90,6 +94,10 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    glossary: GlossarySelect<false> | GlossarySelect<true>;
+    cities: CitiesSelect<false> | CitiesSelect<true>;
+    'property-types': PropertyTypesSelect<false> | PropertyTypesSelect<true>;
     listings: ListingsSelect<false> | ListingsSelect<true>;
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -196,6 +204,91 @@ export interface Page {
   h1?: string | null;
   imageAlt?: string | null;
   socialTitle?: string | null;
+  socialDescription?: string | null;
+  sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  content?: string | null;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  socialDescription?: string | null;
+  sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary".
+ */
+export interface Glossary {
+  id: number;
+  term: string;
+  slug: string;
+  definition?: string | null;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  socialDescription?: string | null;
+  sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cities".
+ */
+export interface City {
+  id: number;
+  title: string;
+  slug: string;
+  content?: string | null;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  socialDescription?: string | null;
+  sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "property-types".
+ */
+export interface PropertyType {
+  id: number;
+  title: string;
+  slug: string;
+  content?: string | null;
+  pageTitle?: string | null;
+  metaDescription?: string | null;
+  robots?: ('index' | 'noindex') | null;
+  canonicalUrl?: string | null;
+  h1?: string | null;
+  imageAlt?: string | null;
+  socialTitle?: string | null;
+  socialDescription?: string | null;
   sitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -223,6 +316,7 @@ export interface Listing {
   h1?: string | null;
   imageAlt?: string | null;
   socialTitle?: string | null;
+  socialDescription?: string | null;
   sitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -395,6 +489,22 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'glossary';
+        value: number | Glossary;
+      } | null)
+    | ({
+        relationTo: 'cities';
+        value: number | City;
+      } | null)
+    | ({
+        relationTo: 'property-types';
+        value: number | PropertyType;
+      } | null)
+    | ({
         relationTo: 'listings';
         value: number | Listing;
       } | null)
@@ -535,6 +645,87 @@ export interface PagesSelect<T extends boolean = true> {
   h1?: T;
   imageAlt?: T;
   socialTitle?: T;
+  socialDescription?: T;
+  sitemap?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  socialDescription?: T;
+  sitemap?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "glossary_select".
+ */
+export interface GlossarySelect<T extends boolean = true> {
+  term?: T;
+  slug?: T;
+  definition?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  socialDescription?: T;
+  sitemap?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cities_select".
+ */
+export interface CitiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  socialDescription?: T;
+  sitemap?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "property-types_select".
+ */
+export interface PropertyTypesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  pageTitle?: T;
+  metaDescription?: T;
+  robots?: T;
+  canonicalUrl?: T;
+  h1?: T;
+  imageAlt?: T;
+  socialTitle?: T;
+  socialDescription?: T;
   sitemap?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -561,6 +752,7 @@ export interface ListingsSelect<T extends boolean = true> {
   h1?: T;
   imageAlt?: T;
   socialTitle?: T;
+  socialDescription?: T;
   sitemap?: T;
   updatedAt?: T;
   createdAt?: T;
