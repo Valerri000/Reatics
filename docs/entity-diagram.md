@@ -1,6 +1,6 @@
 # Reatics 1.0 entity diagram
 
-Reviewed October 19, 2026, against the approved scope. SEO fields are stored on pages and listings. A changed slug is stored in redirects as a 301. Inquiries are named here and are not a table yet. The Phase 2 tables were added empty on October 20, 2026.
+Reviewed October 26, 2026, against the approved scope. SEO fields are stored on pages, listings, posts, glossary terms, cities, and property types. A changed slug is stored in redirects as a 301. Inquiries are named here and are not a table yet. The Phase 2 tables were added empty on October 20, 2026. Marketing collections were added on October 26, 2026.
 
 ```mermaid
 erDiagram
@@ -30,6 +30,7 @@ erDiagram
     string h1
     string imageAlt
     string socialTitle
+    string socialDescription
     bool sitemap
   }
 
@@ -51,6 +52,7 @@ erDiagram
     string h1
     string imageAlt
     string socialTitle
+    string socialDescription
     bool sitemap
   }
 
@@ -79,7 +81,7 @@ erDiagram
   }
 ```
 
-`seo` is a set of fields on `pages` and `listings`, not its own table. The fields are slug, pageTitle, metaDescription, robots, canonicalUrl, h1, imageAlt, socialTitle, and sitemap. `robots` is index or noindex. `sitemap` says whether the record is included.
+`seo` is a set of fields on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`, not its own table. The fields are slug, pageTitle, metaDescription, robots, canonicalUrl, h1, imageAlt, socialTitle, socialDescription, and sitemap. `robots` is index or noindex. `sitemap` says whether the record is included.
 
 ## Names kept
 
@@ -165,7 +167,40 @@ erDiagram
 
 `company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
 
-`users`, `pages`, `listings`, `media`, `billing`, `redirects`, and `audit-log` are tables. SEO fields are stored on `pages` and `listings`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `redirects`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+
+## Marketing collections
+
+posts, glossary, cities, and property-types. A content manager can edit them. A moderator cannot. Each slug is unique inside its collection.
+
+```mermaid
+erDiagram
+  posts {
+    string title
+    string slug
+    string content
+  }
+
+  glossary {
+    string term
+    string slug
+    string definition
+  }
+
+  cities {
+    string title
+    string slug
+    string content
+  }
+
+  property_types {
+    string title
+    string slug
+    string content
+  }
+```
+
+`property-types` is `property_types` in the drawing.
 
 ## Not in this diagram
 
