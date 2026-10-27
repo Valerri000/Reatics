@@ -202,6 +202,10 @@ erDiagram
 
 `property-types` is `property_types` in the drawing.
 
+## Publish
+
+pages, posts, glossary, cities, and property-types have a status of draft or published. The body is rich text. A post also has publishedOn and an author.
+
 ## Not in this diagram
 
 saved-searches, alerts, favorites, prospects, ads, referrals.
