@@ -1,8 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
+import { bodyField } from '@/fields/body'
 import { seoFieldList } from '@/fields/seo'
 import { recordDelete } from '@/lib/audit'
+import { readPublishedMarketing } from '@/lib/draftAccess'
+import { blockUnreadyPublish, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
+import { publicSlugField } from '@/lib/slugConflict'
 
 export const Glossary: CollectionConfig = {
   slug: 'glossary',
@@ -12,15 +16,16 @@ export const Glossary: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'term',
-    defaultColumns: ['term', 'slug'],
+    defaultColumns: ['term', 'slug', 'status'],
   },
   access: {
-    read: () => true,
+    read: readPublishedMarketing,
     create: ({ req: { user } }) => canEditMarketing(user),
     update: ({ req: { user } }) => canEditMarketing(user),
     delete: ({ req: { user } }) => canEditMarketing(user),
   },
   hooks: {
+    beforeChange: [blockUnreadyPublish('term', 'definition')],
     afterDelete: [recordDelete],
   },
   fields: [
@@ -30,18 +35,9 @@ export const Glossary: CollectionConfig = {
       label: 'Term',
       required: true,
     },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-    },
-    {
-      name: 'definition',
-      type: 'textarea',
-      label: 'Definition',
-    },
+    publicSlugField('glossary'),
+    statusField,
+    bodyField('definition', 'Definition'),
     ...seoFieldList,
   ],
 }
