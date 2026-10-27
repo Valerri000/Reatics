@@ -4,6 +4,8 @@ import * as migration_20261021_161927_media_storage from './20261021_161927_medi
 import * as migration_20261021_175842_audit_lock from './20261021_175842_audit_lock'
 import * as migration_20261026_102718_marketing_tables from './20261026_102718_marketing_tables'
 import * as migration_20261026_104936_social_description from './20261026_104936_social_description'
+import * as migration_20261027_040247_rich_text_body from './20261027_040247_rich_text_body'
+import * as migration_20261027_052121_publish_status from './20261027_052121_publish_status'
 
 export const migrations = [
   {
@@ -35,5 +37,15 @@ export const migrations = [
     up: migration_20261026_104936_social_description.up,
     down: migration_20261026_104936_social_description.down,
     name: '20261026_104936_social_description',
+  },
+  {
+    up: migration_20261027_040247_rich_text_body.up,
+    down: migration_20261027_040247_rich_text_body.down,
+    name: '20261027_040247_rich_text_body',
+  },
+  {
+    up: migration_20261027_052121_publish_status.up,
+    down: migration_20261027_052121_publish_status.down,
+    name: '20261027_052121_publish_status',
   },
 ]
