@@ -26,7 +26,10 @@ describe('marketing access', () => {
       expect(allow(collection.access?.create, editor)).toBe(true)
       expect(allow(collection.access?.update, editor)).toBe(true)
       expect(allow(collection.access?.delete, owner)).toBe(true)
-      expect(allow(collection.access?.read, seeker)).toBe(true)
+      expect(allow(collection.access?.read, editor)).toBe(true)
+      expect(allow(collection.access?.read, seeker)).toEqual({
+        status: { equals: 'published' },
+      })
     }
   })
 
