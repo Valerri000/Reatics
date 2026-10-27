@@ -1,8 +1,14 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
+import { bodyField } from '@/fields/body'
 import { seoFieldList } from '@/fields/seo'
 import { recordDelete } from '@/lib/audit'
+import { readPublishedMarketing } from '@/lib/draftAccess'
+import { blockUnreadyPost, stampPublishDate, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
+import { publicSlugField } from '@/lib/slugConflict'
+
+const stampPostDate: CollectionBeforeChangeHook = ({ data }) => stampPublishDate({ data })
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -12,15 +18,16 @@ export const Posts: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug'],
+    defaultColumns: ['title', 'slug', 'status', 'publishedOn'],
   },
   access: {
-    read: () => true,
+    read: readPublishedMarketing,
     create: ({ req: { user } }) => canEditMarketing(user),
     update: ({ req: { user } }) => canEditMarketing(user),
     delete: ({ req: { user } }) => canEditMarketing(user),
   },
   hooks: {
+    beforeChange: [stampPostDate, blockUnreadyPost],
     afterDelete: [recordDelete],
   },
   fields: [
@@ -29,17 +36,19 @@ export const Posts: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    publicSlugField('posts'),
+    statusField,
     {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
+      name: 'publishedOn',
+      type: 'date',
+      label: 'Publish date',
     },
     {
-      name: 'content',
-      type: 'textarea',
+      name: 'author',
+      type: 'relationship',
+      relationTo: 'users',
     },
+    bodyField('content'),
     ...seoFieldList,
   ],
 }
