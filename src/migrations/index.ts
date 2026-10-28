@@ -6,6 +6,7 @@ import * as migration_20261026_102718_marketing_tables from './20261026_102718_m
 import * as migration_20261026_104936_social_description from './20261026_104936_social_description'
 import * as migration_20261027_040247_rich_text_body from './20261027_040247_rich_text_body'
 import * as migration_20261027_052121_publish_status from './20261027_052121_publish_status'
+import * as migration_20261028_081144_contact_messages from './20261028_081144_contact_messages'
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20261027_052121_publish_status.up,
     down: migration_20261027_052121_publish_status.down,
     name: '20261027_052121_publish_status',
+  },
+  {
+    up: migration_20261028_081144_contact_messages.up,
+    down: migration_20261028_081144_contact_messages.down,
+    name: '20261028_081144_contact_messages',
   },
 ]
