@@ -4,17 +4,17 @@ import { Cities } from '@/collections/Cities'
 import { Glossary } from '@/collections/Glossary'
 import { Posts } from '@/collections/Posts'
 import { PropertyTypes } from '@/collections/PropertyTypes'
-import { canEditMarketing } from '@/lib/roles'
+import { canEditMarketing, type RoleUser } from '@/lib/roles'
 
 function allow(access: unknown, user: unknown) {
   if (typeof access !== 'function') throw new Error('missing access')
   return access({ req: { user } })
 }
 
-const owner = { id: 1, adminRole: 'owner' }
-const editor = { id: 2, adminRole: 'content-manager' }
-const moderator = { id: 3, adminRole: 'moderator' }
-const seeker = { id: 4, adminRole: null }
+const owner: RoleUser = { id: 1, adminRole: 'owner' }
+const editor: RoleUser = { id: 2, adminRole: 'content-manager' }
+const moderator: RoleUser = { id: 3, adminRole: 'moderator' }
+const seeker: RoleUser = { id: 4, adminRole: null }
 
 const collections = [Posts, Glossary, Cities, PropertyTypes]
 

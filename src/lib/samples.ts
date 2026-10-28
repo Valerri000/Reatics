@@ -1,3 +1,30 @@
+import type { RichTextBody } from '@/payload-types'
+
+function plainBody(text: string): RichTextBody {
+  return {
+    root: {
+      type: 'root',
+      children: [
+        {
+          type: 'paragraph',
+          version: 1,
+          children: [
+            {
+              type: 'text',
+              version: 1,
+              text,
+            },
+          ],
+        },
+      ],
+      direction: 'ltr',
+      format: '',
+      indent: 0,
+      version: 1,
+    },
+  }
+}
+
 export const sampleListing = {
   title: '201 N Brand',
   slug: '201-n-brand',
@@ -21,7 +48,10 @@ export const sampleListing = {
 export const sampleCity = {
   title: 'Glendale',
   slug: 'glendale',
-  content: 'Sample city page for the staging review. The public city layout is not in this phase.',
+  status: 'draft' as const,
+  content: plainBody(
+    'Sample city page for the staging review. The public city layout is not in this phase.',
+  ),
   pageTitle: 'Commercial real estate in Glendale',
   metaDescription: 'A sample city record so the SEO fields can be reviewed.',
   robots: 'index' as const,

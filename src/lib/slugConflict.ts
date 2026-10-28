@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { Field, TextFieldSingleValidation } from 'payload'
 
 export const slugCollections = [
   { slug: 'pages', label: 'page' },
@@ -72,19 +72,20 @@ export async function sharedSlugWarning({
 }
 
 export function publicSlugField(collection: SlugCollection): Field {
+  const validate: TextFieldSingleValidation = (value, { req, id }) =>
+    sharedSlugWarning({
+      slug: value,
+      collection,
+      id,
+      req: req as unknown as Finder,
+    })
   return {
     name: 'slug',
     type: 'text',
     required: true,
     unique: true,
     index: true,
-    validate: (value, { req, id }) =>
-      sharedSlugWarning({
-        slug: value,
-        collection,
-        id,
-        req: req as Finder,
-      }),
+    validate,
   }
 }
 
