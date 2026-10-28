@@ -1,9 +1,12 @@
 import { stagingUrl } from '@/lib/milestone'
+import { publicPageSlugs } from '@/lib/publicPages'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 export const phaseBHost = stagingUrl
 
 export const phaseBAdminPath = '/admin'
+
+export const phaseBPublicPaths = publicPageSlugs.map((slug) => `/${slug}`)
 
 export const phaseBReviewEmails = stagingAccounts.map((account) => account.email)
 
