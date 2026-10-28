@@ -77,6 +77,7 @@ export interface Config {
     billing: Billing;
     media: Media;
     redirects: Redirect;
+    'contact-messages': ContactMessage;
     companies: Company;
     'company-members': CompanyMember;
     deals: Deal;
@@ -102,6 +103,7 @@ export interface Config {
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     'company-members': CompanyMembersSelect<false> | CompanyMembersSelect<true>;
     deals: DealsSelect<false> | DealsSelect<true>;
@@ -357,6 +359,18 @@ export interface Redirect {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "billing".
  */
 export interface Billing {
@@ -541,6 +555,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'redirects';
         value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null)
     | ({
         relationTo: 'companies';
@@ -805,6 +823,17 @@ export interface RedirectsSelect<T extends boolean = true> {
   fromPath?: T;
   toPath?: T;
   statusCode?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
   updatedAt?: T;
   createdAt?: T;
 }
