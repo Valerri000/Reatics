@@ -59,6 +59,14 @@ export default buildConfig({
     SignedDocuments,
     AuditLog,
   ],
+  onInit: async (payload) => {
+    try {
+      const { ensurePublicPages } = await import('./lib/seedReview')
+      await ensurePublicPages(payload)
+    } catch {
+      return
+    }
+  },
   editor: lexicalEditor(),
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   secret: process.env.PAYLOAD_SECRET || '',

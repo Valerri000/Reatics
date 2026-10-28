@@ -2,6 +2,7 @@ import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
 import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
+import { publicPageSeeds } from '@/lib/publicPageSeed'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 export async function ensureSampleListing(payload: Payload) {
@@ -50,6 +51,24 @@ export async function ensureSampleCity(payload: Payload) {
     data: sampleCity,
     overrideAccess: true,
   })
+}
+
+export async function ensurePublicPages(payload: Payload) {
+  for (const page of publicPageSeeds) {
+    const existing = await payload.find({
+      collection: 'pages',
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: { slug: { equals: page.slug } },
+    })
+    if (existing.docs[0]) continue
+    await payload.create({
+      collection: 'pages',
+      data: page,
+      overrideAccess: true,
+    })
+  }
 }
 
 export async function ensureStagingAccounts(payload: Payload) {
