@@ -10,6 +10,7 @@ import { Billing } from './collections/Billing'
 import { Cities } from './collections/Cities'
 import { Companies } from './collections/Companies'
 import { CompanyMembers } from './collections/CompanyMembers'
+import { ContactMessages } from './collections/ContactMessages'
 import { DealParticipants } from './collections/DealParticipants'
 import { Deals } from './collections/Deals'
 import { Glossary } from './collections/Glossary'
@@ -50,6 +51,7 @@ export default buildConfig({
     Redirects,
     Companies,
     CompanyMembers,
+    ContactMessages,
     Deals,
     DealParticipants,
     ScreeningRequests,
