@@ -96,6 +96,7 @@ export const entities: DiagramEntity[] = [
   { name: 'media', storage: 'table', status: 'present' },
   { name: 'billing', storage: 'table', status: 'present' },
   { name: 'redirects', storage: 'table', status: 'present' },
+  { name: 'contact-messages', storage: 'table', status: 'present' },
   { name: 'audit-log', storage: 'table', status: 'present' },
   { name: 'inquiries', storage: 'table', status: 'planned' },
   {

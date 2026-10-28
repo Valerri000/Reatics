@@ -167,7 +167,7 @@ erDiagram
 
 `company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
 
-`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `redirects`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `redirects`, `contact-messages`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
 
 ## Marketing collections
 
@@ -201,6 +201,10 @@ erDiagram
 ```
 
 `property-types` is `property_types` in the drawing.
+
+## Contact messages
+
+`contact-messages` stores the name, email, and message sent from the contact page. A content manager and the owner can read them. A visitor can create one.
 
 ## Publish
 

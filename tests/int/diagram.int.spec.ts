@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { AuditLog } from '@/collections/AuditLog'
 import { Billing } from '@/collections/Billing'
 import { Cities } from '@/collections/Cities'
+import { ContactMessages } from '@/collections/ContactMessages'
 import { Glossary } from '@/collections/Glossary'
 import { Listings } from '@/collections/Listings'
 import { Media } from '@/collections/Media'
@@ -37,6 +38,7 @@ const present = [
   Media,
   Billing,
   Redirects,
+  ContactMessages,
   AuditLog,
 ]
 
