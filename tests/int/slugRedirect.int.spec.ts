@@ -59,6 +59,16 @@ describe('slug redirects', () => {
       toPath: '/listings/brand-blvd',
       statusCode: 301,
     })
+    expect(redirectForSlugChange('posts', 'market-notes', 'how-to-read-a-listing')).toEqual({
+      fromPath: '/blog/market-notes',
+      toPath: '/blog/how-to-read-a-listing',
+      statusCode: 301,
+    })
+    expect(redirectForSlugChange('glossary', 'cap', 'cap-rate')).toEqual({
+      fromPath: '/glossary/cap',
+      toPath: '/glossary/cap-rate',
+      statusCode: 301,
+    })
   })
 
   it('writes one redirect when a page slug changes', async () => {
@@ -107,6 +117,33 @@ describe('slug redirects', () => {
     })
     expect(store.rows).toEqual([
       { id: 2, fromPath: '/about-us', toPath: '/about', statusCode: 301 },
+    ])
+  })
+
+  it('stores a 301 when a post or a term slug changes', async () => {
+    const store = memory()
+    await storeSlugRedirect({
+      collection: 'posts',
+      operation: 'update',
+      previousDoc: { slug: 'market-notes' },
+      doc: { slug: 'how-to-read-a-listing' },
+      req: store.req,
+    })
+    await storeSlugRedirect({
+      collection: 'glossary',
+      operation: 'update',
+      previousDoc: { slug: 'cap' },
+      doc: { slug: 'cap-rate' },
+      req: store.req,
+    })
+    expect(store.rows).toEqual([
+      {
+        id: 1,
+        fromPath: '/blog/market-notes',
+        toPath: '/blog/how-to-read-a-listing',
+        statusCode: 301,
+      },
+      { id: 2, fromPath: '/glossary/cap', toPath: '/glossary/cap-rate', statusCode: 301 },
     ])
   })
 })
