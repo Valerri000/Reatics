@@ -1,8 +1,9 @@
 import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
-import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
 import { publicPageSeeds } from '@/lib/publicPageSeed'
+import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
+import { sampleDraftPost, samplePost, sampleTerm } from '@/lib/storySeed'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 export async function ensureSampleListing(payload: Payload) {
@@ -69,6 +70,60 @@ export async function ensurePublicPages(payload: Payload) {
       overrideAccess: true,
     })
   }
+}
+
+export async function ensureStorySamples(payload: Payload) {
+  const draft = await payload.find({
+    collection: 'posts',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: sampleDraftPost.slug } },
+  })
+  if (!draft.docs[0]) {
+    await payload.create({
+      collection: 'posts',
+      data: sampleDraftPost,
+      overrideAccess: true,
+    })
+  }
+
+  const term = await payload.find({
+    collection: 'glossary',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: sampleTerm.slug } },
+  })
+  if (!term.docs[0]) {
+    await payload.create({
+      collection: 'glossary',
+      data: sampleTerm,
+      overrideAccess: true,
+    })
+  }
+
+  const users = await payload.find({
+    collection: 'users',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+  })
+  const author = users.docs[0]
+  if (!author) return
+  const post = await payload.find({
+    collection: 'posts',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: samplePost.slug } },
+  })
+  if (post.docs[0]) return
+  await payload.create({
+    collection: 'posts',
+    data: { ...samplePost, author: author.id },
+    overrideAccess: true,
+  })
 }
 
 export async function ensureStagingAccounts(payload: Payload) {
