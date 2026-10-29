@@ -7,6 +7,7 @@ import { readPublishedMarketing } from '@/lib/draftAccess'
 import { blockUnreadyPost, stampPublishDate, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
 import { publicSlugField } from '@/lib/slugConflict'
+import { storeSlugRedirect } from '@/lib/slugRedirect'
 
 const stampPostDate: CollectionBeforeChangeHook = ({ data }) => stampPublishDate({ data })
 
@@ -28,6 +29,7 @@ export const Posts: CollectionConfig = {
   },
   hooks: {
     beforeChange: [stampPostDate, blockUnreadyPost],
+    afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'posts' })],
     afterDelete: [recordDelete],
   },
   fields: [
