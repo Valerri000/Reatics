@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { phaseBAdminPath, phaseBHost, phaseBPublicPaths, phaseBReviewEmails, phaseBReviewHost } from '@/lib/phaseB'
+import { phaseBAdminPath, phaseBHost, phaseBPublicPaths, phaseBReviewEmails, phaseBReviewHost, phaseBStoryPaths } from '@/lib/phaseB'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 describe('Phase B review host', () => {
@@ -33,6 +33,14 @@ describe('Phase B review host', () => {
       'https://18.118.84.127/contact',
       'https://18.118.84.127/scholarship',
       'https://18.118.84.127/steps',
+    ])
+  })
+
+  it('publishes the blog and the glossary on that host', () => {
+    expect(phaseBStoryPaths).toEqual(['/blog', '/glossary'])
+    expect(phaseBStoryPaths.map((path) => `${phaseBHost}${path}`)).toEqual([
+      'https://18.118.84.127/blog',
+      'https://18.118.84.127/glossary',
     ])
   })
 })
