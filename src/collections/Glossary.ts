@@ -7,6 +7,7 @@ import { readPublishedMarketing } from '@/lib/draftAccess'
 import { blockUnreadyPublish, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
 import { publicSlugField } from '@/lib/slugConflict'
+import { storeSlugRedirect } from '@/lib/slugRedirect'
 
 export const Glossary: CollectionConfig = {
   slug: 'glossary',
@@ -26,6 +27,7 @@ export const Glossary: CollectionConfig = {
   },
   hooks: {
     beforeChange: [blockUnreadyPublish('term', 'definition')],
+    afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'glossary' })],
     afterDelete: [recordDelete],
   },
   fields: [
