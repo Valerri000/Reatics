@@ -7,6 +7,7 @@ import { readPublishedMarketing } from '@/lib/draftAccess'
 import { blockUnreadyPublish, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
 import { publicSlugField } from '@/lib/slugConflict'
+import { storeSlugRedirect } from '@/lib/slugRedirect'
 
 export const Cities: CollectionConfig = {
   slug: 'cities',
@@ -26,6 +27,7 @@ export const Cities: CollectionConfig = {
   },
   hooks: {
     beforeChange: [blockUnreadyPublish('title', 'content')],
+    afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'cities' })],
     afterDelete: [recordDelete],
   },
   fields: [
