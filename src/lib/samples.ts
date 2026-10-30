@@ -48,18 +48,31 @@ export const sampleListing = {
 export const sampleCity = {
   title: 'Glendale',
   slug: 'glendale',
-  status: 'draft' as const,
-  content: plainBody(
-    'Sample city page for the staging review. The public city layout is not in this phase.',
-  ),
+  status: 'published' as const,
+  content: plainBody('Commercial real estate listings in Glendale, California.'),
   pageTitle: 'Commercial real estate in Glendale',
-  metaDescription: 'A sample city record so the SEO fields can be reviewed.',
+  metaDescription: 'Office and commercial listings in Glendale.',
   robots: 'index' as const,
   canonicalUrl: '/glendale',
   h1: 'Glendale',
   imageAlt: 'Glendale, California',
   socialTitle: 'Glendale commercial real estate',
-  sitemap: false,
+  sitemap: true,
+}
+
+export const sampleOffice = {
+  title: 'Office',
+  slug: 'office',
+  status: 'published' as const,
+  content: plainBody('Office space for sale and for lease.'),
+  pageTitle: 'Office space',
+  metaDescription: 'Office listings for sale and for lease.',
+  robots: 'index' as const,
+  canonicalUrl: '/office',
+  h1: 'Office',
+  imageAlt: 'Office space',
+  socialTitle: 'Office space',
+  sitemap: true,
 }
 
 export const sampleRedirect = {
