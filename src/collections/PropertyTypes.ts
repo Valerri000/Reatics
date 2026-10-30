@@ -7,6 +7,7 @@ import { readPublishedMarketing } from '@/lib/draftAccess'
 import { blockUnreadyPublish, statusField } from '@/lib/publish'
 import { canEditMarketing } from '@/lib/roles'
 import { publicSlugField } from '@/lib/slugConflict'
+import { storeSlugRedirect } from '@/lib/slugRedirect'
 
 export const PropertyTypes: CollectionConfig = {
   slug: 'property-types',
@@ -26,6 +27,7 @@ export const PropertyTypes: CollectionConfig = {
   },
   hooks: {
     beforeChange: [blockUnreadyPublish('title', 'content')],
+    afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'property-types' })],
     afterDelete: [recordDelete],
   },
   fields: [
