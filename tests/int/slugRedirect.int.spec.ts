@@ -69,6 +69,16 @@ describe('slug redirects', () => {
       toPath: '/glossary/cap-rate',
       statusCode: 301,
     })
+    expect(redirectForSlugChange('cities', 'glendale', 'glendale-ca')).toEqual({
+      fromPath: '/glendale',
+      toPath: '/glendale-ca',
+      statusCode: 301,
+    })
+    expect(redirectForSlugChange('property-types', 'office', 'offices')).toEqual({
+      fromPath: '/office',
+      toPath: '/offices',
+      statusCode: 301,
+    })
   })
 
   it('writes one redirect when a page slug changes', async () => {
