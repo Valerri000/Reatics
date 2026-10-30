@@ -1,4 +1,4 @@
-export type PublicCollection = 'pages' | 'listings' | 'posts' | 'glossary'
+export type PublicCollection = 'pages' | 'listings' | 'posts' | 'glossary' | 'cities' | 'property-types'
 
 export function publicPath(collection: PublicCollection, slug: string) {
   const clean = slug.trim().replace(/^\/+|\/+$/g, '')
