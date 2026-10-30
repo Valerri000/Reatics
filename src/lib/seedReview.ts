@@ -2,7 +2,7 @@ import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
 import { publicPageSeeds } from '@/lib/publicPageSeed'
-import { sampleCity, sampleListing, sampleRedirect } from '@/lib/samples'
+import { sampleCity, sampleListing, sampleOffice, sampleRedirect } from '@/lib/samples'
 import { sampleDraftPost, samplePost, sampleTerm } from '@/lib/storySeed'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
@@ -31,27 +31,54 @@ export async function ensureSampleListing(payload: Payload) {
 }
 
 export async function ensureSampleCity(payload: Payload) {
-  const existing = await payload.find({
+  const page = await payload.find({
     collection: 'pages',
     depth: 0,
     limit: 1,
     overrideAccess: true,
     where: { slug: { equals: sampleCity.slug } },
   })
-  const current = existing.docs[0]
-  if (current) {
-    return payload.update({
+  if (page.docs[0]) {
+    await payload.delete({
       collection: 'pages',
-      id: current.id,
-      data: sampleCity,
+      id: page.docs[0].id,
       overrideAccess: true,
     })
   }
+  const existing = await payload.find({
+    collection: 'cities',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: sampleCity.slug } },
+  })
+  if (existing.docs[0]) return existing.docs[0]
   return payload.create({
-    collection: 'pages',
+    collection: 'cities',
     data: sampleCity,
     overrideAccess: true,
   })
+}
+
+export async function ensureSampleOffice(payload: Payload) {
+  const existing = await payload.find({
+    collection: 'property-types',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: sampleOffice.slug } },
+  })
+  if (existing.docs[0]) return existing.docs[0]
+  return payload.create({
+    collection: 'property-types',
+    data: sampleOffice,
+    overrideAccess: true,
+  })
+}
+
+export async function ensurePlaceSamples(payload: Payload) {
+  await ensureSampleCity(payload)
+  await ensureSampleOffice(payload)
 }
 
 export async function ensurePublicPages(payload: Payload) {
