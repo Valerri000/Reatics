@@ -10,6 +10,8 @@ export const phaseBPublicPaths = publicPageSlugs.map((slug) => `/${slug}`)
 
 export const phaseBStoryPaths = ['/blog', '/glossary'] as const
 
+export const phaseBPlacePaths = ['/glendale', '/office'] as const
+
 export const phaseBReviewEmails = stagingAccounts.map((account) => account.email)
 
 export function phaseBReviewHost(url: string) {
