@@ -6,24 +6,7 @@ import React, { useState } from 'react'
 import { Button } from '@/components/Button'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { Wordmark } from '@/components/Wordmark'
-
-const navigation = [
-  { href: '/', label: 'Home' },
-  { href: '/featured', label: 'Featured properties' },
-  { href: '/about', label: 'About us' },
-  { href: '/services', label: 'Services' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/scholarship', label: 'Scholarship' },
-  { href: '/glossary', label: 'Glossary' },
-  { href: '/steps', label: 'Steps to renting' },
-  { href: '/privacy', label: 'Privacy' },
-  { href: '/terms', label: 'Terms' },
-]
-
-const areas = [
-  { href: '/coworking', label: 'Coworking spaces' },
-  { href: '/commercial', label: 'Commercial real estate' },
-]
+import { footerAreaLinks, footerLinks } from '@/lib/siteLinks'
 
 const inputClass =
   'h-12 w-full border border-hairline bg-white px-3 text-base text-ink outline-none placeholder:text-placeholder'
@@ -121,7 +104,7 @@ export function SiteFooter() {
         <div>
           <p className="m-0 text-base font-bold">Navigation</p>
           <ul className="m-0 mt-4 list-none p-0">
-            {navigation.map((link) => (
+            {footerLinks.map((link) => (
               <li key={link.href} className="mt-2">
                 <Link href={link.href} className="text-base text-white">
                   {link.label}
@@ -130,7 +113,7 @@ export function SiteFooter() {
             ))}
           </ul>
           <ul className="m-0 mt-6 list-none p-0">
-            {areas.map((link) => (
+            {footerAreaLinks.map((link) => (
               <li key={link.href} className="mt-2">
                 <Link href={link.href} className="text-base text-white">
                   {link.label}
