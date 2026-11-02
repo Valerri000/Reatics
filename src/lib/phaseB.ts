@@ -12,6 +12,8 @@ export const phaseBStoryPaths = ['/blog', '/glossary'] as const
 
 export const phaseBPlacePaths = ['/glendale', '/office'] as const
 
+export const phaseBRedirectCode = 301
+
 export const phaseBReviewEmails = stagingAccounts.map((account) => account.email)
 
 export function phaseBReviewHost(url: string) {
