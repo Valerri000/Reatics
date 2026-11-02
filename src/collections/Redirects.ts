@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { recordDelete } from '@/lib/audit'
+import { canAddRedirect } from '@/lib/redirectAccess'
 import { isStaff } from '@/lib/roles'
 
 export const Redirects: CollectionConfig = {
@@ -11,9 +12,9 @@ export const Redirects: CollectionConfig = {
   },
   access: {
     read: ({ req: { user } }) => isStaff(user),
-    create: ({ req: { user } }) => isStaff(user),
-    update: ({ req: { user } }) => isStaff(user),
-    delete: ({ req: { user } }) => isStaff(user),
+    create: ({ req: { user } }) => canAddRedirect(user),
+    update: ({ req: { user } }) => canAddRedirect(user),
+    delete: ({ req: { user } }) => canAddRedirect(user),
   },
   hooks: {
     afterDelete: [recordDelete],
