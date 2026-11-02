@@ -10,6 +10,7 @@ import { PageMenu } from '@/components/header/PageMenu'
 import { MenuIcon } from '@/components/icons'
 import { Wordmark } from '@/components/Wordmark'
 import { accountLinks, canList } from '@/lib/access'
+import { headerUtilityLinks } from '@/lib/siteLinks'
 
 export function Header() {
   const auth = useAuth()
@@ -51,8 +52,8 @@ export function Header() {
               Add a Listing
             </button>
           ) : null}
-          <Link className="text-[16px] font-bold text-accent" href="/brokers">
-            Find a broker
+          <Link className="text-[16px] font-bold text-accent" href={headerUtilityLinks[0].href}>
+            {headerUtilityLinks[0].label}
           </Link>
           {user ? (
             <AccountMenu user={user} onSignOut={() => void auth.signOutUser()} />
