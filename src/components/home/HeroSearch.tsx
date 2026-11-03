@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 import { Button } from '@/components/Button'
+import { homepageSearchTarget } from '@/lib/searchTarget'
 
 export const searchUses = {
   sale: [
@@ -45,12 +46,7 @@ export function HeroSearch() {
 
   function submit(event: React.FormEvent) {
     event.preventDefault()
-    const params = new URLSearchParams({
-      place: place.trim(),
-      kind,
-      use,
-    })
-    router.push(`/featured?${params.toString()}`)
+    router.push(homepageSearchTarget({ place, kind, use }))
   }
 
   return (
