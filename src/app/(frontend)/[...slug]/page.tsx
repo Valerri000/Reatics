@@ -11,6 +11,7 @@ import { pageTitles } from '@/lib/navigation'
 import { metadataFor } from '@/lib/pageMeta'
 import { pageHeading } from '@/lib/pageResponse'
 import { listingsForCity, listingsForType, reservedMapPath } from '@/lib/placeList'
+import { isLegalPageSlug } from '@/lib/legalPages'
 import { isPublicPageSlug } from '@/lib/publicPages'
 import { storyMeta } from '@/lib/storyMeta'
 
@@ -24,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params
   if (slug.length !== 1) return {}
   const key = slug[0]
-  if (isPublicPageSlug(key)) {
+  if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
     if (!page) return {}
     return metadataFor(page)
@@ -41,7 +42,7 @@ export default async function MarketingPage({ params }: { params: Promise<{ slug
   const { slug } = await params
   if (slug.length !== 1) notFound()
   const key = slug[0]
-  if (isPublicPageSlug(key)) {
+  if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
     if (!page) notFound()
     return (
