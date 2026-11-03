@@ -61,8 +61,11 @@ export default buildConfig({
   ],
   onInit: async (payload) => {
     try {
-      const { ensurePlaceSamples, ensurePublicPages, ensureStorySamples } = await import('./lib/seedReview')
+      const { ensureLegalPages, ensurePlaceSamples, ensurePublicPages, ensureStorySamples } = await import(
+        './lib/seedReview'
+      )
       await ensurePublicPages(payload)
+      await ensureLegalPages(payload)
       await ensureStorySamples(payload)
       await ensurePlaceSamples(payload)
     } catch {
