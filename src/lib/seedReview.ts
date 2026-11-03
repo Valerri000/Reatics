@@ -1,6 +1,7 @@
 import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
+import { legalPageSeeds } from '@/lib/legalPages'
 import { publicPageSeeds } from '@/lib/publicPageSeed'
 import { sampleCity, sampleListing, sampleOffice, sampleRedirect } from '@/lib/samples'
 import { sampleDraftPost, samplePost, sampleTerm } from '@/lib/storySeed'
@@ -83,6 +84,24 @@ export async function ensurePlaceSamples(payload: Payload) {
 
 export async function ensurePublicPages(payload: Payload) {
   for (const page of publicPageSeeds) {
+    const existing = await payload.find({
+      collection: 'pages',
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: { slug: { equals: page.slug } },
+    })
+    if (existing.docs[0]) continue
+    await payload.create({
+      collection: 'pages',
+      data: page,
+      overrideAccess: true,
+    })
+  }
+}
+
+export async function ensureLegalPages(payload: Payload) {
+  for (const page of legalPageSeeds) {
     const existing = await payload.find({
       collection: 'pages',
       depth: 0,
