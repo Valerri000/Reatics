@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { homepageSearchTarget, searchCallsMapbox } from '@/lib/searchTarget'
+import { homepageSearchTarget, searchCallsMapbox, searchOpensMap } from '@/lib/searchTarget'
 
 describe('homepage search', () => {
   it('does not call Mapbox', () => {
@@ -9,5 +9,7 @@ describe('homepage search', () => {
     expect(target.startsWith('/map')).toBe(false)
     expect(searchCallsMapbox(target)).toBe(false)
     expect(searchCallsMapbox(homepageSearchTarget({ place: 'mapbox', kind: 'sale', use: 'all' }))).toBe(false)
+    expect(searchOpensMap(target)).toBe(false)
+    expect(searchOpensMap('/map?city=Glendale')).toBe(true)
   })
 })
