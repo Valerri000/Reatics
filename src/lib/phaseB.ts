@@ -16,6 +16,8 @@ export const phaseBRedirectCode = 301
 
 export const phaseBSitemapPath = '/sitemap.xml'
 
+export const phaseBHomePath = '/'
+
 export const phaseBReviewEmails = stagingAccounts.map((account) => account.email)
 
 export function phaseBReviewHost(url: string) {
