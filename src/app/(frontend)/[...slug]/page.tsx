@@ -25,6 +25,7 @@ export async function generateMetadata({
   const { slug } = await params
   if (slug.length !== 1) return {}
   const key = slug[0]
+  if (key === 'home') return {}
   if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
     if (!page) return {}
@@ -42,6 +43,7 @@ export default async function MarketingPage({ params }: { params: Promise<{ slug
   const { slug } = await params
   if (slug.length !== 1) notFound()
   const key = slug[0]
+  if (key === 'home') notFound()
   if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
     if (!page) notFound()
