@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { phaseBAdminPath, phaseBHost, phaseBPlacePaths, phaseBPublicPaths, phaseBRedirectCode, phaseBReviewEmails, phaseBReviewHost, phaseBStoryPaths } from '@/lib/phaseB'
+import { phaseBAdminPath, phaseBHost, phaseBPlacePaths, phaseBPublicPaths, phaseBRedirectCode, phaseBReviewEmails, phaseBReviewHost, phaseBSitemapPath, phaseBStoryPaths } from '@/lib/phaseB'
 import { stagingAccounts } from '@/lib/stagingAccounts'
 
 describe('Phase B review host', () => {
@@ -54,5 +54,10 @@ describe('Phase B review host', () => {
 
   it('answers an old address with a 301 on that host', () => {
     expect(phaseBRedirectCode).toBe(301)
+  })
+
+  it('serves the sitemap on that host', () => {
+    expect(phaseBSitemapPath).toBe('/sitemap.xml')
+    expect(`${phaseBHost}${phaseBSitemapPath}`).toBe('https://18.118.84.127/sitemap.xml')
   })
 })
