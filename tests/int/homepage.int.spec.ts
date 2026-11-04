@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { HomePage } from '@/components/home/HomePage'
 import { SiteShell } from '@/components/SiteShell'
+import { listingCardFields } from '@/lib/placeList'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
@@ -17,7 +18,31 @@ async function mount() {
   document.body.appendChild(container)
   const root: Root = createRoot(container)
   await act(async () => {
-    root.render(createElement(SiteShell, { user: null, children: createElement(HomePage) }))
+    root.render(
+      createElement(SiteShell, {
+        user: null,
+        children: createElement(HomePage, {
+          headline: 'Best-in-class commercial real estate search engine.',
+          cities: [{ href: '/glendale', label: 'Glendale' }],
+          posts: [],
+          listings: [
+            listingCardFields({
+              slug: 'indexed-office',
+              title: 'Indexed office',
+              kind: 'lease',
+              price: 4500,
+              street: '201 N Brand Blvd',
+              city: 'Glendale',
+              state: 'CA',
+              postalCode: '91203',
+              propertyType: 'Office',
+              imageAlt: 'Office',
+              imageUrl: null,
+            }),
+          ],
+        }),
+      }),
+    )
   })
   return {
     container,
@@ -54,8 +79,8 @@ describe('homepage direction', () => {
       'Services',
       'We can teach you',
       'Blog',
+      'No posts yet.',
       'Connect with us',
-      'Find coworking spaces in:',
       'Find commercial real estate in:',
       'Send us a message.',
     ]
@@ -79,23 +104,13 @@ describe('homepage direction', () => {
     view.cleanup()
   })
 
-  it('shows three, four, and six listing cards by width', () => {
+  it('shows the indexed listing and the city record', () => {
     const wraps = view.container.querySelectorAll('#featured .grid > div')
-    expect(wraps).toHaveLength(6)
-    expect(wraps[0].className).toBe('')
-    expect(wraps[2].className).toBe('')
-    expect(wraps[3].className).toContain('hidden')
-    expect(wraps[3].className).toContain('md:block')
-    expect(wraps[4].className).toContain('xl:block')
-    expect(wraps[5].className).toContain('xl:block')
-
-    const cards = view.container.querySelectorAll('#featured article')
-    for (const card of cards) {
-      const label = card.querySelector('span')?.textContent
-      if (label !== 'Coworking') continue
-      expect(card.querySelector('a[href="tel:18885189168"]')?.textContent).toBe('1-888-518-9168')
-      expect(card.textContent).not.toContain('Contact')
-    }
+    expect(wraps).toHaveLength(1)
+    const hrefs = [...view.container.querySelectorAll('#featured a')].map((node) => node.getAttribute('href'))
+    expect(hrefs).toContain('/listings/indexed-office')
+    expect(view.container.querySelector('#areas a[href="/glendale"]')?.textContent).toBe('Glendale')
+    expect(view.container.textContent).toContain('No posts yet.')
     view.cleanup()
   })
 
@@ -121,6 +136,8 @@ describe('homepage direction', () => {
     const text = view.container.textContent || ''
     expect(text).toContain('201 N Brand Suite 200')
     expect(text).toContain('1-888-518-9168')
+    expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-[21px]')
+    expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-white')
     expect(text).toContain('info@reatics.com')
     expect(text).not.toContain('Careers')
     expect(text).not.toContain('Submarket')
