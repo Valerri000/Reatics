@@ -130,7 +130,7 @@ export function SiteFooter() {
             Glendale CA, 91203
           </p>
           <p className="m-0 mt-4">
-            <PhoneNumber tone="white" size="md" />
+            <PhoneNumber tone="white" size="footer" />
           </p>
           <p className="m-0 mt-2">
             <a className="text-base text-white" href="mailto:info@reatics.com">
