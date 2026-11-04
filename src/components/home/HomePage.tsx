@@ -10,22 +10,32 @@ import { ServicesSection } from '@/components/home/ServicesSection'
 import { SignupSection } from '@/components/home/SignupSection'
 import { StepsSection } from '@/components/home/StepsSection'
 
-export function HomePage() {
+export function HomePage({
+  headline,
+  cities,
+  posts,
+  listings,
+}: {
+  headline: string
+  cities: { href: string; label: string }[]
+  posts: { href: string; title: string; byline: string }[]
+  listings: Parameters<typeof FeaturedListings>[0]['listings']
+}) {
   return (
     <div>
       <HomeSection>
         <h1 className="m-0 max-w-[16ch] text-[40px] font-extrabold leading-[48px] text-brand xl:text-hero xl:leading-[75px]">
-          Best-in-class commercial real estate search engine.
+          {headline}
         </h1>
         <HeroSearch />
       </HomeSection>
-      <FeaturedListings />
+      <FeaturedListings listings={listings} />
       <AboutSection />
       <ServicesSection />
       <StepsSection />
-      <BlogSection />
+      <BlogSection posts={posts} />
       <SignupSection />
-      <AreaLinks />
+      <AreaLinks links={cities} />
     </div>
   )
 }
