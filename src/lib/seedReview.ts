@@ -1,6 +1,7 @@
 import { sql } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
+import { homepageSeed } from '@/lib/homePageCopy'
 import { legalPageSeeds } from '@/lib/legalPages'
 import { publicPageSeeds } from '@/lib/publicPageSeed'
 import { sampleCity, sampleListing, sampleOffice, sampleRedirect } from '@/lib/samples'
@@ -98,6 +99,22 @@ export async function ensurePublicPages(payload: Payload) {
       overrideAccess: true,
     })
   }
+}
+
+export async function ensureHomepage(payload: Payload) {
+  const existing = await payload.find({
+    collection: 'pages',
+    depth: 0,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: homepageSeed.slug } },
+  })
+  if (existing.docs[0]) return existing.docs[0]
+  return payload.create({
+    collection: 'pages',
+    data: homepageSeed,
+    overrideAccess: true,
+  })
 }
 
 export async function ensureLegalPages(payload: Payload) {
