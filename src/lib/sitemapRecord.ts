@@ -15,6 +15,7 @@ export type SitemapRecord = {
 export function includeInSitemap(record: SitemapRecord) {
   const slug = record.slug?.trim()
   if (!slug) return false
+  if (record.collection === 'pages' && slug === 'home') return false
   if (record.status !== 'published') return false
   if (record.robots !== 'index') return false
   if (record.sitemap !== true) return false
