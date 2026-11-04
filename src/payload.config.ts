@@ -61,10 +61,10 @@ export default buildConfig({
   ],
   onInit: async (payload) => {
     try {
-      const { ensureLegalPages, ensurePlaceSamples, ensurePublicPages, ensureStorySamples } = await import(
-        './lib/seedReview'
-      )
+      const { ensureHomepage, ensureLegalPages, ensurePlaceSamples, ensurePublicPages, ensureStorySamples } =
+        await import('./lib/seedReview')
       await ensurePublicPages(payload)
+      await ensureHomepage(payload)
       await ensureLegalPages(payload)
       await ensureStorySamples(payload)
       await ensurePlaceSamples(payload)
