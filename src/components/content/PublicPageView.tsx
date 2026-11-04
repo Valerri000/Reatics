@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { FormattedBody } from '@/components/content/FormattedBody'
+import { longPageClass, longPageHeading } from '@/lib/longPage'
 import type { RichTextBody } from '@/payload-types'
 
 export function PublicPageView({
@@ -13,8 +14,8 @@ export function PublicPageView({
   contact?: React.ReactNode
 }) {
   return (
-    <article className="px-inset-phone py-section-phone md:px-inset-wide md:py-section">
-      <h1 className="m-0 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">{h1}</h1>
+    <article className={longPageClass}>
+      <h1 className={longPageHeading}>{h1}</h1>
       <div className="mt-6">
         <FormattedBody value={content} />
         {contact}
