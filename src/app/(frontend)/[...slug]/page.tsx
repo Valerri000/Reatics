@@ -6,7 +6,9 @@ import { BrokerDirectory } from '@/components/broker/BrokerDirectory'
 import { AboutPage } from '@/components/content/AboutPage'
 import { ContactPage } from '@/components/content/ContactPage'
 import { PublicPageView } from '@/components/content/PublicPageView'
+import { ScholarshipPage } from '@/components/content/ScholarshipPage'
 import { ServicesPage } from '@/components/content/ServicesPage'
+import { StepsPage } from '@/components/content/StepsPage'
 import { CommercialMarket } from '@/components/market/CommercialMarket'
 import { CoworkingMarket } from '@/components/market/CoworkingMarket'
 import { FeaturedMarket } from '@/components/market/FeaturedMarket'
@@ -34,7 +36,14 @@ export async function generateMetadata({
   if (slug.length !== 1) return {}
   const key = slug[0]
   if (key === 'home') return {}
-  if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
+  if (isPublicPageSlug(key)) {
+    const record = await loadPageBySlug(key)
+    if (record?.status === 'published') return metadataFor(record)
+    if (record) return {}
+    const seed = publicPageSeeds.find((item) => item.slug === key)
+    return seed ? metadataFor(seed) : {}
+  }
+  if (isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
     if (!page) return {}
     return metadataFor(page)
@@ -79,6 +88,31 @@ export default async function MarketingPage({
     const seed = publicPageSeeds.find((item) => item.slug === 'contact')
     const page = record?.status === 'published' ? record : null
     return <ContactPage h1={page ? pageHeading(page) : seed?.h1 || 'Contact Us'} content={page?.content ?? seed?.content} />
+  }
+  if (key === 'steps') {
+    const record = await loadPageBySlug(key)
+    if (record && record.status !== 'published') notFound()
+    const seed = publicPageSeeds.find((item) => item.slug === 'steps')
+    const page = record?.status === 'published' ? record : null
+    return (
+      <StepsPage
+        h1={page ? pageHeading(page) : seed?.h1 || 'Steps to Renting an Office Space'}
+        content={page?.content ?? seed?.content}
+        showBody={Boolean(page)}
+      />
+    )
+  }
+  if (key === 'scholarship') {
+    const record = await loadPageBySlug(key)
+    if (record && record.status !== 'published') notFound()
+    const seed = publicPageSeeds.find((item) => item.slug === 'scholarship')
+    const page = record?.status === 'published' ? record : null
+    return (
+      <ScholarshipPage
+        h1={page ? pageHeading(page) : seed?.h1 || 'Scholarship'}
+        content={page?.content ?? seed?.content}
+      />
+    )
   }
   if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const record = await loadPageBySlug(key)
