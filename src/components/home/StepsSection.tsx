@@ -1,34 +1,7 @@
 import React from 'react'
 
 import { HomeSection } from '@/components/home/HomeSection'
-
-const steps = [
-  {
-    label: '1',
-    title: 'Budget',
-    text: 'Create a budget that includes rent, utilities, and common area maintenance.',
-  },
-  {
-    label: '2',
-    title: 'Location',
-    text: 'Pick a general location that works for your employees and clients.',
-  },
-  {
-    label: '3',
-    title: 'Properties',
-    text: 'Pick three properties that meet your space and amenity requirements.',
-  },
-  {
-    label: '4',
-    title: 'Letter of intent',
-    text: 'Submit an LOI to start negotiations with the property owner or manager.',
-  },
-  {
-    label: '5',
-    title: 'Lease',
-    text: 'Review the lease terms with your legal team and sign the agreement.',
-  },
-]
+import { rentingSteps } from '@/lib/rentingSteps'
 
 export function StepsSection() {
   return (
@@ -45,7 +18,7 @@ export function StepsSection() {
           transparent.
         </p>
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3 xl:grid-cols-5">
-          {steps.map((step) => (
+          {rentingSteps.map((step) => (
             <article key={step.label} className="relative">
               <p className="pointer-events-none absolute -left-1 -top-10 m-0 select-none text-8xl font-black text-white/10">
                 {step.label}
