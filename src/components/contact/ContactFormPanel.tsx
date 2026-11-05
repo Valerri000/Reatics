@@ -3,7 +3,7 @@ import React from 'react'
 import type { ContactErrors, ContactInput } from '@/lib/contactMessage'
 
 const inputClass =
-  'w-full border border-hairline bg-white px-3 text-base text-ink outline-none placeholder:text-placeholder'
+  'w-full rounded-lg border border-line bg-white px-3 text-base text-ink outline-none placeholder:text-placeholder'
 
 export function ContactFormPanel({
   sent,
@@ -55,7 +55,7 @@ export function ContactFormPanel({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex h-12 w-fit items-center justify-center bg-brand px-6 text-base font-bold text-white disabled:bg-line disabled:text-placeholder"
+        className="inline-flex h-12 w-fit items-center justify-center rounded-lg bg-brand px-6 text-base font-bold text-white disabled:bg-line disabled:text-placeholder"
       >
         Send message
       </button>

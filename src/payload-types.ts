@@ -77,9 +77,9 @@ export interface Config {
     billing: Billing;
     media: Media;
     redirects: Redirect;
-    'contact-messages': ContactMessage;
     companies: Company;
     'company-members': CompanyMember;
+    'contact-messages': ContactMessage;
     deals: Deal;
     'deal-participants': DealParticipant;
     'screening-requests': ScreeningRequest;
@@ -103,9 +103,9 @@ export interface Config {
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
-    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     'company-members': CompanyMembersSelect<false> | CompanyMembersSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-participants': DealParticipantsSelect<false> | DealParticipantsSelect<true>;
     'screening-requests': ScreeningRequestsSelect<false> | ScreeningRequestsSelect<true>;
@@ -194,27 +194,26 @@ export interface User {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
-export interface RichTextBody {
-  root: {
-    type: string;
-    children: {
-      type: any;
-      version: number;
-      [k: string]: unknown;
-    }[];
-    direction: ('ltr' | 'rtl') | null;
-    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-    indent: number;
-    version: number;
-  };
-  [k: string]: unknown;
-}
 export interface Page {
   id: number;
   title: string;
   slug: string;
   status: 'draft' | 'published';
-  content?: RichTextBody | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   pageTitle?: string | null;
   metaDescription?: string | null;
   robots?: ('index' | 'noindex') | null;
@@ -238,7 +237,21 @@ export interface Post {
   status: 'draft' | 'published';
   publishedOn?: string | null;
   author?: (number | null) | User;
-  content?: RichTextBody | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   pageTitle?: string | null;
   metaDescription?: string | null;
   robots?: ('index' | 'noindex') | null;
@@ -260,7 +273,21 @@ export interface Glossary {
   term: string;
   slug: string;
   status: 'draft' | 'published';
-  definition?: RichTextBody | null;
+  definition?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   pageTitle?: string | null;
   metaDescription?: string | null;
   robots?: ('index' | 'noindex') | null;
@@ -282,7 +309,21 @@ export interface City {
   title: string;
   slug: string;
   status: 'draft' | 'published';
-  content?: RichTextBody | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   pageTitle?: string | null;
   metaDescription?: string | null;
   robots?: ('index' | 'noindex') | null;
@@ -304,7 +345,21 @@ export interface PropertyType {
   title: string;
   slug: string;
   status: 'draft' | 'published';
-  content?: RichTextBody | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   pageTitle?: string | null;
   metaDescription?: string | null;
   robots?: ('index' | 'noindex') | null;
@@ -347,27 +402,24 @@ export interface Listing {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
+ * via the `definition` "media".
  */
-export interface Redirect {
+export interface Media {
   id: number;
-  fromPath: string;
-  toPath: string;
-  statusCode: number;
+  alt: string;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages".
- */
-export interface ContactMessage {
-  id: number;
-  name: string;
-  email: string;
-  message: string;
-  updatedAt: string;
-  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -383,24 +435,15 @@ export interface Billing {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "redirects".
  */
-export interface Media {
+export interface Redirect {
   id: number;
-  alt: string;
+  fromPath: string;
+  toPath: string;
+  statusCode: number;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  prefix?: string | null;
-  _objectKey?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -420,6 +463,18 @@ export interface CompanyMember {
   id: number;
   company: number | Company;
   user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -557,16 +612,16 @@ export interface PayloadLockedDocument {
         value: number | Redirect;
       } | null)
     | ({
-        relationTo: 'contact-messages';
-        value: number | ContactMessage;
-      } | null)
-    | ({
         relationTo: 'companies';
         value: number | Company;
       } | null)
     | ({
         relationTo: 'company-members';
         value: number | CompanyMember;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null)
     | ({
         relationTo: 'deals';
@@ -817,23 +872,32 @@ export interface BillingSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  _objectKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
   fromPath?: T;
   toPath?: T;
   statusCode?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages_select".
- */
-export interface ContactMessagesSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  message?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -853,6 +917,17 @@ export interface CompaniesSelect<T extends boolean = true> {
 export interface CompanyMembersSelect<T extends boolean = true> {
   company?: T;
   user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -918,26 +993,6 @@ export interface AuditLogSelect<T extends boolean = true> {
   target?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-  prefix?: T;
-  _objectKey?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

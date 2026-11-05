@@ -46,7 +46,7 @@ function Block({ node }: { node: BodyNode }) {
   }
   if (node.type === 'listitem') return <li className="mt-2">{children}</li>
   if (node.type === 'quote') {
-    return <blockquote className="mt-4 border-l-4 border-line pl-4">{children}</blockquote>
+    return <blockquote className="mt-4 border-l-4 border-brand pl-4">{children}</blockquote>
   }
   if (node.type === 'link') {
     const url = linkUrl(node)

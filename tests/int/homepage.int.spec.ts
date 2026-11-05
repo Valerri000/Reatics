@@ -81,8 +81,8 @@ describe('homepage direction', () => {
       'Blog',
       'No posts yet.',
       'Connect with us',
-      'Find commercial real estate in:',
       'Send us a message.',
+      'Find commercial real estate in:',
     ]
     let cursor = -1
     for (const marker of markers) {
@@ -116,7 +116,7 @@ describe('homepage direction', () => {
 
   it('changes the use list with the transaction and keeps the contact path', () => {
     const form = view.container.querySelector('form')
-    expect(form?.className).toContain('bg-sand')
+    expect(form?.className).toContain('bg-white')
     expect(form?.className).toContain('rounded-panel')
 
     choose(view.container, 'kind', 'coworking')
@@ -137,7 +137,7 @@ describe('homepage direction', () => {
     expect(text).toContain('201 N Brand Suite 200')
     expect(text).toContain('1-888-518-9168')
     expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-[21px]')
-    expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-white')
+    expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-ink')
     expect(text).toContain('info@reatics.com')
     expect(text).not.toContain('Careers')
     expect(text).not.toContain('Submarket')

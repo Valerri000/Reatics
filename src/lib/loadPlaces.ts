@@ -45,6 +45,18 @@ export const loadPlaceListings = cache(async (): Promise<PlaceListing[]> => {
   return found.docs.map(toPlaceListing)
 })
 
+export const loadListing = cache(async (slug: string) => {
+  const payload = await getPayload({ config })
+  const found = await payload.find({
+    collection: 'listings',
+    depth: 1,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: slug } },
+  })
+  return found.docs[0] ?? null
+})
+
 function toPlaceListing(listing: Listing): PlaceListing {
   const photo = listing.photo
   const imageUrl = photo && typeof photo === 'object' && photo.url ? photo.url : null

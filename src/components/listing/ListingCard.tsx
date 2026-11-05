@@ -71,26 +71,38 @@ export function ListingCard({
 
   return (
     <article
-      className={`relative bg-white ${marked ? 'cursor-pointer border-2 border-brand' : 'border border-line'}`}
+      className={`relative overflow-hidden rounded-xl bg-white shadow-sm ${marked ? 'cursor-pointer border-2 border-brand' : 'border border-line'}`}
       onMouseEnter={() => hover(true)}
       onMouseLeave={() => hover(false)}
     >
+      <button
+        type="button"
+        aria-label={saved ? 'Saved' : 'Save listing'}
+        className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-brand shadow-sm"
+        onClick={saveListing}
+      >
+        <HeartIcon filled={saved} />
+      </button>
       <Link href={href}>
-        <span className="relative block">
-          <img src={imageUrl} alt={imageAlt} className="aspect-[3/2] w-full object-cover" />
-          <span className="absolute left-3 top-3 bg-brand px-3 py-2 text-sm font-bold text-white">
-            {labels[kind]}
+        <span className="relative block h-60 overflow-hidden">
+          <img src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
+          <span className="absolute left-4 top-4 flex gap-2">
+            <span className="rounded bg-brand px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+              {labels[kind]}
+            </span>
+            {propertyType ? (
+              <span className="rounded bg-white px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-ink shadow-sm">
+                {propertyType}
+              </span>
+            ) : null}
           </span>
         </span>
       </Link>
-      <div className="p-4">
+      <div className="p-6">
         <Link href={href} className="block">
-          <span className="block text-[22px] font-extrabold leading-8 text-ink md:text-[25px]">
-            {formatListingPrice(kind, price)}
-          </span>
-          <span className="mt-2 block text-base text-slate">{street}</span>
-          <span className="block text-base text-slate">{cityLine}</span>
-          <span className="mt-2 block text-base text-gray">{propertyType}</span>
+          <span className="block text-xl font-bold text-ink">{formatListingPrice(kind, price)}</span>
+          <span className="mt-1 block text-sm text-slate">{street}</span>
+          <span className="block text-sm text-gray">{cityLine}</span>
         </Link>
         {showRate && rate != null ? (
           <button
@@ -107,15 +119,8 @@ export function ListingCard({
           </Link>
         ) : null}
       </div>
-      <div className="flex items-center justify-between border-t border-line p-4">
-        <button
-          type="button"
-          aria-label={saved ? 'Saved' : 'Save listing'}
-          className="flex h-10 w-10 items-center justify-center text-brand"
-          onClick={saveListing}
-        >
-          <HeartIcon filled={saved} />
-        </button>
+      <div className="flex items-center justify-between border-t border-line px-6 py-4">
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate">{propertyType}</span>
         {kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel />}
       </div>
     </article>

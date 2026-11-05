@@ -73,11 +73,11 @@ export const designScreens = [
 ] as const
 
 export const directionTokens = [
-  '--color-brand: #bf1000',
-  '--color-brand-deep: #a00e18',
-  '--color-accent: #f56d1b',
-  "--font-sans: 'Nunito Sans', sans-serif",
-  '--radius-control: 0px',
+  '--color-brand: #2563eb',
+  '--color-brand-deep: #1d4ed8',
+  '--color-accent: #2563eb',
+  "--font-sans: 'Inter', sans-serif",
+  '--radius-control: 8px',
 ] as const
 
 export function waitingMilestones() {

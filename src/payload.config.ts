@@ -80,6 +80,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     migrationDir: path.resolve(dirname, 'migrations'),
+    push: false,
     pool: {
       connectionString: databaseUrl,
       ...(hostedDatabase && databaseUrl ? { ssl: { rejectUnauthorized: false } } : {}),

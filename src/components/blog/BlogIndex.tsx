@@ -1,29 +1,29 @@
 import React from 'react'
 
+import { PageBanner } from '@/components/content/PageBanner'
 import { authorName, emptyBlog, formatPostDate, postPath, visiblePosts, type PostCard } from '@/lib/postList'
 
 export function BlogIndex({ posts }: { posts: PostCard[] }) {
   const visible = visiblePosts(posts)
   return (
-    <section className="px-inset-phone py-section-phone md:px-inset-wide md:py-section">
-      <h1 className="m-0 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">Blog</h1>
+    <PageBanner title="Blog">
       {visible.length === 0 ? (
-        <p className="m-0 mt-6 max-w-3xl text-[16px] font-light leading-6 text-ink md:text-body">{emptyBlog}</p>
+        <p className="m-0 max-w-3xl text-[16px] font-light leading-6 text-ink md:text-body">{emptyBlog}</p>
       ) : (
-        <ul className="m-0 mt-8 max-w-3xl list-none p-0">
+        <ul className="m-0 grid list-none gap-6 p-0 md:grid-cols-2 xl:grid-cols-3">
           {visible.map((post) => {
             const byline = [formatPostDate(post.publishedOn), authorName(post.author)].filter(Boolean).join(' · ')
             return (
-              <li key={post.slug} className="mt-6 border-b border-line pb-6">
-                <a href={postPath(post.slug)} className="text-[22px] font-extrabold text-ink no-underline">
+              <li key={post.slug} className="overflow-hidden rounded-2xl border border-line bg-white">
+                <a href={postPath(post.slug)} className="block p-5 text-[22px] font-extrabold text-ink no-underline">
                   {post.title}
                 </a>
-                {byline ? <p className="m-0 mt-2 text-base text-slate">{byline}</p> : null}
+                {byline ? <p className="m-0 px-5 pb-5 text-base text-slate">{byline}</p> : null}
               </li>
             )
           })}
         </ul>
       )}
-    </section>
+    </PageBanner>
   )
 }

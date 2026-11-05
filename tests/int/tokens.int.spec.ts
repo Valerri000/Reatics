@@ -52,12 +52,14 @@ describe('shared tokens', () => {
     const addListing = [...view.container.querySelectorAll('button')].find(
       (button) => button.textContent === 'Add a Listing',
     )
-    expect(addListing?.className).toContain('text-accent')
-    expect(view.container.querySelector('a[href="/brokers"]')?.className).toContain('text-accent')
+    expect(addListing?.className).toContain('text-slate')
+    expect(view.container.querySelector('a[href="/brokers"]')?.className).toContain('text-slate')
     const login = [...view.container.querySelectorAll('button')].find(
       (button) => button.textContent === 'Login',
     )
-    expect(login?.className).toContain('text-ink')
+    expect(login?.className).toContain('bg-brand')
+    expect(login?.className).toContain('text-white')
+    expect(login?.className).toContain('rounded-lg')
     expect(view.container.querySelector('header')?.className).toContain('border-line')
     expect(view.container.querySelector('header')?.className).toContain('bg-white')
 
@@ -72,7 +74,7 @@ describe('shared tokens', () => {
     )
     expect(signIn?.className).toContain('bg-brand')
     expect(signIn?.className).toContain('hover:bg-brand-deep')
-    expect(signIn?.className).toContain('rounded-none')
+    expect(signIn?.className).toContain('rounded-lg')
     view.cleanup()
   })
 

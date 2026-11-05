@@ -13,7 +13,7 @@ export function PhonePanel() {
   return (
     <div className="relative">
       <button
-        className="flex h-[54px] w-[54px] items-center justify-center text-ink"
+        className="flex h-10 w-10 items-center justify-center text-slate hover:text-brand"
         aria-label="Phone"
         onClick={() => setOpen((value) => !value)}
       >
@@ -39,7 +39,7 @@ export function MailPanel() {
   return (
     <div className="relative">
       <button
-        className="flex h-[54px] w-[54px] items-center justify-center text-ink"
+        className="flex h-10 w-10 items-center justify-center text-slate hover:text-brand"
         aria-label="Mail"
         onClick={() => setOpen((value) => !value)}
       >
@@ -96,7 +96,7 @@ export function MailPanel() {
 
 export function PhoneBar() {
   return (
-    <div className="flex h-[48px] items-center gap-2 border-b border-line px-inset-phone md:hidden">
+    <div className="flex h-10 items-center justify-center gap-2 border-t border-line bg-mist px-inset-phone md:hidden">
       <PhoneIcon className="h-5 w-5 text-brand" />
       <PhoneNumber size="md" />
     </div>

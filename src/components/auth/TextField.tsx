@@ -33,8 +33,8 @@ export function TextField({
         placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={(event) => onChange(event.target.value)}
-        className={`h-12 w-full bg-white px-3 text-base text-ink outline-none placeholder:text-placeholder ${
-          error || invalid ? 'border-2 border-brand' : 'border border-hairline'
+        className={`h-12 w-full rounded-lg bg-white px-3 text-base text-ink outline-none placeholder:text-placeholder ${
+          error || invalid ? 'border-2 border-brand' : 'border border-line'
         }`}
       />
       {error ? <p className="mt-2 text-sm text-brand">{error}</p> : null}

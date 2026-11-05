@@ -23,14 +23,15 @@ export const searchUses = {
 } as const
 
 export const searchKinds = [
-  { value: 'sale', label: 'for sale' },
-  { value: 'lease', label: 'for lease' },
-  { value: 'coworking', label: 'coworking' },
+  { value: 'sale', label: 'For Sale' },
+  { value: 'lease', label: 'For Lease' },
+  { value: 'coworking', label: 'Coworking' },
 ] as const
 
 export type SearchKind = keyof typeof searchUses
 
-const field = 'border-b border-ink bg-transparent px-1 text-base text-ink outline-none'
+const control =
+  'h-12 w-full rounded-lg border border-line bg-white px-3 text-base text-ink outline-none'
 
 export function HeroSearch() {
   const router = useRouter()
@@ -50,53 +51,56 @@ export function HeroSearch() {
   }
 
   return (
-    <form onSubmit={submit} className="mt-8 max-w-3xl rounded-panel bg-sand p-4 md:p-6">
-      <p className="m-0 text-[16px] font-light leading-6 text-ink md:text-body">
-        What kind of property are you looking for?
-      </p>
-      <p className="m-0 mt-4 flex flex-col gap-3 text-[16px] leading-8 text-ink md:block md:text-body">
-        <span>I am looking for a space in </span>
-        <input
-          name="place"
-          aria-label="City, state, county, or ZIP"
-          placeholder="Pasadena CA 91106"
-          value={place}
-          onChange={(event) => setPlace(event.target.value)}
-          className={`${field} w-full placeholder:text-placeholder md:w-64`}
-        />
-        <span>, that is, </span>
-        <select
-          name="kind"
-          aria-label="Transaction"
-          value={kind}
-          onChange={(event) => changeKind(event.target.value as SearchKind)}
-          className={field}
-        >
-          {searchKinds.map((item) => (
-            <option key={item.value} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </select>
-        <span>, and is for </span>
-        <select
-          name="use"
-          aria-label="Use"
-          value={use}
-          onChange={(event) => setUse(event.target.value)}
-          className={field}
-        >
-          {searchUses[kind].map((item) => (
-            <option key={item} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-        <span> uses.</span>
-      </p>
-      <Button className="mt-6 w-full md:w-auto" type="submit">
-        Search
-      </Button>
+    <form onSubmit={submit} className="mx-auto mt-10 max-w-3xl rounded-panel bg-white p-4 text-left shadow-2xl md:p-5">
+      <p className="sr-only">What kind of property are you looking for?</p>
+      <div className="grid gap-4 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
+        <label className="block">
+          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Location</span>
+          <input
+            name="place"
+            aria-label="City, state, county, or ZIP"
+            placeholder="City, state, or ZIP"
+            value={place}
+            onChange={(event) => setPlace(event.target.value)}
+            className={control}
+          />
+        </label>
+        <label className="block">
+          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Type</span>
+          <select
+            name="kind"
+            aria-label="Transaction"
+            value={kind}
+            onChange={(event) => changeKind(event.target.value as SearchKind)}
+            className={control}
+          >
+            {searchKinds.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Use</span>
+          <select
+            name="use"
+            aria-label="Use"
+            value={use}
+            onChange={(event) => setUse(event.target.value)}
+            className={control}
+          >
+            {searchUses[kind].map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Button className="w-full md:w-auto" type="submit">
+          Search
+        </Button>
+      </div>
     </form>
   )
 }

@@ -11,15 +11,17 @@ export function HomeSection({
   children,
   tone = 'white',
   id,
+  className = '',
 }: {
   children: React.ReactNode
   tone?: keyof typeof tones
   id?: string
+  className?: string
 }) {
   return (
     <section
       id={id}
-      className={`${tones[tone]} px-inset-phone py-section-phone md:px-inset-tablet md:py-section xl:px-inset-desktop 2xl:px-inset-wide`}
+      className={`${tones[tone]} px-inset-phone py-section-phone md:px-inset-tablet md:py-section xl:px-inset-desktop 2xl:px-inset-wide ${className}`}
     >
       {children}
     </section>

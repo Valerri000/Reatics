@@ -8,7 +8,7 @@ export function Wordmark({ tone = 'brand' }: WordmarkProps) {
   const color = tone === 'white' ? 'text-white' : 'text-brand'
 
   return (
-    <span className={`text-[24px] font-extrabold leading-none md:text-[32px] ${color}`}>
+    <span className={`text-2xl font-bold uppercase leading-none tracking-tight ${color}`}>
       Reatics
     </span>
   )
