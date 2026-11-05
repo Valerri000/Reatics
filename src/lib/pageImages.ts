@@ -26,6 +26,14 @@ export const blogCardPhotos = [
   '/pages/blog-card-2.jpg',
   '/pages/blog-card-3.jpg',
 ] as const
+export const stepPhotos = [
+  '/pages/step-budget.jpg',
+  '/pages/step-location.jpg',
+  '/pages/step-properties.jpg',
+  '/pages/step-loi.jpg',
+  '/pages/step-lease.jpg',
+] as const
+export const scholarshipPhoto = '/pages/scholarship.jpg'
 
 export const commercialMarkets = [
   { name: 'Glendale', image: '/pages/city-hero.jpg', place: 'Glendale' },
