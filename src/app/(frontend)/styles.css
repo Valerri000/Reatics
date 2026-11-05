@@ -90,6 +90,39 @@ img {
   display: none;
 }
 
+.timeline-line {
+  background: repeating-linear-gradient(to bottom, #e2e8f0, #e2e8f0 10px, transparent 10px, transparent 20px);
+}
+
+.mesh-bg {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(at 0% 0%, hsl(221 100% 92%) 0, transparent 50%),
+    radial-gradient(at 50% 0%, hsl(217 91% 95%) 0, transparent 50%),
+    radial-gradient(at 100% 0%, hsl(210 100% 94%) 0, transparent 50%);
+}
+
+.gradient-text {
+  background-image: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.featured-blog {
+  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.08);
+}
+
+img.cover-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
 a {
   color: currentColor;
 
