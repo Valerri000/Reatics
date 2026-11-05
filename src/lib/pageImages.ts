@@ -19,6 +19,13 @@ export const marketCards = [
 
 export const aboutPhoto = '/pages/about-architecture.jpg'
 export const aboutOfficePhoto = '/pages/about-office.jpg'
+export const contactMapPhoto = '/pages/contact-map.jpg'
+export const blogFeaturedPhoto = '/pages/blog-featured.jpg'
+export const blogCardPhotos = [
+  '/pages/blog-card-1.jpg',
+  '/pages/blog-card-2.jpg',
+  '/pages/blog-card-3.jpg',
+] as const
 
 export const commercialMarkets = [
   { name: 'Glendale', image: '/pages/city-hero.jpg', place: 'Glendale' },

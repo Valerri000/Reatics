@@ -82,6 +82,14 @@ img {
   display: block;
 }
 
+.alpha-nav {
+  scrollbar-width: none;
+}
+
+.alpha-nav::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   color: currentColor;
 

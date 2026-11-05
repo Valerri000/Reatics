@@ -3,9 +3,10 @@ import React from 'react'
 import type { Metadata } from 'next'
 
 import { BrokerDirectory } from '@/components/broker/BrokerDirectory'
-import { ContactDetails } from '@/components/contact/ContactDetails'
 import { AboutPage } from '@/components/content/AboutPage'
+import { ContactPage } from '@/components/content/ContactPage'
 import { PublicPageView } from '@/components/content/PublicPageView'
+import { ServicesPage } from '@/components/content/ServicesPage'
 import { CommercialMarket } from '@/components/market/CommercialMarket'
 import { CoworkingMarket } from '@/components/market/CoworkingMarket'
 import { FeaturedMarket } from '@/components/market/FeaturedMarket'
@@ -65,6 +66,20 @@ export default async function MarketingPage({
     const page = record?.status === 'published' ? record : null
     return <AboutPage h1={page ? pageHeading(page) : seed?.h1 || 'About Us'} content={page?.content ?? seed?.content} />
   }
+  if (key === 'services') {
+    const record = await loadPageBySlug(key)
+    if (record && record.status !== 'published') notFound()
+    const seed = publicPageSeeds.find((item) => item.slug === 'services')
+    const page = record?.status === 'published' ? record : null
+    return <ServicesPage h1={page ? pageHeading(page) : seed?.h1 || 'Services'} content={page?.content ?? seed?.content} />
+  }
+  if (key === 'contact') {
+    const record = await loadPageBySlug(key)
+    if (record && record.status !== 'published') notFound()
+    const seed = publicPageSeeds.find((item) => item.slug === 'contact')
+    const page = record?.status === 'published' ? record : null
+    return <ContactPage h1={page ? pageHeading(page) : seed?.h1 || 'Contact Us'} content={page?.content ?? seed?.content} />
+  }
   if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const record = await loadPageBySlug(key)
     if (record && record.status !== 'published') notFound()
@@ -75,7 +90,6 @@ export default async function MarketingPage({
       <PublicPageView
         h1={page ? pageHeading(page) : seed?.h1 || pageTitles[key]}
         content={page?.content ?? seed?.content}
-        contact={key === 'contact' ? <ContactDetails /> : null}
       />
     )
   }

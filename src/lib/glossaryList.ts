@@ -30,3 +30,16 @@ export function termHeading(term: { h1?: string | null; term?: string | null }) 
   if (heading) return heading
   return term.term?.trim() || ''
 }
+
+export function definitionLine(value: unknown) {
+  return readText(value).replace(/\s+/g, ' ').trim()
+}
+
+function readText(value: unknown): string {
+  if (!value || typeof value !== 'object') return ''
+  const record = value as { text?: unknown; children?: unknown; root?: unknown }
+  const own = typeof record.text === 'string' ? record.text : ''
+  const nested = Array.isArray(record.children) ? record.children.map(readText).join(' ') : ''
+  const root = record.root ? readText(record.root) : ''
+  return `${own} ${nested} ${root}`
+}
