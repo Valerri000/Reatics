@@ -9,3 +9,7 @@ The homepage area links, blog, and featured listings read published records. The
 Terms and Privacy stay unpublished until the copy arrives. Their long-text frame is not a public page.
 
 A request that leaves these pages is estimated before it is added. That includes the live map, the public listing page, and the broker directory.
+
+## November 6 review
+
+No corrections have been recorded from the review yet. A change that leaves these pages is estimated before it is added.
