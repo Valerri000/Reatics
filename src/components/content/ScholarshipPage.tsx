@@ -3,7 +3,7 @@ import React from 'react'
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { ScholarshipForm } from '@/components/content/ScholarshipForm'
 import { scholarshipPhoto } from '@/lib/pageImages'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function ScholarshipPage({ h1, content }: { h1: string; content?: RichTextBody | null }) {
   return (

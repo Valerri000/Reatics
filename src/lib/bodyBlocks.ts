@@ -1,4 +1,4 @@
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export type BodyBlock = {
   kind: 'paragraph' | 'h2'

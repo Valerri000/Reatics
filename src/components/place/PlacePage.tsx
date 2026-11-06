@@ -4,7 +4,7 @@ import { FormattedBody } from '@/components/content/FormattedBody'
 import { ResultGrid } from '@/components/market/ResultGrid'
 import { cityHeroPhoto } from '@/lib/pageImages'
 import { emptyPlace, mapLabel, type PlaceListing } from '@/lib/placeList'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function PlacePage({
   h1,

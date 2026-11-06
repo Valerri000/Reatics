@@ -4,7 +4,7 @@ import React from 'react'
 import { AddListingButton } from '@/components/content/AddListingButton'
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { coworkHeroPhoto } from '@/lib/pageImages'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 const cards = [
   {

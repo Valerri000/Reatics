@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { termHeading, type TermCard } from '@/lib/glossaryList'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function TermView({ term }: { term: TermCard }) {
   return (

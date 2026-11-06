@@ -6,7 +6,7 @@ import { FormattedBody } from '@/components/content/FormattedBody'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { contactAddress } from '@/lib/contactDetails'
 import { contactMapPhoto } from '@/lib/pageImages'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function ContactPage({ h1, content }: { h1: string; content?: RichTextBody | null }) {
   return (

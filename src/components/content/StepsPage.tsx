@@ -4,7 +4,7 @@ import React from 'react'
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { stepPhotos } from '@/lib/pageImages'
 import { rentingSteps } from '@/lib/rentingSteps'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function StepsPage({
   h1,

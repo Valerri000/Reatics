@@ -2,7 +2,7 @@ import React from 'react'
 
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { longPageClass, longPageHeading } from '@/lib/longPage'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function PublicPageView({
   h1,

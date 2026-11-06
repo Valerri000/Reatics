@@ -1,4 +1,4 @@
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 function plainBody(text: string): RichTextBody {
   return {

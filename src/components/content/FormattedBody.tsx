@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 type BodyNode = {
   type?: string

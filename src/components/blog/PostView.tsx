@@ -3,7 +3,7 @@ import React from 'react'
 import { PageBanner } from '@/components/content/PageBanner'
 import { FormattedBody } from '@/components/content/FormattedBody'
 import { postByline, type PostCard } from '@/lib/postList'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 export function PostView({ post, preview = false }: { post: PostCard; preview?: boolean }) {
   const byline = postByline(post)

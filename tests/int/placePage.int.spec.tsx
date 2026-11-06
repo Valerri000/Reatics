@@ -4,7 +4,7 @@ import React from 'react'
 
 import { PlacePage } from '@/components/place/PlacePage'
 import { emptyPlace, mapLabel } from '@/lib/placeList'
-import type { RichTextBody } from '@/payload-types'
+import type { RichTextBody } from '@/lib/richTextBody'
 
 const intro: RichTextBody = {
   root: {
