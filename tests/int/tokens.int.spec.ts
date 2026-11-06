@@ -68,7 +68,7 @@ describe('shared tokens', () => {
     expect(overlay?.className).toContain('bg-ink/45')
     const panel = overlay?.firstElementChild
     expect(panel?.className).toContain('bg-white')
-    expect(panel?.className).not.toContain('rounded')
+    expect(panel?.className).toContain('md:rounded-[3rem]')
     const signIn = [...view.container.querySelectorAll('button')].find(
       (button) => button.textContent === 'Sign in',
     )

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -48,16 +49,25 @@ export function AuthModal() {
       onClick={auth.close}
     >
       <div
-        className="relative h-full w-full overflow-y-auto bg-white p-4 md:h-auto md:max-h-[90vh] md:w-[480px] md:p-8"
+        className={`modal-shadow relative h-full w-full overflow-hidden bg-white md:h-auto md:max-h-[90vh] md:rounded-[3rem] ${
+          auth.view === 'register' ? 'md:w-[56rem]' : 'md:w-[32rem]'
+        }`}
         onClick={(event) => event.stopPropagation()}
       >
+        <div className="h-full overflow-y-auto p-8 md:h-auto md:max-h-[90vh] md:p-12">
         <button
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center text-ink"
+          className="absolute right-8 top-8 z-10 flex h-10 w-10 items-center justify-center text-gray hover:text-ink"
           aria-label="Close"
           onClick={auth.close}
         >
           <CloseIcon />
         </button>
+        <div className="mb-8 text-center">
+          <Link href="/" className="text-3xl font-black tracking-tighter" onClick={auth.close}>
+            <span className="text-brand">REATICS</span>
+            <span className="text-blue-200">.</span>
+          </Link>
+        </div>
         {auth.view === 'sign-in' ? (
           <SignInView
             onCreateAccount={auth.openRegister}
@@ -77,6 +87,7 @@ export function AuthModal() {
         {auth.view === 'register' && registerStep === 'details' ? (
           <DetailsView
             role={role}
+            onBack={() => setRegisterStep('role')}
             onSignIn={auth.openSignIn}
             onCreated={() => auth.setView('success')}
           />
@@ -86,7 +97,7 @@ export function AuthModal() {
         ) : null}
         {auth.view === 'success' ? (
           <div>
-            <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
+            <h2 className="text-center text-3xl font-black tracking-tighter text-ink">
               You are now registered.
             </h2>
             <p className="mt-4 text-base text-ink">Would you like to set up your profile now?</p>
@@ -114,6 +125,8 @@ export function AuthModal() {
             </Button>
           </div>
         ) : null}
+        </div>
+        <div className="pointer-events-none absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-brand/5 blur-3xl" />
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { BrokerDirectory } from '@/components/broker/BrokerDirectory'
 import { AboutPage } from '@/components/content/AboutPage'
 import { ContactPage } from '@/components/content/ContactPage'
+import { PrivacyPage } from '@/components/content/PrivacyPage'
 import { PublicPageView } from '@/components/content/PublicPageView'
 import { ScholarshipPage } from '@/components/content/ScholarshipPage'
 import { ServicesPage } from '@/components/content/ServicesPage'
@@ -45,7 +46,7 @@ export async function generateMetadata({
   }
   if (isLegalPageSlug(key)) {
     const page = await loadPublishedPage(key)
-    if (!page) return {}
+    if (!page) return { robots: { index: false, follow: false } }
     return metadataFor(page)
   }
   if (pageTitles[key]) return {}
@@ -113,6 +114,11 @@ export default async function MarketingPage({
         content={page?.content ?? seed?.content}
       />
     )
+  }
+  if (key === 'privacy') {
+    const record = await loadPageBySlug(key)
+    const page = record?.status === 'published' ? record : null
+    return <PrivacyPage h1={page ? pageHeading(page) : 'Privacy Policy'} content={page?.content} />
   }
   if (isPublicPageSlug(key) || isLegalPageSlug(key)) {
     const record = await loadPageBySlug(key)

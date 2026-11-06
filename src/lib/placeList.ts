@@ -51,6 +51,7 @@ export function listingCityLine(listing: {
 export function listingCardFields(listing: PlaceListing) {
   return {
     href: listingCardHref(listing.slug),
+    title: listing.title,
     imageUrl: listing.imageUrl || '/direction-photo.svg',
     imageAlt: listing.imageAlt || listing.title,
     kind: listing.kind,

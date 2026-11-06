@@ -114,6 +114,10 @@ img {
   box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.08);
 }
 
+.modal-shadow {
+  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.15), 0 30px 60px -30px rgba(0, 0, 0, 0.2);
+}
+
 img.cover-photo {
   position: absolute;
   inset: 0;
@@ -121,6 +125,42 @@ img.cover-photo {
   height: 100%;
   max-width: none;
   object-fit: cover;
+}
+
+img.hero-banner-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+}
+
+img.hero-banner-photo.is-shown {
+  z-index: 1;
+}
+
+img.hero-banner-photo.is-shown.is-fading {
+  animation: hero-banner-fade 1.25s ease;
+}
+
+@keyframes hero-banner-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img.hero-banner-photo.is-shown.is-fading {
+    animation: none;
+  }
 }
 
 a {

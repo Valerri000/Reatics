@@ -31,7 +31,7 @@ export const searchKinds = [
 export type SearchKind = keyof typeof searchUses
 
 const control =
-  'h-12 w-full rounded-lg border border-line bg-white px-3 text-base text-ink outline-none'
+  'h-12 w-full rounded-xl border border-line bg-white px-3 text-base text-ink outline-none'
 
 export function HeroSearch() {
   const router = useRouter()
@@ -51,11 +51,14 @@ export function HeroSearch() {
   }
 
   return (
-    <form onSubmit={submit} className="mx-auto mt-10 max-w-3xl rounded-panel bg-white p-4 text-left shadow-2xl md:p-5">
+    <form onSubmit={submit} className="mt-6 max-w-4xl rounded-panel bg-white p-3 text-left shadow-2xl md:p-4">
       <p className="sr-only">What kind of property are you looking for?</p>
-      <div className="grid gap-4 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
+      <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-end">
         <label className="block">
-          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Location</span>
+          <span className="mb-2 flex items-center gap-2 px-1 text-xs font-semibold text-slate">
+            <FieldIcon name="pin" />
+            Location
+          </span>
           <input
             name="place"
             aria-label="City, state, county, or ZIP"
@@ -66,7 +69,10 @@ export function HeroSearch() {
           />
         </label>
         <label className="block">
-          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Type</span>
+          <span className="mb-2 flex items-center gap-2 px-1 text-xs font-semibold text-slate">
+            <FieldIcon name="building" />
+            Type
+          </span>
           <select
             name="kind"
             aria-label="Transaction"
@@ -82,7 +88,10 @@ export function HeroSearch() {
           </select>
         </label>
         <label className="block">
-          <span className="mb-1 block px-1 text-xs font-bold uppercase text-gray">Use</span>
+          <span className="mb-2 flex items-center gap-2 px-1 text-xs font-semibold text-slate">
+            <FieldIcon name="grid" />
+            Use
+          </span>
           <select
             name="use"
             aria-label="Use"
@@ -92,15 +101,48 @@ export function HeroSearch() {
           >
             {searchUses[kind].map((item) => (
               <option key={item} value={item}>
-                {item}
+                {item === 'all' ? 'All Uses' : item}
               </option>
             ))}
           </select>
         </label>
-        <Button className="w-full md:w-auto" type="submit">
+        <Button className="w-full gap-2 md:w-auto" type="submit">
+          <FieldIcon name="search" />
           Search
         </Button>
       </div>
     </form>
+  )
+}
+
+function FieldIcon({ name }: { name: 'pin' | 'building' | 'grid' | 'search' }) {
+  const common = { className: 'h-4 w-4', viewBox: '0 0 24 24', 'aria-hidden': true as const }
+  if (name === 'building') {
+    return (
+      <svg {...common}>
+        <path d="M4 20V9l8-5 8 5v11H4zM9 20v-6h6v6" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      </svg>
+    )
+  }
+  if (name === 'grid') {
+    return (
+      <svg {...common}>
+        <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      </svg>
+    )
+  }
+  if (name === 'search') {
+    return (
+      <svg {...common} className="h-4 w-4 text-white">
+        <circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M16 16l4 4" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      </svg>
+    )
+  }
+  return (
+    <svg {...common}>
+      <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="11" r="2" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
   )
 }

@@ -63,7 +63,7 @@ export function ResetView({ initialToken, onSignIn }: ResetViewProps) {
   if (step === 'done') {
     return (
       <div>
-        <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
+        <h2 className="text-center text-3xl font-black tracking-tighter text-ink">
           Your password has been reset.
         </h2>
         <Button className="mt-6 w-full" type="button" onClick={onSignIn}>
@@ -76,7 +76,7 @@ export function ResetView({ initialToken, onSignIn }: ResetViewProps) {
   if (step === 'sent') {
     return (
       <div>
-        <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
+        <h2 className="text-center text-3xl font-black tracking-tighter text-ink">
           Reset password
         </h2>
         <p className="mt-4 text-base text-ink">
@@ -100,7 +100,7 @@ export function ResetView({ initialToken, onSignIn }: ResetViewProps) {
   if (step === 'choose') {
     return (
       <form onSubmit={savePassword}>
-        <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
+        <h2 className="text-center text-3xl font-black tracking-tighter text-ink">
           Reset password
         </h2>
         <div className="mt-6 space-y-4">
@@ -142,7 +142,7 @@ export function ResetView({ initialToken, onSignIn }: ResetViewProps) {
 
   return (
     <form onSubmit={sendLink}>
-      <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
+      <h2 className="text-center text-3xl font-black tracking-tighter text-ink">
         Reset password
       </h2>
       <div className="mt-6">

@@ -9,6 +9,7 @@ import { MIN_PASSWORD_LENGTH } from '@/lib/session'
 
 type DetailsViewProps = {
   role: AccountRole
+  onBack: () => void
   onSignIn: () => void
   onCreated: () => void
 }
@@ -87,7 +88,7 @@ const labels: Record<keyof FormState, string> = {
   confirm: 'Confirm password',
 }
 
-export function DetailsView({ role, onSignIn, onCreated }: DetailsViewProps) {
+export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewProps) {
   const [form, setForm] = useState<FormState>(emptyForm)
   const [errors, setErrors] = useState<Partial<Record<keyof FormState | 'referral', string>>>({})
   const [referral, setReferral] = useState(false)
@@ -148,30 +149,45 @@ export function DetailsView({ role, onSignIn, onCreated }: DetailsViewProps) {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
-        Create an account
-      </h2>
-      <div className="mt-6 space-y-4">
+      <div className="mb-10 text-center">
+        <h2 className="text-4xl font-black leading-none tracking-tighter text-ink">Almost there.</h2>
+        <p className="mt-4 text-lg font-bold text-slate">We need a few details to set up your account.</p>
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {names.map((name) => (
-          <TextField
-            key={name}
-            label={labels[name]}
-            name={name}
-            type={
-              name === 'password' || name === 'confirm'
-                ? 'password'
-                : name === 'email'
-                  ? 'email'
-                  : 'text'
-            }
-            value={form[name]}
-            placeholder={name === 'email' ? 'Email address' : labels[name]}
-            error={errors[name]}
-            onChange={(value) => setValue(name, value)}
-          />
+          <div key={name} className={name === 'dreNumber' ? 'md:col-span-2' : undefined}>
+            <TextField
+              label={labels[name]}
+              name={name}
+              type={
+                name === 'password' || name === 'confirm'
+                  ? 'password'
+                  : name === 'email'
+                    ? 'email'
+                    : name === 'mobilePhone' || name === 'officePhone' || name === 'phone'
+                      ? 'tel'
+                      : 'text'
+              }
+              value={form[name]}
+              placeholder={
+                name === 'email'
+                  ? 'name@company.com'
+                  : name === 'password' || name === 'confirm'
+                    ? 'Min. 8 characters'
+                    : name === 'dreNumber'
+                      ? 'DRE number'
+                      : labels[name]
+              }
+              autoComplete={
+                name === 'email' ? 'email' : name === 'password' || name === 'confirm' ? 'new-password' : undefined
+              }
+              error={errors[name]}
+              onChange={(value) => setValue(name, value)}
+            />
+          </div>
         ))}
         {role === 'coworking' ? (
-          <label className="block text-base text-ink">
+          <label className="block text-base text-ink md:col-span-2">
             <input
               className="mr-2"
               type="checkbox"
@@ -186,9 +202,14 @@ export function DetailsView({ role, onSignIn, onCreated }: DetailsViewProps) {
           </label>
         ) : null}
       </div>
-      <Button className="mt-6 w-full" type="submit">
-        Create account
-      </Button>
+      <div className="mt-8 flex flex-col gap-4 md:flex-row">
+        <Button className="w-full md:w-1/3" variant="secondary" type="button" onClick={onBack}>
+          Go back
+        </Button>
+        <Button className="w-full md:w-2/3" type="submit">
+          Create account
+        </Button>
+      </div>
       {errors.email === 'An account with this email already exists.' ? (
         <button className="mt-4 block text-base text-brand" type="button" onClick={onSignIn}>
           Sign in

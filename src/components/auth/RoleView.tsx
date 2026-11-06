@@ -2,18 +2,33 @@
 
 import React, { useState } from 'react'
 
-import { Button } from '@/components/Button'
 import type { AccountRole } from '@/lib/account'
 
-const choices: { id: AccountRole; title: string; detail: string }[] = [
-  { id: 'space-seeker', title: 'I am looking for space', detail: 'Space seeker. Free.' },
+const choices: { id: AccountRole; title: string; text: string; detail: string }[] = [
+  {
+    id: 'space-seeker',
+    title: 'Space seeker',
+    text: 'I am looking for commercial or coworking space.',
+    detail: 'Free.',
+  },
   {
     id: 'broker',
-    title: 'I am a broker',
-    detail: 'Broker. $129 a month. A DRE number is required.',
+    title: 'Broker',
+    text: 'I am a professional broker representing clients or properties.',
+    detail: '$129 a month. A DRE number is required.',
   },
-  { id: 'owner', title: 'I will list properties', detail: 'Owner with listings. $129 a month.' },
-  { id: 'coworking', title: 'I provide coworking space', detail: 'Coworking provider. Free.' },
+  {
+    id: 'owner',
+    title: 'Property owner',
+    text: 'I own commercial assets and want to list them directly.',
+    detail: '$129 a month.',
+  },
+  {
+    id: 'coworking',
+    title: 'Coworking provider',
+    text: 'I manage flexible workspaces and shared office hubs.',
+    detail: 'Free.',
+  },
 ]
 
 type RoleViewProps = {
@@ -22,66 +37,59 @@ type RoleViewProps = {
 }
 
 export function RoleView({ onContinue, onSignIn }: RoleViewProps) {
-  const [choice, setChoice] = useState<AccountRole | null>(null)
   const [asking, setAsking] = useState(false)
-  const [lists, setLists] = useState<boolean | null>(null)
-
-  function continueFromChoice() {
-    if (!choice) return
-    if (choice === 'broker') {
-      setAsking(true)
-      return
-    }
-    onContinue(choice)
-  }
 
   return (
     <div>
-      <h2 className="pr-10 text-[28px] font-extrabold leading-none text-ink md:text-[32px]">
-        {asking ? 'Will you be listing properties?' : 'Create an account'}
-      </h2>
-      {asking ? null : <p className="mt-4 text-base text-slate">How will you use Reatics?</p>}
-      <div className="mt-6 space-y-4">
-        {asking ? (
-          <>
-            <ChoiceRow
-              title="Yes, I will list properties"
-              selected={lists === true}
-              onSelect={() => setLists(true)}
-            />
-            <ChoiceRow
-              title="No, broker profile only"
-              selected={lists === false}
-              onSelect={() => setLists(false)}
-            />
-          </>
-        ) : (
-          choices.map((item) => (
-            <ChoiceRow
+      <div className="mb-12 text-center">
+        <h2 className="text-4xl font-black leading-none tracking-tighter text-ink">
+          {asking ? 'Will you be listing properties?' : 'Join the network.'}
+        </h2>
+        <p className="mt-4 text-lg font-bold text-slate">
+          {asking
+            ? 'Choose a broker profile, or a broker profile that also lists properties.'
+            : 'Choose how you will use Reatics.'}
+        </p>
+      </div>
+      {asking ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <RoleCard
+            title="Yes, I will list properties"
+            text="Broker profile with listings."
+            detail="$129 a month. A DRE number is required."
+            onSelect={() => onContinue('broker-owner')}
+          />
+          <RoleCard
+            title="No, broker profile only"
+            text="Broker profile without listings."
+            detail="$129 a month. A DRE number is required."
+            onSelect={() => onContinue('broker')}
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {choices.map((item) => (
+            <RoleCard
               key={item.id}
               title={item.title}
+              text={item.text}
               detail={item.detail}
-              selected={choice === item.id}
-              onSelect={() => setChoice(item.id)}
+              onSelect={() => {
+                if (item.id === 'broker') {
+                  setAsking(true)
+                  return
+                }
+                onContinue(item.id)
+              }}
             />
-          ))
-        )}
-      </div>
-      <Button
-        className="mt-6 w-full"
-        type="button"
-        disabled={asking ? lists === null : !choice}
-        onClick={() => {
-          if (asking) {
-            if (lists === null) return
-            onContinue(lists ? 'broker-owner' : 'broker')
-            return
-          }
-          continueFromChoice()
-        }}
-      >
-        Continue
-      </Button>
+          ))}
+        </div>
+      )}
+      {asking ? (
+        <button className="mt-8 block text-base text-brand" type="button" onClick={() => setAsking(false)}>
+          Go back
+        </button>
+      ) : null}
       <button className="mt-4 block text-base text-brand" type="button" onClick={onSignIn}>
         Already have an account? Sign in
       </button>
@@ -89,25 +97,28 @@ export function RoleView({ onContinue, onSignIn }: RoleViewProps) {
   )
 }
 
-function ChoiceRow({
+function RoleCard({
   title,
+  text,
   detail,
-  selected,
   onSelect,
 }: {
   title: string
-  detail?: string
-  selected: boolean
+  text: string
+  detail: string
   onSelect: () => void
 }) {
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`block w-full px-4 py-4 text-left ${selected ? 'border-2 border-brand' : 'border border-line'}`}
+      className="rounded-[2.5rem] border-2 border-transparent bg-sand p-8 text-left hover:border-brand hover:bg-blue-50"
     >
-      <span className="block text-base font-bold text-ink">{title}</span>
-      {detail ? <span className="mt-1 block text-sm text-gray">{detail}</span> : null}
+      <span className="block text-xl font-black text-ink">{title}</span>
+      <span className="mt-2 block text-sm font-medium leading-relaxed text-slate">{text}</span>
+      <span className="mt-6 inline-flex rounded-lg bg-blue-100/50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-brand">
+        {detail}
+      </span>
     </button>
   )
 }

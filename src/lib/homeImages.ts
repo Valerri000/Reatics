@@ -1,4 +1,6 @@
-export const heroPhoto = '/home/hero.jpg'
+export const heroSlides = ['/home/hero1.jpg', '/home/hero2.jpg'] as const
+
+export const heroPhoto = heroSlides[0]
 
 export const propertyPhotos = [
   '/home/property-1.jpg',

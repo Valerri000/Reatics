@@ -38,5 +38,5 @@ export const scholarshipPhoto = '/pages/scholarship.jpg'
 export const commercialMarkets = [
   { name: 'Glendale', image: '/pages/city-hero.jpg', place: 'Glendale' },
   { name: 'Pasadena', image: '/pages/market-pasadena.jpg', place: 'Pasadena' },
-  { name: 'Los Angeles', image: '/home/hero.jpg', place: 'Los Angeles' },
+  { name: 'Los Angeles', image: '/home/hero1.jpg', place: 'Los Angeles' },
 ] as const
