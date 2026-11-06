@@ -18,3 +18,6 @@ Open /services. The heading and the body come from the Services page.
 ## Contact
 
 Open /contact. The form is Name, Email, and Message. A sent message is saved for the office. The page shows 1-888-518-9168 and info@reatics.com.
+## Blog
+
+Open /blog. The page is the insights index. A published post is /blog/{slug}. The draft office-tour-notes opens at /blog/office-tour-notes?preview=1 for the content manager, and the page says "Draft preview". A signed-out visitor does not get that preview.
