@@ -24,3 +24,10 @@ Open /blog. The page is the insights index. A published post is /blog/{slug}. Th
 ## Glossary
 
 Open /glossary. The index lists published terms, or says "No terms yet." A published term is /glossary/{slug}. The sample term is /glossary/cap-rate when that record is published.
+## Glendale
+
+Open /glendale when the city is published. The heading is the city title. Change the slug in Cities. The old address redirects with a 301. The sitemap box adds and removes /glendale.
+
+## Office
+
+Open /office when the property type is published. It uses the same place page as a city. Another property type is a new record, not a new template.
