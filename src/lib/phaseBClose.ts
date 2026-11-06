@@ -13,3 +13,25 @@ export const phaseBPages = [
   { path: '/office', label: 'Office' },
 ] as const
 
+export const phaseBOpenItems = [
+  {
+    id: 'terms',
+    label: 'Terms copy has not been supplied. The page stays unpublished and noindex.',
+  },
+  {
+    id: 'privacy',
+    label: 'Privacy copy has not been supplied. The page stays unpublished and noindex.',
+  },
+  {
+    id: 'content-manager',
+    label: 'The content manager name has not been supplied.',
+  },
+  {
+    id: 'github',
+    label: 'The company GitHub transfer has not been done.',
+  },
+  {
+    id: 'contact-email',
+    label: 'Contact email sending is not connected.',
+  },
+] as const
