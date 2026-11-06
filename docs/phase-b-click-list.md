@@ -31,3 +31,10 @@ Open /glendale when the city is published. The heading is the city title. Change
 ## Office
 
 Open /office when the property type is published. It uses the same place page as a city. Another property type is a new record, not a new template.
+## Steps
+
+Open /steps. The page shows the five renting steps.
+
+## Scholarship
+
+Open /scholarship. The form asks for a name, an email, a school, and a note. A completed note is saved with the contact messages.
