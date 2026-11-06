@@ -21,3 +21,6 @@ Open /contact. The form is Name, Email, and Message. A sent message is saved for
 ## Blog
 
 Open /blog. The page is the insights index. A published post is /blog/{slug}. The draft office-tour-notes opens at /blog/office-tour-notes?preview=1 for the content manager, and the page says "Draft preview". A signed-out visitor does not get that preview.
+## Glossary
+
+Open /glossary. The index lists published terms, or says "No terms yet." A published term is /glossary/{slug}. The sample term is /glossary/cap-rate when that record is published.
