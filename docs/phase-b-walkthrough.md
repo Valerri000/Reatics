@@ -4,7 +4,7 @@ Open https://18.118.84.127. The certificate warning is expected. Sign in as stag
 
 ## Homepage
 
-Open `/`. The search field submits to `/featured`. It does not open the map. Featured listings say "No listings yet." when none are set to Index. The blog block says "No posts yet." when no post is published.
+Open `/`. The search field submits to `/featured`. It does not open the map. Featured listings use the card layout. Until a listing is set to Index, the row shows the design samples. The header logo is /logo.png. The blog block says "No posts yet." when no post is published.
 
 ## About
 
