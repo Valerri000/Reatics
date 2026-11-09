@@ -83,6 +83,14 @@ export const Listings: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'latitude',
+      type: 'number',
+    },
+    {
+      name: 'longitude',
+      type: 'number',
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',
