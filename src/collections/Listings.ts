@@ -70,6 +70,19 @@ export const Listings: CollectionConfig = {
       label: 'Property type',
     },
     {
+      name: 'squareFootage',
+      type: 'number',
+      label: 'Square footage',
+    },
+    {
+      name: 'keywords',
+      type: 'text',
+    },
+    {
+      name: 'county',
+      type: 'text',
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',
