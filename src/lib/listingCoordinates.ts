@@ -15,14 +15,21 @@ const knownPoints = [
 export function readStoredPoint(listing: {
   latitude?: number | null
   longitude?: number | null
+  street?: string | null
+  city?: string | null
 }): MapPoint | null {
   if (!isPoint(listing.latitude) || !isPoint(listing.longitude)) return null
   return { latitude: listing.latitude, longitude: listing.longitude }
 }
 
-export function pointSavedWithListing<T extends { street?: string | null; city?: string | null; latitude?: number | null; longitude?: number | null }>(
-  data: T,
-): T {
+export function pointSavedWithListing<
+  T extends {
+    street?: string | null
+    city?: string | null
+    latitude?: number | null
+    longitude?: number | null
+  },
+>(data: T): T & { latitude?: number | null; longitude?: number | null } {
   if (readStoredPoint(data)) return data
   const known = knownPoints.find(
     (point) => point.street === normalize(data.street) && point.city === normalize(data.city),

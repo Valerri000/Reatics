@@ -8,7 +8,7 @@ describe('listing save hook', () => {
     expect(hooks?.length).toBe(1)
     const saved = hooks?.[0]?.({
       data: { street: '201 N Brand Blvd', city: 'Glendale' },
-    } as Parameters<NonNullable<typeof hooks>[number]>[0])
+    } as unknown as Parameters<NonNullable<typeof hooks>[number]>[0])
     expect(saved).toMatchObject({ latitude: 34.1478, longitude: -118.2551 })
   })
 })
