@@ -387,6 +387,11 @@ export interface Listing {
   state?: string | null;
   postalCode?: string | null;
   propertyType?: string | null;
+  squareFootage?: number | null;
+  keywords?: string | null;
+  county?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   photo?: (number | null) | Media;
   pageTitle?: string | null;
   metaDescription?: string | null;
