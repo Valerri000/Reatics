@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { seoFieldList } from '@/fields/seo'
 import { recordDelete } from '@/lib/audit'
+import { pointSavedWithListing } from '@/lib/listingCoordinates'
 import { canModerate } from '@/lib/roles'
 import { storeSlugRedirect } from '@/lib/slugRedirect'
 
@@ -18,6 +19,11 @@ export const Listings: CollectionConfig = {
     delete: ({ req: { user } }) => canModerate(user),
   },
   hooks: {
+    beforeChange: [
+      ({ data }) => {
+        return pointSavedWithListing(data)
+      },
+    ],
     afterChange: [(args) => storeSlugRedirect({ ...args, collection: 'listings' })],
     afterDelete: [recordDelete],
   },
