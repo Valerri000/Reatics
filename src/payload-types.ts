@@ -80,6 +80,7 @@ export interface Config {
     companies: Company;
     'company-members': CompanyMember;
     'contact-messages': ContactMessage;
+    'listing-reports': ListingReport;
     deals: Deal;
     'deal-participants': DealParticipant;
     'screening-requests': ScreeningRequest;
@@ -106,6 +107,7 @@ export interface Config {
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     'company-members': CompanyMembersSelect<false> | CompanyMembersSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    'listing-reports': ListingReportsSelect<false> | ListingReportsSelect<true>;
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-participants': DealParticipantsSelect<false> | DealParticipantsSelect<true>;
     'screening-requests': ScreeningRequestsSelect<false> | ScreeningRequestsSelect<true>;
@@ -392,6 +394,23 @@ export interface Listing {
   county?: string | null;
   latitude?: number | null;
   longitude?: number | null;
+  description?: string | null;
+  availability?: ('available' | 'unavailable') | null;
+  brokerName?: string | null;
+  brokerCompany?: string | null;
+  brokerPhone?: string | null;
+  brokerEmail?: string | null;
+  availabilities?:
+    | {
+        status?: string | null;
+        floor?: string | null;
+        suite?: string | null;
+        squareFeet?: number | null;
+        use?: string | null;
+        term?: string | null;
+        pricePerSquareFoot?: number | null;
+      }[]
+    | null;
   photo?: (number | null) | Media;
   pageTitle?: string | null;
   metaDescription?: string | null;
@@ -402,6 +421,20 @@ export interface Listing {
   socialTitle?: string | null;
   socialDescription?: string | null;
   sitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listing-reports".
+ */
+export interface ListingReport {
+  id: number;
+  name: string;
+  email: string;
+  errorType: 'incorrect-price' | 'incorrect-address' | 'duplicate' | 'other';
+  description: string;
+  listing: number | Listing;
   updatedAt: string;
   createdAt: string;
 }
@@ -851,6 +884,18 @@ export interface ListingsSelect<T extends boolean = true> {
   state?: T;
   postalCode?: T;
   propertyType?: T;
+  squareFootage?: T;
+  keywords?: T;
+  county?: T;
+  latitude?: T;
+  longitude?: T;
+  description?: T;
+  availability?: T;
+  brokerName?: T;
+  brokerCompany?: T;
+  brokerPhone?: T;
+  brokerEmail?: T;
+  availabilities?: T;
   photo?: T;
   pageTitle?: T;
   metaDescription?: T;
@@ -933,6 +978,19 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listing-reports_select".
+ */
+export interface ListingReportsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  errorType?: T;
+  description?: T;
+  listing?: T;
   updatedAt?: T;
   createdAt?: T;
 }
