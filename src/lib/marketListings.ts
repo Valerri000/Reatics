@@ -1,3 +1,4 @@
+import { listingOnMap } from '@/lib/listingPage'
 import type { PlaceListing } from '@/lib/placeList'
 
 export type MarketQuery = {
@@ -23,6 +24,7 @@ export function marketListings(listings: PlaceListing[], query: MarketQuery) {
 }
 
 function matches(listing: PlaceListing, query: MarketQuery) {
+  if (!listingOnMap(listing)) return false
   if (query.kind === 'commercial' && listing.kind === 'coworking') return false
   if (query.kind && query.kind !== 'all' && query.kind !== 'commercial' && listing.kind !== query.kind) {
     return false

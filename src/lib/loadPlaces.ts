@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { getPayload } from 'payload'
 
+import { listingOnMap } from '@/lib/listingPage'
 import type { PlaceListing } from '@/lib/placeList'
 import config from '@/payload.config'
 import type { City, Listing, PropertyType } from '@/payload-types'
@@ -42,7 +43,7 @@ export const loadPlaceListings = cache(async (): Promise<PlaceListing[]> => {
     overrideAccess: true,
     sort: 'title',
   })
-  return found.docs.map(toPlaceListing)
+  return found.docs.filter((listing) => listingOnMap(listing)).map(toPlaceListing)
 })
 
 export const loadListing = cache(async (slug: string) => {
@@ -72,5 +73,6 @@ function toPlaceListing(listing: Listing): PlaceListing {
     propertyType: listing.propertyType,
     imageAlt: listing.imageAlt,
     imageUrl,
+    availability: listing.availability,
   }
 }
