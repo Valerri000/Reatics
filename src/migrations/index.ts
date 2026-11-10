@@ -8,6 +8,8 @@ import * as migration_20261027_040247_rich_text_body from './20261027_040247_ric
 import * as migration_20261027_052121_publish_status from './20261027_052121_publish_status'
 import * as migration_20261028_081144_contact_messages from './20261028_081144_contact_messages'
 import * as migration_20261109_050819_listing_map_fields from './20261109_050819_listing_map_fields'
+import * as migration_20261110_034811_listing_page from './20261110_034811_listing_page'
+import * as migration_20261110_101552_listing_reports from './20261110_101552_listing_reports'
 
 export const migrations = [
   {
@@ -59,5 +61,15 @@ export const migrations = [
     up: migration_20261109_050819_listing_map_fields.up,
     down: migration_20261109_050819_listing_map_fields.down,
     name: '20261109_050819_listing_map_fields',
+  },
+  {
+    up: migration_20261110_034811_listing_page.up,
+    down: migration_20261110_034811_listing_page.down,
+    name: '20261110_034811_listing_page',
+  },
+  {
+    up: migration_20261110_101552_listing_reports.up,
+    down: migration_20261110_101552_listing_reports.down,
+    name: '20261110_101552_listing_reports',
   },
 ]
