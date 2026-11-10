@@ -15,6 +15,7 @@ import { DealParticipants } from './collections/DealParticipants'
 import { Deals } from './collections/Deals'
 import { Glossary } from './collections/Glossary'
 import { LeaseDrafts } from './collections/LeaseDrafts'
+import { ListingReports } from './collections/ListingReports'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -46,6 +47,7 @@ export default buildConfig({
     Cities,
     PropertyTypes,
     Listings,
+    ListingReports,
     Billing,
     Media,
     Redirects,
