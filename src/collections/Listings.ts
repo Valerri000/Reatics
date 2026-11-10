@@ -97,6 +97,43 @@ export const Listings: CollectionConfig = {
       type: 'number',
     },
     {
+      name: 'description',
+      type: 'textarea',
+    },
+    {
+      name: 'availability',
+      type: 'select',
+      defaultValue: 'available',
+      options: [
+        { label: 'Available', value: 'available' },
+        { label: 'No longer available', value: 'unavailable' },
+      ],
+    },
+    {
+      name: 'brokerName',
+      type: 'text',
+      label: 'Broker name',
+    },
+    {
+      name: 'brokerCompany',
+      type: 'text',
+      label: 'Broker company',
+    },
+    {
+      name: 'brokerPhone',
+      type: 'text',
+      label: 'Broker phone',
+    },
+    {
+      name: 'brokerEmail',
+      type: 'email',
+      label: 'Broker email',
+    },
+    {
+      name: 'availabilities',
+      type: 'json',
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',
