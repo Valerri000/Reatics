@@ -74,5 +74,7 @@ function toPlaceListing(listing: Listing): PlaceListing {
     imageAlt: listing.imageAlt,
     imageUrl,
     availability: listing.availability,
+    latitude: listing.latitude,
+    longitude: listing.longitude,
   }
 }
