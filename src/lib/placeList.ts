@@ -21,6 +21,8 @@ export type PlaceListing = {
   imageAlt?: string | null
   imageUrl?: string | null
   availability?: string | null
+  latitude?: number | null
+  longitude?: number | null
 }
 
 export function listingsForCity<T extends { city?: string | null }>(listings: T[], city: string) {
