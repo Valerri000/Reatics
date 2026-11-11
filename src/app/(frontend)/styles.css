@@ -180,3 +180,21 @@ a {
 svg {
   vertical-align: middle;
 }
+
+.map-stage {
+  position: absolute;
+  inset: 0;
+}
+
+img.map-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.mapboxgl-map img {
+  max-width: none;
+}
