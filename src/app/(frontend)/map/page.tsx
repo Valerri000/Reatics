@@ -1,12 +1,20 @@
 import React from 'react'
+import type { Metadata } from 'next'
 
 import { MapSearch } from '@/components/market/MapSearch'
 import { designPhoto, propertyPhotos } from '@/lib/homeImages'
 import { loadPlaceListings } from '@/lib/loadPlaces'
+import { storedMapPins } from '@/lib/mapPins'
+import { mapRobots, mapTitle, mapToken } from '@/lib/mapStage'
 import { marketListings, readQuery } from '@/lib/marketListings'
 import { listingCardFields } from '@/lib/placeList'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: mapTitle,
+  robots: mapRobots,
+}
 
 export default async function MapPage({
   searchParams,
@@ -14,7 +22,8 @@ export default async function MapPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const query = readQuery(await searchParams)
-  const listings = marketListings(await loadPlaceListings(), query).map((listing, index) => {
+  const records = marketListings(await loadPlaceListings(), query)
+  const listings = records.map((listing, index) => {
     const card = listingCardFields(listing)
     return {
       ...card,
@@ -22,5 +31,13 @@ export default async function MapPage({
     }
   })
 
-  return <MapSearch listings={listings} place={query.place || query.city || ''} kind={query.kind} />
+  return (
+    <MapSearch
+      listings={listings}
+      points={storedMapPins(records)}
+      token={mapToken(process.env)}
+      place={query.place || query.city || ''}
+      kind={query.kind}
+    />
+  )
 }
