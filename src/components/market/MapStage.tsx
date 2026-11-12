@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 
+import { areaFeature, type AreaPoint } from '@/lib/mapArea'
 import { pinFeatureCollection, type MapPinInput } from '@/lib/mapPins'
 import { mapCluster, mapStyle } from '@/lib/mapStage'
 import { mapPhoto } from '@/lib/pageImages'
@@ -15,6 +16,7 @@ type MapboxMap = {
   removeSource: (id: string) => void
   isStyleLoaded: () => boolean
   once: (event: string, handler: () => void) => void
+  on: (event: string, handler: (event: { lngLat?: { lat: number; lng: number } }) => void) => void
   setStyle: (style: string) => void
   zoomIn: () => void
   zoomOut: () => void
@@ -32,17 +34,29 @@ export function MapStage({
   token,
   points,
   satellite,
+  area = [],
+  drawing = false,
+  onPick,
   onHandle,
 }: {
   token: string
   points: MapPinInput[]
   satellite: boolean
+  area?: AreaPoint[]
+  drawing?: boolean
+  onPick?: (point: AreaPoint) => void
   onHandle: (handle: MapHandle | null) => void
 }) {
   const node = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MapboxMap | null>(null)
   const pointsRef = useRef(points)
+  const areaRef = useRef(area)
+  const drawingRef = useRef(drawing)
+  const onPickRef = useRef(onPick)
   pointsRef.current = points
+  areaRef.current = area
+  drawingRef.current = drawing
+  onPickRef.current = onPick
 
   useEffect(() => {
     if (!token || !node.current) {
@@ -64,7 +78,14 @@ export function MapStage({
         zoom: first ? 11 : 8,
       }) as MapboxMap
       mapRef.current = created
+      created.on('click', (event) => {
+        const latitude = event.lngLat?.lat
+        const longitude = event.lngLat?.lng
+        if (!drawingRef.current || latitude == null || longitude == null) return
+        onPickRef.current?.({ latitude, longitude })
+      })
       paintListings(created, pointsRef.current)
+      paintArea(created, areaRef.current)
       onHandle({
         zoomIn: () => created?.zoomIn(),
         zoomOut: () => created?.zoomOut(),
@@ -83,13 +104,18 @@ export function MapStage({
     const map = mapRef.current
     if (!map) return
     map.setStyle(mapStyle(satellite))
-    map.once('style.load', () => paintListings(map, pointsRef.current))
+    map.once('style.load', () => {
+      paintListings(map, pointsRef.current)
+      paintArea(map, areaRef.current)
+    })
   }, [satellite])
 
   useEffect(() => {
-    const source = mapRef.current?.getSource('listings')
-    source?.setData(pinFeatureCollection(points))
-  }, [points])
+    const map = mapRef.current
+    if (!map?.isStyleLoaded()) return
+    map.getSource('listings')?.setData(pinFeatureCollection(points))
+    paintArea(map, area)
+  }, [points, area])
 
   if (!token) return <img src={mapPhoto} alt="" className="map-fallback" />
   return <div ref={node} className="map-stage" />
@@ -118,6 +144,32 @@ function paintListings(map: MapboxMap, points: MapPinInput[]) {
       source: 'listings',
       filter: ['!', ['has', 'point_count']],
       paint: { 'circle-color': '#0f172a', 'circle-radius': 7 },
+    })
+  }
+  if (map.isStyleLoaded()) draw()
+  else map.once('load', draw)
+}
+
+function paintArea(map: MapboxMap, area: AreaPoint[]) {
+  const draw = () => {
+    const data = areaFeature(area)
+    const source = map.getSource('area')
+    if (source) {
+      source.setData(data)
+      return
+    }
+    map.addSource('area', { type: 'geojson', data })
+    map.addLayer({
+      id: 'area-fill',
+      type: 'fill',
+      source: 'area',
+      paint: { 'fill-color': '#2563eb', 'fill-opacity': 0.15 },
+    })
+    map.addLayer({
+      id: 'area-line',
+      type: 'line',
+      source: 'area',
+      paint: { 'line-color': '#2563eb', 'line-width': 2 },
     })
   }
   if (map.isStyleLoaded()) draw()
