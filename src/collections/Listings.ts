@@ -97,6 +97,31 @@ export const Listings: CollectionConfig = {
       type: 'number',
     },
     {
+      name: 'lotSize',
+      type: 'number',
+      label: 'Lot size',
+    },
+    {
+      name: 'capRate',
+      type: 'number',
+      label: 'Cap rate',
+    },
+    {
+      name: 'yearBuilt',
+      type: 'number',
+      label: 'Year built',
+    },
+    {
+      name: 'units',
+      type: 'number',
+      label: 'Units',
+    },
+    {
+      name: 'listingCode',
+      type: 'text',
+      label: 'Listing ID',
+    },
+    {
       name: 'description',
       type: 'textarea',
     },
