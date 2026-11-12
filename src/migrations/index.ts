@@ -10,6 +10,7 @@ import * as migration_20261028_081144_contact_messages from './20261028_081144_c
 import * as migration_20261109_050819_listing_map_fields from './20261109_050819_listing_map_fields'
 import * as migration_20261110_034811_listing_page from './20261110_034811_listing_page'
 import * as migration_20261110_101552_listing_reports from './20261110_101552_listing_reports'
+import * as migration_20261112_050723_listing_record_fields from './20261112_050723_listing_record_fields'
 
 export const migrations = [
   {
@@ -71,5 +72,10 @@ export const migrations = [
     up: migration_20261110_101552_listing_reports.up,
     down: migration_20261110_101552_listing_reports.down,
     name: '20261110_101552_listing_reports',
+  },
+  {
+    up: migration_20261112_050723_listing_record_fields.up,
+    down: migration_20261112_050723_listing_record_fields.down,
+    name: '20261112_050723_listing_record_fields',
   },
 ]
