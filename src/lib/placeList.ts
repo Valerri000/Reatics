@@ -18,6 +18,9 @@ export type PlaceListing = {
   state?: string | null
   postalCode?: string | null
   propertyType?: string | null
+  squareFootage?: number | null
+  keywords?: string | null
+  county?: string | null
   imageAlt?: string | null
   imageUrl?: string | null
   availability?: string | null
