@@ -74,13 +74,13 @@ export interface Config {
     cities: City;
     'property-types': PropertyType;
     listings: Listing;
+    'listing-reports': ListingReport;
     billing: Billing;
     media: Media;
     redirects: Redirect;
     companies: Company;
     'company-members': CompanyMember;
     'contact-messages': ContactMessage;
-    'listing-reports': ListingReport;
     deals: Deal;
     'deal-participants': DealParticipant;
     'screening-requests': ScreeningRequest;
@@ -101,13 +101,13 @@ export interface Config {
     cities: CitiesSelect<false> | CitiesSelect<true>;
     'property-types': PropertyTypesSelect<false> | PropertyTypesSelect<true>;
     listings: ListingsSelect<false> | ListingsSelect<true>;
+    'listing-reports': ListingReportsSelect<false> | ListingReportsSelect<true>;
     billing: BillingSelect<false> | BillingSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
     'company-members': CompanyMembersSelect<false> | CompanyMembersSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
-    'listing-reports': ListingReportsSelect<false> | ListingReportsSelect<true>;
     deals: DealsSelect<false> | DealsSelect<true>;
     'deal-participants': DealParticipantsSelect<false> | DealParticipantsSelect<true>;
     'screening-requests': ScreeningRequestsSelect<false> | ScreeningRequestsSelect<true>;
@@ -407,14 +407,12 @@ export interface Listing {
   brokerEmail?: string | null;
   availabilities?:
     | {
-        status?: string | null;
-        floor?: string | null;
-        suite?: string | null;
-        squareFeet?: number | null;
-        use?: string | null;
-        term?: string | null;
-        pricePerSquareFoot?: number | null;
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   photo?: (number | null) | Media;
   pageTitle?: string | null;
@@ -426,20 +424,6 @@ export interface Listing {
   socialTitle?: string | null;
   socialDescription?: string | null;
   sitemap?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "listing-reports".
- */
-export interface ListingReport {
-  id: number;
-  name: string;
-  email: string;
-  errorType: 'incorrect-price' | 'incorrect-address' | 'duplicate' | 'other';
-  description: string;
-  listing: number | Listing;
   updatedAt: string;
   createdAt: string;
 }
@@ -463,6 +447,20 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listing-reports".
+ */
+export interface ListingReport {
+  id: number;
+  name: string;
+  email: string;
+  errorType: 'incorrect-price' | 'incorrect-address' | 'duplicate' | 'other';
+  description: string;
+  listing: number | Listing;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -641,6 +639,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'listings';
         value: number | Listing;
+      } | null)
+    | ({
+        relationTo: 'listing-reports';
+        value: number | ListingReport;
       } | null)
     | ({
         relationTo: 'billing';
@@ -921,6 +923,19 @@ export interface ListingsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listing-reports_select".
+ */
+export interface ListingReportsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  errorType?: T;
+  description?: T;
+  listing?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "billing_select".
  */
 export interface BillingSelect<T extends boolean = true> {
@@ -988,19 +1003,6 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   message?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "listing-reports_select".
- */
-export interface ListingReportsSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  errorType?: T;
-  description?: T;
-  listing?: T;
   updatedAt?: T;
   createdAt?: T;
 }

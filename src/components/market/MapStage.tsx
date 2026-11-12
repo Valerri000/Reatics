@@ -21,6 +21,7 @@ type MapboxMap = {
   zoomIn: () => void
   zoomOut: () => void
   flyTo: (options: { center: [number, number]; zoom: number }) => void
+  resize: () => void
   remove: () => void
 }
 
@@ -65,6 +66,7 @@ export function MapStage({
     }
     let removed = false
     let created: MapboxMap | null = null
+    let observer: ResizeObserver | null = null
     void import('mapbox-gl').then(async (mod) => {
       await import('mapbox-gl/dist/mapbox-gl.css')
       if (removed || !node.current) return
@@ -86,6 +88,9 @@ export function MapStage({
       })
       paintListings(created, pointsRef.current)
       paintArea(created, areaRef.current)
+      observer = new ResizeObserver(() => created?.resize())
+      if (node.current) observer.observe(node.current)
+      created.resize()
       onHandle({
         zoomIn: () => created?.zoomIn(),
         zoomOut: () => created?.zoomOut(),
@@ -94,6 +99,7 @@ export function MapStage({
     })
     return () => {
       removed = true
+      observer?.disconnect()
       created?.remove()
       mapRef.current = null
       onHandle(null)
