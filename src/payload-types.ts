@@ -394,6 +394,11 @@ export interface Listing {
   county?: string | null;
   latitude?: number | null;
   longitude?: number | null;
+  lotSize?: number | null;
+  capRate?: number | null;
+  yearBuilt?: number | null;
+  units?: number | null;
+  listingCode?: string | null;
   description?: string | null;
   availability?: ('available' | 'unavailable') | null;
   brokerName?: string | null;
@@ -889,6 +894,11 @@ export interface ListingsSelect<T extends boolean = true> {
   county?: T;
   latitude?: T;
   longitude?: T;
+  lotSize?: T;
+  capRate?: T;
+  yearBuilt?: T;
+  units?: T;
+  listingCode?: T;
   description?: T;
   availability?: T;
   brokerName?: T;
