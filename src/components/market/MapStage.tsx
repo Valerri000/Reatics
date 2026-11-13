@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 
 import { areaFeature, type AreaPoint } from '@/lib/mapArea'
+import { activePinRadius, pinRadius } from '@/lib/mapHover'
 import { pinFeatureCollection, type MapPinInput } from '@/lib/mapPins'
 import { mapCluster, mapStyle } from '@/lib/mapStage'
 import { mapPhoto } from '@/lib/pageImages'
@@ -16,7 +17,9 @@ type MapboxMap = {
   removeSource: (id: string) => void
   isStyleLoaded: () => boolean
   once: (event: string, handler: () => void) => void
-  on: (event: string, handler: (event: { lngLat?: { lat: number; lng: number } }) => void) => void
+  on: (event: string, handler: (event: { lngLat?: { lat: number; lng: number }; point?: { x: number; y: number } }) => void) => void
+  setPaintProperty: (layer: string, name: string, value: unknown) => void
+  queryRenderedFeatures: (point: { x: number; y: number }, options: { layers: string[] }) => Array<{ properties?: { slug?: string } }>
   setStyle: (style: string) => void
   zoomIn: () => void
   zoomOut: () => void
@@ -37,6 +40,9 @@ export function MapStage({
   satellite,
   area = [],
   drawing = false,
+  activeSlug = null,
+  onActive,
+  onOpen,
   onPick,
   onHandle,
 }: {
@@ -45,6 +51,9 @@ export function MapStage({
   satellite: boolean
   area?: AreaPoint[]
   drawing?: boolean
+  activeSlug?: string | null
+  onActive?: (slug: string | null) => void
+  onOpen?: (slug: string) => void
   onPick?: (point: AreaPoint) => void
   onHandle: (handle: MapHandle | null) => void
 }) {
@@ -54,10 +63,14 @@ export function MapStage({
   const areaRef = useRef(area)
   const drawingRef = useRef(drawing)
   const onPickRef = useRef(onPick)
+  const onActiveRef = useRef(onActive)
+  const onOpenRef = useRef(onOpen)
   pointsRef.current = points
   areaRef.current = area
   drawingRef.current = drawing
   onPickRef.current = onPick
+  onActiveRef.current = onActive
+  onOpenRef.current = onOpen
 
   useEffect(() => {
     if (!token || !node.current) {
@@ -83,8 +96,15 @@ export function MapStage({
       created.on('click', (event) => {
         const latitude = event.lngLat?.lat
         const longitude = event.lngLat?.lng
-        if (!drawingRef.current || latitude == null || longitude == null) return
-        onPickRef.current?.({ latitude, longitude })
+        if (drawingRef.current && latitude != null && longitude != null) {
+          onPickRef.current?.({ latitude, longitude })
+          return
+        }
+        const slug = pinUnder(created, event.point)
+        if (slug) onOpenRef.current?.(slug)
+      })
+      created.on('mousemove', (event) => {
+        onActiveRef.current?.(pinUnder(created, event.point))
       })
       paintListings(created, pointsRef.current)
       paintArea(created, areaRef.current)
@@ -123,8 +143,26 @@ export function MapStage({
     paintArea(map, area)
   }, [points, area])
 
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map?.getLayer('pins')) return
+    map.setPaintProperty('pins', 'circle-radius', [
+      'case',
+      ['==', ['get', 'slug'], activeSlug || ''],
+      activePinRadius,
+      pinRadius,
+    ])
+  }, [activeSlug])
+
   if (!token) return <img src={mapPhoto} alt="" className="map-fallback" />
   return <div ref={node} className="map-stage" />
+}
+
+function pinUnder(map: MapboxMap | null, point?: { x: number; y: number }) {
+  if (!map || !point || !map.getLayer('pins')) return null
+  const features = map.queryRenderedFeatures(point, { layers: ['pins'] })
+  const slug = features[0]?.properties?.slug
+  return slug || null
 }
 
 function paintListings(map: MapboxMap, points: MapPinInput[]) {
