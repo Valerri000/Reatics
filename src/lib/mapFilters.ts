@@ -82,6 +82,11 @@ export function filtersFromQuery(query: {
   kind?: string
   type?: string
   use?: string
+  priceMin?: string
+  priceMax?: string
+  sqftMin?: string
+  sqftMax?: string
+  keywords?: string
 }): MapFilters {
   const kind = query.kind === 'sale' || query.kind === 'lease' || query.kind === 'coworking' ? query.kind : ''
   const requested = (query.type || (query.use && query.use !== 'all' ? query.use : '') || '').trim()
@@ -90,6 +95,11 @@ export function filtersFromQuery(query: {
     kind,
     propertyType: matchType(kind, requested),
     place: (query.city || query.place || '').trim(),
+    priceMin: query.priceMin || '',
+    priceMax: query.priceMax || '',
+    squareFootageMin: query.sqftMin || '',
+    squareFootageMax: query.sqftMax || '',
+    keywords: query.keywords || '',
   }
 }
 
