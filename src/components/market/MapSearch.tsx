@@ -1,9 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import { useOptionalAuth } from '@/components/auth/AuthProvider'
+import { ContactPanel } from '@/components/listing/ListingCard'
 import { MapStage, type MapHandle } from '@/components/market/MapStage'
+import { PhoneNumber } from '@/components/PhoneNumber'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
 import { addAreaPoint, type AreaPoint } from '@/lib/mapArea'
 import {
@@ -14,7 +17,9 @@ import {
   type MapFilters,
   type MapListing,
 } from '@/lib/mapFilters'
+import { cardIsActive, favoriteNeedsSignIn } from '@/lib/mapHover'
 import { storedMapPins } from '@/lib/mapPins'
+import { shareableMapPath } from '@/lib/mapShare'
 import { locationCenter } from '@/lib/mapStage'
 import { emptyPlace } from '@/lib/placeList'
 
@@ -52,6 +57,8 @@ export function MapSearch({
   const [view, setView] = useState<'map' | 'list'>('map')
   const [satellite, setSatellite] = useState(false)
   const [handle, setHandle] = useState<MapHandle | null>(null)
+  const [active, setActive] = useState<string | null>(null)
+  const auth = useOptionalAuth()
   const shown = filterMapListings(listings, filters, area)
   const derived = storedMapPins(
     shown.flatMap((listing) =>
@@ -62,6 +69,12 @@ export function MapSearch({
   )
   const pins = listings.some((listing) => listing.latitude != null && listing.longitude != null) ? derived : points
   const typeOptions = typesForKind(filters.kind)
+
+  useEffect(() => {
+    const next = shareableMapPath(filters)
+    const current = `${window.location.pathname}${window.location.search}`
+    if (current !== next) window.history.replaceState(null, '', next)
+  }, [filters])
 
   function locate() {
     const geo = navigator.geolocation
@@ -97,6 +110,12 @@ export function MapSearch({
           area={area}
           drawing={drawing}
           onPick={(point) => setArea((current) => addAreaPoint(current, point))}
+          activeSlug={active}
+          onActive={setActive}
+          onOpen={(slug) => {
+            const match = listings.find((item) => item.slug === slug || item.href.endsWith(`/${slug}`))
+            if (match) window.location.assign(match.href)
+          }}
           onHandle={setHandle}
         />
         <aside
@@ -233,22 +252,42 @@ export function MapSearch({
                 {shown.length === 0 ? emptyPlace : `${shown.length} listings`}
               </p>
               {shown.length === 0 ? <p className="m-0 text-base font-semibold text-slate">{emptyPlace}</p> : null}
-              {shown.map((listing) => (
-                <Link
-                  key={listing.href}
-                  href={listing.href}
-                  className="block overflow-hidden rounded-3xl border border-line bg-white no-underline"
-                >
-                  <img src={listing.imageUrl} alt={listing.imageAlt} className="h-44 w-full object-cover" />
-                  <div className="p-5">
-                    <p className="m-0 text-xl font-black text-ink">{formatListingPrice(listing.kind, listing.price)}</p>
-                    <p className="m-0 mt-1 truncate text-sm font-bold text-slate">{listing.street || listing.cityLine}</p>
-                    <p className="m-0 mt-4 text-[10px] font-black uppercase tracking-widest text-gray">
-                      {listing.propertyType}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+              {shown.map((listing) => {
+                const slug = listing.slug || listing.href
+                const marked = cardIsActive(slug, active)
+                return (
+                  <article
+                    key={listing.href}
+                    className={`overflow-hidden rounded-3xl bg-white ${marked ? 'border-2 border-brand' : 'border border-line'}`}
+                    onMouseEnter={() => setActive(slug)}
+                    onMouseLeave={() => setActive(null)}
+                  >
+                    <Link href={listing.href} className="block no-underline">
+                      <img src={listing.imageUrl} alt={listing.imageAlt} className="h-44 w-full object-cover" />
+                      <div className="p-5">
+                        <p className="m-0 text-xl font-black text-ink">{formatListingPrice(listing.kind, listing.price)}</p>
+                        <p className="m-0 mt-1 truncate text-sm font-bold text-slate">{listing.street || listing.cityLine}</p>
+                        <p className="m-0 mt-4 text-[10px] font-black uppercase tracking-widest text-gray">
+                          {listing.propertyType}
+                        </p>
+                      </div>
+                    </Link>
+                    <div className="flex items-center justify-between border-t border-line px-5 py-4">
+                      {listing.kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel listingHref={listing.href} />}
+                      <button
+                        type="button"
+                        aria-label="Save listing"
+                        className="text-sm font-bold text-brand"
+                        onClick={() => {
+                          if (favoriteNeedsSignIn(auth?.user)) auth?.openSignIn()
+                        }}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </article>
+                )
+              })}
             </div>
           </div>
         </aside>
