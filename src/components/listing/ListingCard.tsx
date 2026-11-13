@@ -121,13 +121,13 @@ export function ListingCard({
       </div>
       <div className="flex items-center justify-between border-t border-line px-6 py-4">
         <span className="text-xs font-semibold uppercase tracking-widest text-slate">{propertyType}</span>
-        {kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel />}
+        {kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel listingHref={href} />}
       </div>
     </article>
   )
 }
 
-function ContactPanel() {
+export function ContactPanel({ listingHref = '' }: { listingHref?: string }) {
   const [open, setOpen] = useState(false)
   const [sent, setSent] = useState(false)
   const [name, setName] = useState('')
@@ -135,7 +135,7 @@ function ContactPanel() {
   const [message, setMessage] = useState('')
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({})
 
-  function submit(event: React.FormEvent) {
+  async function submit(event: React.FormEvent) {
     event.preventDefault()
     const next: { name?: string; email?: string; message?: string } = {}
     if (!name.trim()) next.name = 'Enter your name.'
@@ -143,6 +143,11 @@ function ContactPanel() {
     if (!message.trim()) next.message = 'Enter your message.'
     setErrors(next)
     if (Object.keys(next).length > 0) return
+    if (listingHref) {
+      const { sendListingContact } = await import('@/lib/sendListingContact')
+      const result = await sendListingContact({ name, email, message, listing: listingHref })
+      if (!result.ok) return
+    }
     setName('')
     setEmail('')
     setMessage('')
