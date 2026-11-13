@@ -7,6 +7,11 @@ export type MarketQuery = {
   use?: string
   city?: string
   type?: string
+  priceMin?: string
+  priceMax?: string
+  sqftMin?: string
+  sqftMax?: string
+  keywords?: string
 }
 
 export function readQuery(source: Record<string, string | string[] | undefined>): MarketQuery {
@@ -16,6 +21,11 @@ export function readQuery(source: Record<string, string | string[] | undefined>)
     use: first(source.use),
     city: first(source.city),
     type: first(source.type),
+    priceMin: first(source.priceMin),
+    priceMax: first(source.priceMax),
+    sqftMin: first(source.sqftMin),
+    sqftMax: first(source.sqftMax),
+    keywords: first(source.keywords),
   }
 }
 
