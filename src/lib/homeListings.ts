@@ -3,10 +3,21 @@ export const emptyFeatured = 'No listings yet.'
 export const homeListingLimit = 6
 
 export function homeListingRecords<
-  T extends { slug?: string | null; title?: string | null; robots?: string | null },
+  T extends {
+    slug?: string | null
+    title?: string | null
+    robots?: string | null
+    availability?: string | null
+  },
 >(listings: T[]) {
   return listings
-    .filter((listing) => listing.robots === 'index' && Boolean(listing.slug?.trim()) && Boolean(listing.title?.trim()))
+    .filter(
+      (listing) =>
+        listing.robots === 'index' &&
+        listing.availability !== 'unavailable' &&
+        Boolean(listing.slug?.trim()) &&
+        Boolean(listing.title?.trim()),
+    )
     .slice(0, homeListingLimit)
 }
 
