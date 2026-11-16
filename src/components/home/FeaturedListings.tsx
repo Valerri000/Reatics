@@ -7,74 +7,11 @@ import { useAuth } from '@/components/auth/AuthProvider'
 import { HomeSection } from '@/components/home/HomeSection'
 import { HeartIcon } from '@/components/icons'
 import { designPhoto, propertyPhotos } from '@/lib/homeImages'
-import { featuredCardClass } from '@/lib/homeListings'
+import { emptyFeatured, featuredCardClass } from '@/lib/homeListings'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
 import { listingCardFields } from '@/lib/placeList'
 
 type FeaturedCard = ReturnType<typeof listingCardFields>
-
-const designProperties = [
-  {
-    imageUrl: propertyPhotos[0],
-    kind: 'lease' as const,
-    badge: 'Office',
-    price: '$45.00 / SF',
-    street: '201 N Brand Blvd',
-    cityLine: 'Glendale, CA 91203',
-    category: 'Office space',
-    action: 'contact' as const,
-  },
-  {
-    imageUrl: propertyPhotos[1],
-    kind: 'coworking' as const,
-    badge: 'Desk',
-    price: '$350 / Mo',
-    street: '123 Market St',
-    cityLine: 'San Francisco, CA 94103',
-    category: 'Shared office',
-    action: 'call' as const,
-  },
-  {
-    imageUrl: propertyPhotos[2],
-    kind: 'sale' as const,
-    badge: 'Retail',
-    price: '$1,250,000',
-    street: '800 Wilshire Blvd',
-    cityLine: 'Los Angeles, CA 90017',
-    category: 'Retail building',
-    action: 'contact' as const,
-  },
-  {
-    imageUrl: propertyPhotos[3],
-    kind: 'lease' as const,
-    badge: 'Industrial',
-    price: '$12.50 / SF',
-    street: '450 Terminal Way',
-    cityLine: 'Pasadena, CA 91101',
-    category: 'Warehouse',
-    action: 'contact' as const,
-  },
-  {
-    imageUrl: propertyPhotos[4],
-    kind: 'coworking' as const,
-    badge: 'Private office',
-    price: '$1,200 / Mo',
-    street: '555 Flower St',
-    cityLine: 'Los Angeles, CA 90071',
-    category: 'Premium office',
-    action: 'call' as const,
-  },
-  {
-    imageUrl: propertyPhotos[5],
-    kind: 'lease' as const,
-    badge: 'Medical',
-    price: '$55.00 / SF',
-    street: '101 Medical Plaza',
-    cityLine: 'Santa Monica, CA 90404',
-    category: 'Medical suite',
-    action: 'contact' as const,
-  },
-]
 
 const kindLabel: Record<ListingKind, string> = {
   sale: 'For sale',
@@ -104,24 +41,7 @@ export function FeaturedListings({ listings }: { listings: FeaturedCard[] }) {
           </Link>
         </div>
         {listings.length === 0 ? (
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {designProperties.map((property) => (
-              <PropertyCard
-                key={property.street}
-                imageUrl={property.imageUrl}
-                imageAlt={property.street}
-                kind={property.kind}
-                badge={property.badge}
-                price={property.price}
-                street={property.street}
-                cityLine={property.cityLine}
-                category={property.category}
-                action={property.action}
-                href="/featured"
-                onSave={auth.openSignIn}
-              />
-            ))}
-          </div>
+          <p className="m-0 mt-8 text-base font-semibold text-ink">{emptyFeatured}</p>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {listings.map((listing, index) => (
