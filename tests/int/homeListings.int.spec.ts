@@ -6,7 +6,8 @@ describe('homepage featured listings', () => {
   it('keeps indexed listings and leaves the rest out', () => {
     const shown = homeListingRecords([
       { title: '201 N Brand', slug: '201-n-brand', robots: 'noindex' },
-      { title: 'Indexed office', slug: 'indexed-office', robots: 'index' },
+      { title: 'Indexed office', slug: 'indexed-office', robots: 'index', availability: 'available' },
+      { title: 'Closed office', slug: 'closed-office', robots: 'index', availability: 'unavailable' },
       { title: ' ', slug: 'blank', robots: 'index' },
     ])
     expect(shown.map((listing) => listing.slug)).toEqual(['indexed-office'])
