@@ -17,6 +17,12 @@ describe('sitemap paths', () => {
     expect(sitemapPath({ collection: 'glossary', slug: 'cap-rate', ...ready })).toBe('/glossary/cap-rate')
     expect(sitemapPath({ collection: 'cities', slug: 'glendale', ...ready })).toBe('/glendale')
     expect(sitemapPath({ collection: 'property-types', slug: 'office', ...ready })).toBe('/office')
-    expect(sitemapCollections).not.toContain('listings')
+    expect(sitemapPath({ collection: 'listings', slug: 'indexed-office', ...ready, availability: 'available' })).toBe(
+      '/listings/indexed-office',
+    )
+    expect(sitemapPath({ collection: 'listings', slug: 'closed-office', ...ready, availability: 'unavailable' })).toBe(
+      null,
+    )
+    expect(sitemapCollections).toContain('listings')
   })
 })
