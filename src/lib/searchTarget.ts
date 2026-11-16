@@ -4,7 +4,7 @@ export function homepageSearchTarget(fields: { place: string; kind: string; use:
     kind: fields.kind,
     use: fields.use,
   })
-  return `/featured?${params.toString()}`
+  return `/map?${params.toString()}`
 }
 
 export function searchCallsMapbox(target: string) {
