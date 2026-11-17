@@ -93,11 +93,11 @@ export const publicPageSeeds: PageSeed[] = [
     slug: 'contact',
     h1: 'Contact Us',
     pageTitle: 'Contact Reatics',
-    description: 'Send a message to the Reatics office in Glendale, or call 1-888-518-9168.',
+    description: 'Send a message to the Reatics office in Encino, or call 1-888-518-9168.',
     blocks: [
       {
         kind: 'paragraph',
-        text: 'Send a message and the team will reply. You can also call or write to the Glendale office.',
+        text: 'Send a message and the team will reply. You can also call or write to the Encino office.',
       },
     ],
   }),

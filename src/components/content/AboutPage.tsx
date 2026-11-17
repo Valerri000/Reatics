@@ -75,7 +75,7 @@ export function AboutPage({ h1, content }: { h1: string; content?: RichTextBody 
           <img src={aboutOfficePhoto} alt="" className="h-full min-h-[360px] w-full rounded-[2.5rem] object-cover" />
           <div className="flex flex-col justify-center rounded-[2.5rem] border border-line bg-white p-10">
             <p className="m-0 text-[10px] font-black uppercase tracking-[0.3em] text-gray">Headquarters</p>
-            <h2 className="m-0 mt-4 text-4xl font-black tracking-tight text-ink">Visit us in Glendale.</h2>
+            <h2 className="m-0 mt-4 text-4xl font-black tracking-tight text-ink">Visit us in Encino.</h2>
             <p className="m-0 mt-8 text-xl font-bold text-ink">
               {contactAddress[0]}
               <br />

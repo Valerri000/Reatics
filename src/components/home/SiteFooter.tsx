@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { Button } from '@/components/Button'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { Wordmark } from '@/components/Wordmark'
+import { contactAddress } from '@/lib/contactDetails'
 import { footerAreaLinks, footerLinks } from '@/lib/siteLinks'
 
 const inputClass =
@@ -66,9 +67,9 @@ export function SiteFooter() {
         <div>
           <p className="m-0 text-base font-bold">Contact Us</p>
           <p className="m-0 mt-4 text-sm leading-6 text-slate">
-            201 N Brand Suite 200
+            {contactAddress[0]}
             <br />
-            Glendale CA, 91203
+            {contactAddress[1]}
           </p>
           <p className="m-0 mt-4">
             <PhoneNumber tone="ink" size="footer" />

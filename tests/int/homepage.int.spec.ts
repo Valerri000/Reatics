@@ -134,7 +134,7 @@ describe('homepage direction', () => {
     expect(lease).not.toContain('1–2')
 
     const text = view.container.textContent || ''
-    expect(text).toContain('201 N Brand Suite 200')
+    expect(text).toContain('16200 Ventura Blvd. Suite 428')
     expect(text).toContain('1-888-518-9168')
     expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-[21px]')
     expect(view.container.querySelector('footer a[href="tel:18885189168"]')?.className).toContain('text-ink')
