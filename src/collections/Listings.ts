@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { seoFieldList } from '@/fields/seo'
 import { recordDelete } from '@/lib/audit'
 import { pointSavedWithListing } from '@/lib/listingCoordinates'
+import { canSaveListing } from '@/lib/listingSave'
 import { canModerate } from '@/lib/roles'
 import { storeSlugRedirect } from '@/lib/slugRedirect'
 
@@ -14,8 +15,8 @@ export const Listings: CollectionConfig = {
   },
   access: {
     read: ({ req: { user } }) => canModerate(user),
-    create: ({ req: { user } }) => canModerate(user),
-    update: ({ req: { user } }) => canModerate(user),
+    create: ({ req: { user } }) => canSaveListing(user),
+    update: ({ req: { user } }) => canSaveListing(user),
     delete: ({ req: { user } }) => canModerate(user),
   },
   hooks: {
