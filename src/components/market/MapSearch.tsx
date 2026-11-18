@@ -9,6 +9,10 @@ import { MapStage, type MapHandle } from '@/components/market/MapStage'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
 import { addAreaPoint, type AreaPoint } from '@/lib/mapArea'
+import { clearedDrawnArea } from '@/lib/drawnClear'
+import { emptySearchMessage } from '@/lib/emptySearch'
+import { mapPanelClass } from '@/lib/mapPanel'
+import { resultStackClass } from '@/lib/resultStack'
 import {
   chooseKind,
   emptyMapFilters,
@@ -21,8 +25,6 @@ import { cardIsActive, favoriteNeedsSignIn } from '@/lib/mapHover'
 import { storedMapPins } from '@/lib/mapPins'
 import { shareableMapPath } from '@/lib/mapShare'
 import { locationCenter } from '@/lib/mapStage'
-import { emptyPlace } from '@/lib/placeList'
-
 type MapCard = MapListing & {
   href: string
   imageUrl: string
@@ -41,6 +43,7 @@ export function MapSearch({
   place,
   kind,
   initial,
+  initialArea,
 }: {
   listings: MapCard[]
   points: { slug: string; latitude: number; longitude: number }[]
@@ -48,10 +51,11 @@ export function MapSearch({
   place: string
   kind?: string
   initial?: MapFilters
+  initialArea?: AreaPoint[]
 }) {
   const [query, setQuery] = useState(initial?.place || place)
   const [filters, setFilters] = useState<MapFilters>(() => initial || startingFilters(place, kind))
-  const [area, setArea] = useState<AreaPoint[]>([])
+  const [area, setArea] = useState<AreaPoint[]>(initialArea ?? [])
   const [drawing, setDrawing] = useState(false)
   const [open, setOpen] = useState(true)
   const [view, setView] = useState<'map' | 'list'>('map')
@@ -118,9 +122,7 @@ export function MapSearch({
           }}
           onHandle={setHandle}
         />
-        <aside
-          className={`${open ? 'flex' : 'hidden'} absolute inset-x-4 top-4 z-20 max-h-[calc(100%-5.5rem)] w-auto flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-[0_24px_60px_rgba(15,23,42,0.16)] sm:inset-x-auto sm:left-6 sm:top-6 sm:w-[420px] md:left-8 md:top-8`}
-        >
+        <aside className={`${open ? 'flex' : 'hidden'} ${mapPanelClass}`}>
           <div className="overflow-y-auto p-6">
             <h1 className="m-0 text-2xl font-black tracking-tight text-ink">Find Commercial Properties</h1>
             <p className="m-0 mt-1 text-sm font-medium text-slate">Offices, retail, industrial, and coworking spaces</p>
@@ -247,11 +249,13 @@ export function MapSearch({
             >
               Clear All
             </button>
-            <div className={`${view === 'list' ? 'mt-6 space-y-4 border-t border-line pt-5' : 'hidden'}`}>
+            <div className={`${view === 'list' ? 'mt-6 border-t border-line pt-5' : 'hidden'} ${resultStackClass}`}>
               <p className="m-0 text-[10px] font-black uppercase tracking-widest text-gray">
-                {shown.length === 0 ? emptyPlace : `${shown.length} listings`}
+                {emptySearchMessage(shown.length)}
               </p>
-              {shown.length === 0 ? <p className="m-0 text-base font-semibold text-slate">{emptyPlace}</p> : null}
+              {shown.length === 0 ? (
+                <p className="m-0 text-base font-semibold text-slate">{emptySearchMessage(0)}</p>
+              ) : null}
               {shown.map((listing) => {
                 const slug = listing.slug || listing.href
                 const marked = cardIsActive(slug, active)
@@ -309,8 +313,9 @@ export function MapSearch({
           </MapButton>
           <MapButton
             label="Clear area"
+            mark={area.length}
             onClick={() => {
-              setArea([])
+              setArea((current) => clearedDrawnArea(current))
               setDrawing(false)
             }}
           >
@@ -319,7 +324,7 @@ export function MapSearch({
         </div>
         <div className="absolute bottom-6 left-4 z-10 flex flex-col gap-3 md:bottom-8 md:left-8">
           <div className="rounded-2xl bg-white px-5 py-3 text-sm font-bold text-ink shadow">
-            {shown.length === 0 ? emptyPlace : `${shown.length} listings`}
+            {emptySearchMessage(shown.length)}
           </div>
           <button
             type="button"
@@ -354,15 +359,18 @@ function MapButton({
   label,
   onClick,
   children,
+  mark,
 }: {
   label: string
   onClick: () => void
   children: React.ReactNode
+  mark?: number
 }) {
   return (
     <button
       type="button"
       aria-label={label}
+      data-drawn-points={mark}
       className="h-12 w-12 rounded-2xl bg-white text-lg font-bold text-ink shadow"
       onClick={onClick}
     >
