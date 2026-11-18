@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react'
 import { areaFeature, type AreaPoint } from '@/lib/mapArea'
 import { activePinRadius, pinRadius } from '@/lib/mapHover'
 import { pinFeatureCollection, type MapPinInput } from '@/lib/mapPins'
+import { geocodesOnMove, pinsAfterMove } from '@/lib/mapMove'
 import { mapCluster, mapStyle } from '@/lib/mapStage'
 import { mapPhoto } from '@/lib/pageImages'
 
@@ -105,6 +106,14 @@ export function MapStage({
       })
       created.on('mousemove', (event) => {
         onActiveRef.current?.(pinUnder(created, event.point))
+      })
+      created.on('moveend', () => {
+        pinsAfterMove(pointsRef.current)
+        geocodesOnMove('pan')
+      })
+      created.on('zoomend', () => {
+        pinsAfterMove(pointsRef.current)
+        geocodesOnMove('zoom')
       })
       paintListings(created, pointsRef.current)
       paintArea(created, areaRef.current)
