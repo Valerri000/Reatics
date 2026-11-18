@@ -1,6 +1,9 @@
 import React from 'react'
 
 import { PhoneNumber } from '@/components/PhoneNumber'
+import { availabilityStackClass, factStackClass } from '@/lib/factStack'
+import { listingPhoneSize } from '@/lib/listingPhone'
+import { listingHeadingClass } from '@/lib/listingType'
 import { unavailableListing, type PublicBroker, type PublicListing } from '@/lib/listingPage'
 
 export function ListingView({
@@ -14,7 +17,7 @@ export function ListingView({
     return (
       <article className="bg-sand px-inset-phone py-10 md:px-inset-tablet xl:px-inset-desktop 2xl:px-inset-wide">
         <div className="mx-auto max-w-7xl">
-          <h1 className="m-0 text-3xl font-black leading-tight text-ink">{listing.h1}</h1>
+          <h1 className={listingHeadingClass}>{listing.h1}</h1>
           {listing.address ? <p className="m-0 mt-3 text-base text-slate">{listing.address}</p> : null}
           <p className="m-0 mt-6 text-xl font-bold text-ink">{unavailableListing}</p>
         </div>
@@ -27,7 +30,7 @@ export function ListingView({
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.6fr_0.8fr]">
         <div className="lg:col-span-2">
           <p className="m-0 text-[10px] font-black uppercase tracking-widest text-brand">{listing.transaction}</p>
-          <h1 className="m-0 mt-3 text-3xl font-black leading-tight text-ink">{listing.h1}</h1>
+          <h1 className={`mt-3 ${listingHeadingClass}`}>{listing.h1}</h1>
           {listing.address ? <p className="m-0 mt-3 text-base font-bold text-slate">{listing.address}</p> : null}
           <p className="m-0 mt-4 text-3xl font-black text-brand">{listing.price}</p>
         </div>
@@ -41,7 +44,7 @@ export function ListingView({
             </div>
           </div>
           {listing.facts.length > 0 ? (
-            <dl className="grid gap-4 rounded-[2rem] border border-line bg-white p-8 sm:grid-cols-3">
+            <dl className={`${factStackClass} rounded-[2rem] border border-line bg-white p-4 md:p-8`}>
               {listing.facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="m-0 text-[10px] font-black uppercase tracking-widest text-gray">{fact.label}</dt>
@@ -56,7 +59,7 @@ export function ListingView({
               {listing.availabilities.map((row) => (
                 <div
                   key={[row.suite, row.floor, row.use].join('-')}
-                  className="grid gap-3 border-t border-line pt-4 sm:grid-cols-2 lg:grid-cols-4"
+                  className={availabilityStackClass}
                 >
                   <Fact label="Status" value={row.status} />
                   <Fact label="Floor" value={row.floor} />
@@ -79,7 +82,7 @@ export function ListingView({
             <div className="rounded-[2rem] bg-ink p-8 text-white">
               <p className="m-0 text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Coworking</p>
               <div className="mt-4">
-                <PhoneNumber tone="white" />
+                <PhoneNumber tone="white" size={listingPhoneSize} />
               </div>
             </div>
           ) : (
