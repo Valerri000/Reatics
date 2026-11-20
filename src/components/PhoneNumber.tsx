@@ -1,21 +1,19 @@
 import React from 'react'
 
 type PhoneNumberProps = {
-  tone?: 'brand' | 'white' | 'ink'
+  tone?: 'brand' | 'white' | 'ink' | 'red'
   size?: 'md' | 'lg' | 'footer'
   className?: string
 }
 
 export function PhoneNumber({ tone = 'brand', size = 'lg', className = '' }: PhoneNumberProps) {
-  const color = tone === 'white' ? 'text-white' : tone === 'ink' ? 'text-ink' : 'text-brand'
+  const color =
+    tone === 'white' ? 'text-white' : tone === 'ink' ? 'text-ink' : tone === 'red' ? 'text-red-600' : 'text-brand'
   const sizeClass = size === 'md' ? 'text-base' : size === 'footer' ? 'text-[21px] leading-7' : 'text-[20px]'
 
   return (
-    <a
-      className={`${sizeClass} font-bold hover:underline ${color} ${className}`}
-      href="tel:18885189168"
-    >
-      1-888-518-9168
+    <a className={`${sizeClass} font-bold hover:underline ${className}`} href="tel:18885189168">
+      <span className={color}>1-888-518-9168</span>
     </a>
   )
 }

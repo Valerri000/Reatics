@@ -6,7 +6,7 @@ import { designPhoto, propertyPhotos } from '@/lib/homeImages'
 import { emptyFeatured } from '@/lib/homeListings'
 import { listingCardFields, type PlaceListing } from '@/lib/placeList'
 
-export function ResultGrid({ listings }: { listings: PlaceListing[] }) {
+export function ResultGrid({ listings, tone }: { listings: PlaceListing[]; tone?: 'red' }) {
   if (listings.length === 0) {
     return <p className="m-0 mt-10 text-base text-ink">{emptyFeatured}</p>
   }
@@ -26,6 +26,7 @@ export function ResultGrid({ listings }: { listings: PlaceListing[] }) {
             street={card.street || listing.title}
             cityLine={card.cityLine}
             propertyType={card.propertyType}
+            tone={tone}
           />
         )
       })}
@@ -37,15 +38,17 @@ export function MarketLink({
   href,
   image,
   name,
+  tone,
 }: {
   href: string
   image: string
   name: string
+  tone?: 'red'
 }) {
   return (
-    <Link href={href} className="group relative block h-64 overflow-hidden rounded-[2rem] no-underline">
+    <Link href={href} className="group relative block h-64 overflow-hidden rounded-[2rem] no-underline shadow-xl">
       <img src={image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
-      <span className="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent" />
+      <span className={`absolute inset-0 bg-gradient-to-t ${tone === 'red' ? 'from-red-900/80' : 'from-ink/80'} to-transparent`} />
       <span className="absolute bottom-6 left-6 text-2xl font-black text-white">{name}</span>
     </Link>
   )

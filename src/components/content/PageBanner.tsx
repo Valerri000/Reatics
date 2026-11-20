@@ -12,16 +12,15 @@ export function PageBanner({
 }) {
   return (
     <div>
-      <header className="relative overflow-hidden bg-ink text-white">
-        <img src={heroPhoto} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-ink/60" />
-        <div className={`${longPageClass} relative`}>
-          <h1 className="m-0 max-w-3xl text-[28px] font-extrabold leading-9 text-white xl:text-[48px] xl:leading-[56px]">
+      <header className="relative aspect-[3/1] overflow-hidden bg-ink text-white">
+        <img src={heroPhoto} alt="" className="cover-photo" />
+        <div className="relative flex h-full items-center px-inset-phone md:px-inset-tablet xl:px-inset-desktop 2xl:px-inset-wide">
+          <h1 className="m-0 max-w-xl text-[28px] font-extrabold leading-9 text-white xl:text-[48px] xl:leading-[56px]">
             {title}
           </h1>
         </div>
       </header>
-      <div className={longPageClass}>{children}</div>
+      {children ? <div className={longPageClass}>{children}</div> : null}
     </div>
   )
 }

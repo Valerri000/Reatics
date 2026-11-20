@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import React from 'react'
 
+import { SavedBrokers } from '@/components/account/SavedBrokers'
 import { PageBanner } from '@/components/content/PageBanner'
 import { accountTitles } from '@/lib/navigation'
 
@@ -9,5 +10,10 @@ export default async function AccountPage({ params }: { params: Promise<{ sectio
   const title = accountTitles[section]
   if (!title) notFound()
 
-  return <PageBanner title={title} />
+  return (
+    <div className="flex flex-1 flex-col">
+      <PageBanner title={title} />
+      {section === 'saved-brokers' ? <SavedBrokers /> : null}
+    </div>
+  )
 }

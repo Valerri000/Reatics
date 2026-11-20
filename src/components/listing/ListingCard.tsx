@@ -28,6 +28,7 @@ type ListingCardProps = {
   saved?: boolean
   signedIn?: boolean
   highlighted?: boolean
+  tone?: 'red'
   onFavorite?: () => void
   onSignIn?: () => void
   onHoverChange?: (active: boolean) => void
@@ -46,6 +47,7 @@ export function ListingCard({
   saved = false,
   signedIn = false,
   highlighted = false,
+  tone,
   onFavorite,
   onSignIn,
   onHoverChange,
@@ -53,6 +55,7 @@ export function ListingCard({
   const [hovered, setHovered] = useState(false)
   const [ratePeriod, setRatePeriod] = useState<'year' | 'month'>('year')
   const marked = highlighted || hovered
+  const red = tone === 'red'
   const showRate = (kind === 'lease' || kind === 'coworking') && rate != null
 
   function hover(active: boolean) {
@@ -71,14 +74,18 @@ export function ListingCard({
 
   return (
     <article
-      className={`relative overflow-hidden rounded-xl bg-white shadow-sm ${marked ? 'cursor-pointer border-2 border-brand' : 'border border-line'}`}
+      className={`relative overflow-hidden rounded-xl bg-white shadow-sm ${
+        marked
+          ? `cursor-pointer border-2 ${red ? 'border-red-600' : 'border-brand'}`
+          : `border ${red ? 'border-red-100' : 'border-line'}`
+      }`}
       onMouseEnter={() => hover(true)}
       onMouseLeave={() => hover(false)}
     >
       <button
         type="button"
         aria-label={saved ? 'Saved' : 'Save listing'}
-        className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-brand shadow-sm"
+        className={`absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-sm ${red ? 'text-red-600' : 'text-brand'}`}
         onClick={saveListing}
       >
         <HeartIcon filled={saved} />
@@ -87,7 +94,7 @@ export function ListingCard({
         <span className="relative block h-60 overflow-hidden">
           <img src={imageUrl} alt={imageAlt} className="h-full w-full object-cover" />
           <span className="absolute left-4 top-4 flex gap-2">
-            <span className="rounded bg-brand px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+            <span className={`rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white ${red ? 'bg-red-600' : 'bg-brand'}`}>
               {labels[kind]}
             </span>
             {propertyType ? (
@@ -114,14 +121,14 @@ export function ListingCard({
           </button>
         ) : null}
         {kind === 'lease' || kind === 'coworking' ? (
-          <Link href={`${href}#availabilities`} className="mt-2 block text-base text-brand">
-            Availabilities
+          <Link href={`${href}#availabilities`} className="mt-2 block text-base">
+            <span className={red ? 'text-red-600' : 'text-brand'}>Availabilities</span>
           </Link>
         ) : null}
       </div>
-      <div className="flex items-center justify-between border-t border-line px-6 py-4">
+      <div className={`flex items-center justify-between border-t px-6 py-4 ${red ? 'border-red-50' : 'border-line'}`}>
         <span className="text-xs font-semibold uppercase tracking-widest text-slate">{propertyType}</span>
-        {kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel listingHref={href} />}
+        {kind === 'coworking' ? <PhoneNumber size="md" tone={red ? 'red' : 'brand'} /> : <ContactPanel listingHref={href} />}
       </div>
     </article>
   )
