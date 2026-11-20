@@ -45,7 +45,7 @@ export function SiteFooter() {
           <ul className="m-0 mt-4 list-none p-0">
             {navigation.map((link) => (
               <li key={link.href} className="mt-3">
-                <Link href={link.href} className="text-sm text-slate hover:text-brand">
+                <Link href={link.href} className="text-sm text-slate hover:text-red-600">
                   {link.label}
                 </Link>
               </li>
@@ -57,7 +57,7 @@ export function SiteFooter() {
           <ul className="m-0 mt-4 list-none p-0">
             {resources.map((link) => (
               <li key={link.href} className="mt-3">
-                <Link href={link.href} className="text-sm text-slate hover:text-brand">
+                <Link href={link.href} className="text-sm text-slate hover:text-red-600">
                   {link.label}
                 </Link>
               </li>
@@ -75,7 +75,7 @@ export function SiteFooter() {
             <PhoneNumber tone="ink" size="footer" />
           </p>
           <p className="m-0 mt-2">
-            <a className="text-sm text-slate hover:text-brand" href="mailto:info@reatics.com">
+            <a className="text-sm text-slate hover:text-red-600" href="mailto:info@reatics.com">
               info@reatics.com
             </a>
           </p>

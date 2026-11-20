@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react'
 import { areaFeature, type AreaPoint } from '@/lib/mapArea'
 import { activePinRadius, pinRadius } from '@/lib/mapHover'
 import { pinFeatureCollection, type MapPinInput } from '@/lib/mapPins'
+import { pinColor, pinPulse, pinRippleColor } from '@/lib/mapPinMotion'
 import { geocodesOnMove, pinsAfterMove } from '@/lib/mapMove'
 import { mapCluster, mapStyle } from '@/lib/mapStage'
 import { mapPhoto } from '@/lib/pageImages'
@@ -79,6 +80,7 @@ export function MapStage({
       return
     }
     let removed = false
+    let frame = 0
     let created: MapboxMap | null = null
     let observer: ResizeObserver | null = null
     void import('mapbox-gl').then(async (mod) => {
@@ -117,6 +119,15 @@ export function MapStage({
       })
       paintListings(created, pointsRef.current)
       paintArea(created, areaRef.current)
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const started = performance.now()
+      const pulse = (now: number) => {
+        if (removed) return
+        frame = requestAnimationFrame(pulse)
+        if (reduceMotion || !created?.getLayer('pins-pulse')) return
+        paintPulse(created, 'pins-pulse', pinPulse(now - started))
+      }
+      frame = requestAnimationFrame(pulse)
       observer = new ResizeObserver(() => created?.resize())
       if (node.current) observer.observe(node.current)
       created.resize()
@@ -128,6 +139,7 @@ export function MapStage({
     })
     return () => {
       removed = true
+      cancelAnimationFrame(frame)
       observer?.disconnect()
       created?.remove()
       mapRef.current = null
@@ -167,9 +179,17 @@ export function MapStage({
   return <div ref={node} className="map-stage" />
 }
 
+function paintPulse(map: MapboxMap, layer: string, frame: { radius: number; opacity: number }) {
+  map.setPaintProperty(layer, 'circle-radius', frame.radius)
+  map.setPaintProperty(layer, 'circle-opacity', frame.opacity * 0.22)
+  map.setPaintProperty(layer, 'circle-stroke-opacity', frame.opacity)
+}
+
 function pinUnder(map: MapboxMap | null, point?: { x: number; y: number }) {
-  if (!map || !point || !map.getLayer('pins')) return null
-  const features = map.queryRenderedFeatures(point, { layers: ['pins'] })
+  if (!map || !point) return null
+  const layers = ['pins', 'pins-pulse'].filter((id) => map.getLayer(id))
+  if (!layers.length) return null
+  const features = map.queryRenderedFeatures(point, { layers })
   const slug = features[0]?.properties?.slug
   return slug || null
 }
@@ -178,6 +198,7 @@ function paintListings(map: MapboxMap, points: MapPinInput[]) {
   const draw = () => {
     if (map.getLayer('clusters')) map.removeLayer('clusters')
     if (map.getLayer('pins')) map.removeLayer('pins')
+    if (map.getLayer('pins-pulse')) map.removeLayer('pins-pulse')
     if (map.getSource('listings')) map.removeSource('listings')
     map.addSource('listings', {
       type: 'geojson',
@@ -192,11 +213,31 @@ function paintListings(map: MapboxMap, points: MapPinInput[]) {
       paint: { 'circle-color': '#2563eb', 'circle-radius': 18 },
     })
     map.addLayer({
+      id: 'pins-pulse',
+      type: 'circle',
+      source: 'listings',
+      filter: ['!', ['has', 'point_count']],
+      paint: {
+        'circle-color': pinColor,
+        'circle-radius': 12,
+        'circle-opacity': 0.2,
+        'circle-blur': 0.05,
+        'circle-stroke-color': pinRippleColor,
+        'circle-stroke-width': 3,
+        'circle-stroke-opacity': 0.9,
+      },
+    })
+    map.addLayer({
       id: 'pins',
       type: 'circle',
       source: 'listings',
       filter: ['!', ['has', 'point_count']],
-      paint: { 'circle-color': '#0f172a', 'circle-radius': 7 },
+      paint: {
+        'circle-color': pinColor,
+        'circle-radius': pinRadius,
+        'circle-stroke-color': '#ffffff',
+        'circle-stroke-width': 3,
+      },
     })
   }
   if (map.isStyleLoaded()) draw()
