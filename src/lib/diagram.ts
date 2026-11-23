@@ -66,6 +66,7 @@ export const heldBack = [
 export const relationships = [
   { from: 'users', to: 'listings', label: 'lists' },
   { from: 'users', to: 'billing', label: 'records' },
+  { from: 'users', to: 'subscriptions', label: 'subscribes' },
   { from: 'users', to: 'inquiries', label: 'sends' },
   { from: 'listings', to: 'inquiries', label: 'receives' },
   { from: 'listings', to: 'media', label: 'shows' },
@@ -95,6 +96,7 @@ export const entities: DiagramEntity[] = [
   { name: 'listings', storage: 'table', status: 'present' },
   { name: 'media', storage: 'table', status: 'present' },
   { name: 'billing', storage: 'table', status: 'present' },
+  { name: 'subscriptions', storage: 'table', status: 'present' },
   { name: 'redirects', storage: 'table', status: 'present' },
   { name: 'contact-messages', storage: 'table', status: 'present' },
   { name: 'audit-log', storage: 'table', status: 'present' },

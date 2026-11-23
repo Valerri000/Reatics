@@ -12,6 +12,7 @@ import { Pages } from '@/collections/Pages'
 import { Posts } from '@/collections/Posts'
 import { PropertyTypes } from '@/collections/PropertyTypes'
 import { Redirects } from '@/collections/Redirects'
+import { Subscriptions } from '@/collections/Subscriptions'
 import { Users } from '@/collections/Users'
 import {
   adminRoles,
@@ -37,6 +38,7 @@ const present = [
   Listings,
   Media,
   Billing,
+  Subscriptions,
   Redirects,
   ContactMessages,
   AuditLog,

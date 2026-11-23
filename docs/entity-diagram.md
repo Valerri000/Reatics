@@ -6,6 +6,7 @@ Reviewed October 26, 2026, against the approved scope. SEO fields are stored on 
 erDiagram
   users ||--o{ listings : lists
   users ||--o{ billing : records
+  users ||--o{ subscriptions : subscribes
   users ||--o{ inquiries : sends
   listings ||--o{ inquiries : receives
   listings }o--o{ media : shows
@@ -65,6 +66,15 @@ erDiagram
     string action
     number amount
     string note
+  }
+
+  subscriptions {
+    string planId
+    string status
+    number amountCents
+    string stripeCustomerId
+    string stripeSubscriptionId
+    string stripeCheckoutSessionId
   }
 
   redirects {
@@ -167,7 +177,7 @@ erDiagram
 
 `company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
 
-`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `redirects`, `contact-messages`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `subscriptions`, `redirects`, `contact-messages`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
 
 ## Marketing collections
 
