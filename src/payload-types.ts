@@ -76,6 +76,7 @@ export interface Config {
     listings: Listing;
     'listing-reports': ListingReport;
     billing: Billing;
+    subscriptions: Subscription;
     media: Media;
     redirects: Redirect;
     companies: Company;
@@ -103,6 +104,7 @@ export interface Config {
     listings: ListingsSelect<false> | ListingsSelect<true>;
     'listing-reports': ListingReportsSelect<false> | ListingReportsSelect<true>;
     billing: BillingSelect<false> | BillingSelect<true>;
+    subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
@@ -476,6 +478,22 @@ export interface Billing {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions".
+ */
+export interface Subscription {
+  id: number;
+  user?: number | User | null;
+  planId: 'broker' | 'owner';
+  status: 'none' | 'incomplete' | 'active' | 'past_due' | 'canceled';
+  amountCents: number;
+  stripeCustomerId?: string | null;
+  stripeSubscriptionId?: string | null;
+  stripeCheckoutSessionId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -647,6 +665,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'billing';
         value: number | Billing;
+      } | null)
+    | ({
+        relationTo: 'subscriptions';
+        value: number | Subscription;
       } | null)
     | ({
         relationTo: 'media';
@@ -942,6 +964,21 @@ export interface BillingSelect<T extends boolean = true> {
   action?: T;
   amount?: T;
   note?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscriptions_select".
+ */
+export interface SubscriptionsSelect<T extends boolean = true> {
+  user?: T;
+  planId?: T;
+  status?: T;
+  amountCents?: T;
+  stripeCustomerId?: T;
+  stripeSubscriptionId?: T;
+  stripeCheckoutSessionId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

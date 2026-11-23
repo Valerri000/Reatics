@@ -24,6 +24,7 @@ import { PropertyTypes } from './collections/PropertyTypes'
 import { Redirects } from './collections/Redirects'
 import { ScreeningRequests } from './collections/ScreeningRequests'
 import { SignedDocuments } from './collections/SignedDocuments'
+import { Subscriptions } from './collections/Subscriptions'
 import { Users } from './collections/Users'
 import { mediaStorage } from './lib/storage'
 
@@ -49,6 +50,7 @@ export default buildConfig({
     Listings,
     ListingReports,
     Billing,
+    Subscriptions,
     Media,
     Redirects,
     Companies,
