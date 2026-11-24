@@ -171,6 +171,7 @@ export interface User {
   officePhone?: string | null;
   phone?: string | null;
   dreNumber?: string | null;
+  dreValidated?: boolean | null;
   listsProperties?: boolean | null;
   referralAccepted?: boolean | null;
   verified?: boolean | null;
@@ -482,7 +483,7 @@ export interface Billing {
  */
 export interface Subscription {
   id: number;
-  user?: number | User | null;
+  user?: (number | null) | User;
   planId: 'broker' | 'owner';
   status: 'none' | 'incomplete' | 'active' | 'past_due' | 'canceled';
   amountCents: number;
@@ -771,6 +772,7 @@ export interface UsersSelect<T extends boolean = true> {
   officePhone?: T;
   phone?: T;
   dreNumber?: T;
+  dreValidated?: T;
   listsProperties?: T;
   referralAccepted?: T;
   verified?: T;
