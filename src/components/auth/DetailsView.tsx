@@ -5,7 +5,9 @@ import React, { useState } from 'react'
 import { Button } from '@/components/Button'
 import { TextField } from '@/components/auth/TextField'
 import { createAccount, type AccountRole } from '@/lib/account'
-import { MIN_PASSWORD_LENGTH } from '@/lib/session'
+import { referralScopeSentence, referralWaitingLabel } from '@/lib/referralRule'
+import { signupFieldNames, signupFormErrors, type SignupField } from '@/lib/signupFields'
+import { signupLayout } from '@/lib/signupLayout'
 
 type DetailsViewProps = {
   role: AccountRole
@@ -14,19 +16,7 @@ type DetailsViewProps = {
   onCreated: () => void
 }
 
-type FormState = {
-  firstName: string
-  lastName: string
-  company: string
-  jobTitle: string
-  mobilePhone: string
-  officePhone: string
-  phone: string
-  email: string
-  dreNumber: string
-  password: string
-  confirm: string
-}
+type FormState = Record<SignupField, string>
 
 const emptyForm: FormState = {
   firstName: '',
@@ -42,39 +32,7 @@ const emptyForm: FormState = {
   confirm: '',
 }
 
-const emptyCopy: Record<keyof FormState, string> = {
-  firstName: 'Enter your first name.',
-  lastName: 'Enter your last name.',
-  company: 'Enter your company.',
-  jobTitle: 'Enter your title.',
-  mobilePhone: 'Enter your mobile phone.',
-  officePhone: 'Enter your office phone.',
-  phone: 'Enter your phone.',
-  email: 'Enter your email address.',
-  dreNumber: 'Enter your DRE number.',
-  password: 'Enter your password.',
-  confirm: 'Enter your password.',
-}
-
-function fieldsFor(role: AccountRole): (keyof FormState)[] {
-  if (role === 'space-seeker') return ['firstName', 'lastName', 'email', 'password', 'confirm']
-  if (role === 'coworking')
-    return ['firstName', 'lastName', 'company', 'phone', 'email', 'password', 'confirm']
-  return [
-    'firstName',
-    'lastName',
-    'company',
-    'jobTitle',
-    'mobilePhone',
-    'officePhone',
-    'email',
-    'dreNumber',
-    'password',
-    'confirm',
-  ]
-}
-
-const labels: Record<keyof FormState, string> = {
+const labels: Record<SignupField, string> = {
   firstName: 'First name',
   lastName: 'Last name',
   company: 'Company',
@@ -90,29 +48,17 @@ const labels: Record<keyof FormState, string> = {
 
 export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewProps) {
   const [form, setForm] = useState<FormState>(emptyForm)
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState | 'referral', string>>>({})
+  const [errors, setErrors] = useState<Partial<Record<SignupField | 'referral', string>>>({})
   const [referral, setReferral] = useState(false)
-  const names = fieldsFor(role)
+  const names = signupFieldNames(role)
 
-  function setValue(name: keyof FormState, value: string) {
+  function setValue(name: SignupField, value: string) {
     setForm((current) => ({ ...current, [name]: value }))
   }
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault()
-    const next: Partial<Record<keyof FormState | 'referral', string>> = {}
-    for (const name of names) {
-      if (!form[name].trim()) next[name] = emptyCopy[name]
-    }
-    if (form.password && form.password.length < MIN_PASSWORD_LENGTH) {
-      next.password = 'Use at least 8 characters.'
-    }
-    if (form.confirm && form.password !== form.confirm) {
-      next.confirm = 'Passwords do not match.'
-    }
-    if (role === 'coworking' && !referral) {
-      next.referral = 'The referral agreement is required.'
-    }
+    const next = signupFormErrors(role, form, referral)
     setErrors(next)
     if (Object.keys(next).length > 0) return
 
@@ -137,6 +83,14 @@ export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewPr
         setErrors({ email: 'An account with this email already exists.' })
         return
       }
+      if (result.fields.dreNumber) {
+        setErrors({ dreNumber: 'Enter your DRE number.' })
+        return
+      }
+      if (result.fields.referralAccepted) {
+        setErrors({ referral: 'The referral agreement is required.' })
+        return
+      }
       if (/8 characters/i.test(result.message)) {
         setErrors({ password: 'Use at least 8 characters.' })
         return
@@ -153,7 +107,7 @@ export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewPr
         <h2 className="text-4xl font-black leading-none tracking-tighter text-ink">Almost there.</h2>
         <p className="mt-4 text-lg font-bold text-slate">We need a few details to set up your account.</p>
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div className={`${signupLayout.phone} ${signupLayout.desktop}`}>
         {names.map((name) => (
           <div key={name} className={name === 'dreNumber' ? 'md:col-span-2' : undefined}>
             <TextField
@@ -188,17 +142,17 @@ export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewPr
         ))}
         {role === 'coworking' ? (
           <label className="block text-base text-ink md:col-span-2">
+            <span className="mb-2 block text-[10px] font-black uppercase tracking-widest text-slate">
+              {referralWaitingLabel}
+            </span>
             <input
               className="mr-2"
               type="checkbox"
               checked={referral}
               onChange={(event) => setReferral(event.target.checked)}
             />
-            I agree that Reatics receives 10% of a signed referral. My contact details are not shown
-            on listings. Inquiries go to 1-888-518-9168.
-            {errors.referral ? (
-              <span className="mt-2 block text-sm text-brand">{errors.referral}</span>
-            ) : null}
+            {referralScopeSentence}
+            {errors.referral ? <span className="mt-2 block text-sm text-brand">{errors.referral}</span> : null}
           </label>
         ) : null}
       </div>
@@ -210,15 +164,11 @@ export function DetailsView({ role, onBack, onSignIn, onCreated }: DetailsViewPr
           Create account
         </Button>
       </div>
-      {errors.email === 'An account with this email already exists.' ? (
-        <button className="mt-4 block text-base text-brand" type="button" onClick={onSignIn}>
-          Sign in
-        </button>
-      ) : (
-        <button className="mt-4 block text-base text-brand" type="button" onClick={onSignIn}>
-          Already have an account? Sign in
-        </button>
-      )}
+      <button className="mt-4 block text-base text-brand" type="button" onClick={onSignIn}>
+        {errors.email === 'An account with this email already exists.'
+          ? 'Sign in'
+          : 'Already have an account? Sign in'}
+      </button>
     </form>
   )
 }
