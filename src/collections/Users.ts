@@ -1,44 +1,19 @@
-import { ValidationError, type CollectionBeforeChangeHook, type CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { recordDelete, recordRoleChange, recordSignIn } from '@/lib/audit'
 import { canModerate, isOwner, isStaff, ownRecord } from '@/lib/roles'
+import { signupGuard } from '@/lib/signupGuard'
 import {
   LOCK_DURATION_MS,
   MAX_LOGIN_ATTEMPTS,
-  MIN_PASSWORD_LENGTH,
   TOKEN_EXPIRATION_SECONDS,
 } from '@/lib/session'
-
-const guardAccount: CollectionBeforeChangeHook = ({ data, operation, req }) => {
-  if (!data) return data
-
-  if (operation === 'create' && !req.user) {
-    data.verified = false
-  }
-
-  if (!isOwner(req.user)) {
-    if (operation === 'create') data.adminRole = null
-    else delete data.adminRole
-  }
-
-  if (
-    typeof data.password === 'string' &&
-    data.password.length > 0 &&
-    data.password.length < MIN_PASSWORD_LENGTH
-  ) {
-    throw new ValidationError({
-      errors: [{ message: 'Use at least 8 characters.', path: 'password' }],
-    })
-  }
-
-  return data
-}
 
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
-    defaultColumns: ['email', 'firstName', 'lastName', 'role', 'adminRole'],
+    defaultColumns: ['email', 'firstName', 'lastName', 'role', 'adminRole', 'dreValidated', 'verified'],
   },
   auth: {
     tokenExpiration: TOKEN_EXPIRATION_SECONDS,
@@ -65,7 +40,7 @@ export const Users: CollectionConfig = {
     delete: ({ req: { user } }) => canModerate(user),
   },
   hooks: {
-    beforeChange: [guardAccount],
+    beforeChange: [signupGuard],
     afterChange: [recordRoleChange],
     afterLogin: [recordSignIn],
     afterDelete: [recordDelete],
@@ -135,6 +110,16 @@ export const Users: CollectionConfig = {
       label: 'DRE number',
     },
     {
+      name: 'dreValidated',
+      type: 'checkbox',
+      label: 'DRE validated',
+      defaultValue: false,
+      access: {
+        create: ({ req: { user } }) => isOwner(user),
+        update: ({ req: { user } }) => isOwner(user),
+      },
+    },
+    {
       name: 'listsProperties',
       type: 'checkbox',
       defaultValue: false,
@@ -155,8 +140,8 @@ export const Users: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       access: {
-        create: ({ req: { user } }) => canModerate(user),
-        update: ({ req: { user } }) => canModerate(user),
+        create: ({ req: { user } }) => isOwner(user),
+        update: ({ req: { user } }) => isOwner(user),
       },
     },
   ],
