@@ -2,7 +2,7 @@
 
 ## What is stored
 
-An account stores the email, name, company, title, phone numbers, account role, admin role, DRE number, and whether the person lists properties or accepted the coworking referral. The password is stored as a hash. The password itself is not stored. There is no card number field. A billing record stores a refund action and an amount. A subscription stores the plan, the status, the amount, and the Stripe customer, subscription, and Checkout ids. It does not store a card number.
+An account stores the email, name, company, title, phone numbers, account role, admin role, DRE number, whether that DRE is validated, and whether the person lists properties or accepted the coworking referral. An owner admin can mark the DRE validated and can verify a coworking account. A content manager cannot. The password is stored as a hash. The password itself is not stored. There is no card number field. A billing record stores a refund action and an amount. A subscription stores the plan, the status, the amount, and the Stripe customer, subscription, and Checkout ids. It does not store a card number.
 
 A session lasts at most 8 hours. The site ends it after 30 minutes with no activity. Five failed sign-ins lock the account for 15 minutes.
 
