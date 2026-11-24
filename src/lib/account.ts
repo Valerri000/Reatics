@@ -9,6 +9,7 @@ export type AccountUser = {
   lastName?: string | null
   role?: AccountRole | null
   verified?: boolean | null
+  dreValidated?: boolean | null
 }
 
 export type AccountInput = {

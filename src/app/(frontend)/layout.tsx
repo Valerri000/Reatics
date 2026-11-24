@@ -33,6 +33,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         lastName: user.lastName,
         role: user.role,
         verified: user.verified,
+        dreValidated: user.dreValidated,
       }
     : null
 

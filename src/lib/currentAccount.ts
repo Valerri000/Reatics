@@ -16,5 +16,6 @@ export async function currentAccount(): Promise<AccountUser | null> {
     lastName: user.lastName,
     role: user.role,
     verified: user.verified,
+    dreValidated: user.dreValidated,
   }
 }
