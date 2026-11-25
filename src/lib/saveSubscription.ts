@@ -1,6 +1,8 @@
 import { sql } from '@payloadcms/db-postgres'
 import { getPayload } from 'payload'
 
+import { statusFromSubscription } from '@/lib/accountBilling'
+import { graceNotice } from '@/lib/graceNotice'
 import config from '@/payload.config'
 import type { SubscriptionRecord } from '@/lib/subscriptionRecord'
 
@@ -36,5 +38,37 @@ export async function saveSubscription(record: SubscriptionRecord) {
       "amount_cents" = excluded."amount_cents",
       "updated_at" = now()
   `)
+  const accountStatus = statusFromSubscription(record.status)
+  if (accountStatus) {
+    await payload.db.drizzle.execute(sql`
+      update "users" set "subscription_status" = ${accountStatus} where "id" = ${record.userId}
+    `)
+  }
+  const notice = graceNotice(record.status)
+  if (notice) {
+    await payload.db.drizzle.execute(sql`
+      insert into "mailbox" (
+        "kind",
+        "to_address",
+        "subject",
+        "body",
+        "status",
+        "user_id",
+        "updated_at",
+        "created_at"
+      )
+      select
+        ${notice.kind},
+        "email",
+        ${notice.subject},
+        ${notice.body},
+        ${notice.status},
+        "id",
+        now(),
+        now()
+      from "users"
+      where "id" = ${record.userId}
+    `)
+  }
   return { ok: true as const, stored: true as const }
 }
