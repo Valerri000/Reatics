@@ -1,4 +1,5 @@
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
+import { listingLeftPublic } from '@/lib/listingVisibility'
 import { listingMainPhoto, listingThumbs } from '@/lib/pageImages'
 import { metadataFor } from '@/lib/pageMeta'
 import { listingCityLine } from '@/lib/placeList'
@@ -41,6 +42,9 @@ export type ListingSource = {
   canonicalUrl?: string | null
   h1?: string | null
   sitemap?: boolean | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
 }
 
 export type ListingFact = {
@@ -65,16 +69,35 @@ export type PublicBroker = {
   email: string
 }
 
-export function listingUnavailable(listing: { availability?: string | null }) {
-  return listing.availability === 'unavailable'
+export function listingUnavailable(listing: {
+  availability?: string | null
+  kind?: string | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
+}) {
+  return listingLeftPublic(listing)
 }
 
-export function listingRobots(listing: { availability?: string | null; robots?: string | null }) {
+export function listingRobots(listing: {
+  availability?: string | null
+  robots?: string | null
+  kind?: string | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
+}) {
   if (listingUnavailable(listing)) return 'noindex'
   return listing.robots === 'noindex' ? 'noindex' : 'index'
 }
 
-export function listingOnMap(listing: { availability?: string | null }) {
+export function listingOnMap(listing: {
+  availability?: string | null
+  kind?: string | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
+}) {
   return !listingUnavailable(listing)
 }
 
@@ -83,6 +106,10 @@ export function listingOnSitemap(listing: {
   robots?: string | null
   sitemap?: boolean | null
   slug?: string | null
+  kind?: string | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
 }) {
   if (listingUnavailable(listing)) return false
   const slug = listing.slug?.trim()
