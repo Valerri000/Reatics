@@ -13,6 +13,7 @@ import * as migration_20261110_101552_listing_reports from './20261110_101552_li
 import * as migration_20261112_050723_listing_record_fields from './20261112_050723_listing_record_fields'
 import * as migration_20261123_091500_subscriptions from './20261123_091500_subscriptions'
 import * as migration_20261124_081500_dre_validated from './20261124_081500_dre_validated'
+import * as migration_20261125_081500_billing_status from './20261125_081500_billing_status'
 
 export const migrations = [
   {
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20261124_081500_dre_validated.up,
     down: migration_20261124_081500_dre_validated.down,
     name: '20261124_081500_dre_validated',
+  },
+  {
+    up: migration_20261125_081500_billing_status.up,
+    down: migration_20261125_081500_billing_status.down,
+    name: '20261125_081500_billing_status',
   },
 ]
