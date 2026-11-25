@@ -16,6 +16,7 @@ import { Deals } from './collections/Deals'
 import { Glossary } from './collections/Glossary'
 import { LeaseDrafts } from './collections/LeaseDrafts'
 import { ListingReports } from './collections/ListingReports'
+import { Mailbox } from './collections/Mailbox'
 import { Listings } from './collections/Listings'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -51,6 +52,7 @@ export default buildConfig({
     ListingReports,
     Billing,
     Subscriptions,
+    Mailbox,
     Media,
     Redirects,
     Companies,

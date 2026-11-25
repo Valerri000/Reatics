@@ -77,6 +77,7 @@ export interface Config {
     'listing-reports': ListingReport;
     billing: Billing;
     subscriptions: Subscription;
+    mailbox: Mailbox;
     media: Media;
     redirects: Redirect;
     companies: Company;
@@ -105,6 +106,7 @@ export interface Config {
     'listing-reports': ListingReportsSelect<false> | ListingReportsSelect<true>;
     billing: BillingSelect<false> | BillingSelect<true>;
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
+    mailbox: MailboxSelect<false> | MailboxSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
@@ -175,6 +177,7 @@ export interface User {
   listsProperties?: boolean | null;
   referralAccepted?: boolean | null;
   verified?: boolean | null;
+  subscriptionStatus?: ('active' | 'past_due' | 'canceled' | 'comped') | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -385,6 +388,7 @@ export interface Listing {
   id: number;
   title: string;
   slug: string;
+  account?: (number | null) | User;
   kind: 'sale' | 'lease' | 'coworking';
   price?: number | null;
   street?: string | null;
@@ -490,6 +494,21 @@ export interface Subscription {
   stripeCustomerId?: string | null;
   stripeSubscriptionId?: string | null;
   stripeCheckoutSessionId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mailbox".
+ */
+export interface Mailbox {
+  id: number;
+  kind: 'grace';
+  toAddress: string;
+  subject: string;
+  body: string;
+  status: 'stored';
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -672,6 +691,10 @@ export interface PayloadLockedDocument {
         value: number | Subscription;
       } | null)
     | ({
+        relationTo: 'mailbox';
+        value: number | Mailbox;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -776,6 +799,7 @@ export interface UsersSelect<T extends boolean = true> {
   listsProperties?: T;
   referralAccepted?: T;
   verified?: T;
+  subscriptionStatus?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -908,6 +932,7 @@ export interface PropertyTypesSelect<T extends boolean = true> {
 export interface ListingsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  account?: T;
   kind?: T;
   price?: T;
   street?: T;
@@ -981,6 +1006,20 @@ export interface SubscriptionsSelect<T extends boolean = true> {
   stripeCustomerId?: T;
   stripeSubscriptionId?: T;
   stripeCheckoutSessionId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mailbox_select".
+ */
+export interface MailboxSelect<T extends boolean = true> {
+  kind?: T;
+  toAddress?: T;
+  subject?: T;
+  body?: T;
+  status?: T;
+  user?: T;
   updatedAt?: T;
   createdAt?: T;
 }
