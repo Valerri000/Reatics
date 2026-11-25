@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 
 import { cityAreaLinks } from '@/lib/homeAreas'
 import { homeListingRecords } from '@/lib/homeListings'
+import { listingAccountFields } from '@/lib/listingAccount'
 import { homepageCopy, homepageSlug } from '@/lib/homePageCopy'
 import { homePostCards } from '@/lib/homePosts'
 import { listingCardFields, type PlaceListing } from '@/lib/placeList'
@@ -48,7 +49,12 @@ export async function loadHome() {
     copy: homepageCopy(page.docs[0] ?? null),
     cities: cityAreaLinks(cities.docs),
     posts: homePostCards(posts.docs),
-    listings: homeListingRecords(listings.docs).map((listing) => listingCardFields(toPlaceListing(listing))),
+    listings: homeListingRecords(
+      listings.docs.map((listing) => ({
+        ...listing,
+        ...listingAccountFields(listing.account),
+      })),
+    ).map((listing) => listingCardFields(toPlaceListing(listing))),
   }
 }
 

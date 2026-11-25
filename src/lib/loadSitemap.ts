@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 
+import { listingAccountFields } from '@/lib/listingAccount'
 import config from '@/payload.config'
 import { publicSitemapPaths, sitemapCollections, sitemapPath, type SitemapCollection } from '@/lib/sitemapRecord'
 
@@ -10,7 +11,7 @@ export async function loadSitemapPaths() {
     if (collection === 'listings') {
       const found = await payload.find({
         collection: 'listings',
-        depth: 0,
+        depth: 1,
         limit: 1000,
         overrideAccess: true,
         where: {
@@ -18,12 +19,16 @@ export async function loadSitemapPaths() {
         },
       })
       for (const doc of found.docs) {
+        const account = listingAccountFields(doc.account)
         const path = sitemapPath({
           collection: 'listings',
           slug: doc.slug,
           robots: doc.robots,
           sitemap: doc.sitemap,
           availability: doc.availability,
+          kind: doc.kind,
+          subscriptionStatus: account.subscriptionStatus,
+          verified: account.verified,
         })
         if (path) paths.push(path)
       }

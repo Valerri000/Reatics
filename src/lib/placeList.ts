@@ -26,6 +26,8 @@ export type PlaceListing = {
   availability?: string | null
   latitude?: number | null
   longitude?: number | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
 }
 
 export function listingsForCity<T extends { city?: string | null }>(listings: T[], city: string) {

@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { getPayload } from 'payload'
 
+import { listingAccountFields } from '@/lib/listingAccount'
 import { listingOnMap } from '@/lib/listingPage'
 import type { PlaceListing } from '@/lib/placeList'
 import config from '@/payload.config'
@@ -79,5 +80,6 @@ function toPlaceListing(listing: Listing): PlaceListing {
     availability: listing.availability,
     latitude: listing.latitude,
     longitude: listing.longitude,
+    ...listingAccountFields(listing.account),
   }
 }

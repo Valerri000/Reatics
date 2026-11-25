@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { ListingView } from '@/components/listing/ListingView'
 import { ReportForm } from '@/components/listing/ReportForm'
+import { listingAccountFields } from '@/lib/listingAccount'
 import { listingMeta, publicListing } from '@/lib/listingPage'
 import { loadListing } from '@/lib/loadPlaces'
 
@@ -28,6 +29,7 @@ export default async function ListingPage({ params }: { params: Promise<{ slug: 
   const listing = publicListing({
     ...record,
     imageUrl: photo && typeof photo === 'object' && photo.url ? photo.url : null,
+    ...listingAccountFields(record.account),
   })
   return (
     <ListingView
