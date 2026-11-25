@@ -42,6 +42,12 @@ export const Listings: CollectionConfig = {
       index: true,
     },
     {
+      name: 'account',
+      type: 'relationship',
+      relationTo: 'users',
+      label: 'Account',
+    },
+    {
       name: 'kind',
       type: 'select',
       required: true,
