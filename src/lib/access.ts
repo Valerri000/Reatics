@@ -28,6 +28,7 @@ export function accountLinks(user: AccountUser | null) {
   }
 
   if (user?.role === 'broker' || user?.role === 'owner' || user?.role === 'broker-owner') {
+    links.push({ href: '/account/billing', label: 'Billing' })
     links.push({ href: '/account/inquiries', label: 'Inquiries' })
   }
 

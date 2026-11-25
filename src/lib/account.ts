@@ -1,3 +1,4 @@
+import type { AccountBillingStatus } from '@/lib/accountBilling'
 import { clearSessionMarks, markSessionStarted } from '@/lib/session'
 
 export type AccountRole = 'space-seeker' | 'broker' | 'owner' | 'broker-owner' | 'coworking'
@@ -10,6 +11,7 @@ export type AccountUser = {
   role?: AccountRole | null
   verified?: boolean | null
   dreValidated?: boolean | null
+  subscriptionStatus?: AccountBillingStatus | null
 }
 
 export type AccountInput = {

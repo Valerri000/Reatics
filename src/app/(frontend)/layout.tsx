@@ -34,6 +34,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         role: user.role,
         verified: user.verified,
         dreValidated: user.dreValidated,
+        subscriptionStatus: user.subscriptionStatus,
       }
     : null
 

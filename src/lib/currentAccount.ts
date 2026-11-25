@@ -17,5 +17,6 @@ export async function currentAccount(): Promise<AccountUser | null> {
     role: user.role,
     verified: user.verified,
     dreValidated: user.dreValidated,
+    subscriptionStatus: user.subscriptionStatus,
   }
 }

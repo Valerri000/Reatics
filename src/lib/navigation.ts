@@ -38,4 +38,5 @@ export const accountTitles: Record<string, string> = {
   'saved-brokers': 'Saved brokers',
   listings: 'My listings',
   inquiries: 'Inquiries',
+  billing: 'Billing',
 }
