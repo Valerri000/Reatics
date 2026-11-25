@@ -1,3 +1,4 @@
+import { listingUnavailable } from '@/lib/listingPage'
 import { publicPath, type PublicCollection } from '@/lib/paths'
 
 export const sitemapCollections = ['pages', 'posts', 'glossary', 'cities', 'property-types', 'listings'] as const
@@ -11,6 +12,10 @@ export type SitemapRecord = {
   robots?: string | null
   sitemap?: boolean | null
   availability?: string | null
+  kind?: string | null
+  subscriptionStatus?: string | null
+  verified?: boolean | null
+  published?: boolean | null
 }
 
 export function includeInSitemap(record: SitemapRecord) {
@@ -18,7 +23,7 @@ export function includeInSitemap(record: SitemapRecord) {
   if (!slug) return false
   if (record.collection === 'pages' && slug === 'home') return false
   if (record.collection === 'listings') {
-    if (record.availability === 'unavailable') return false
+    if (listingUnavailable(record)) return false
   } else if (record.status !== 'published') return false
   if (record.robots !== 'index') return false
   if (record.sitemap !== true) return false
