@@ -1,3 +1,5 @@
+import { listingUnavailable } from '@/lib/listingPage'
+
 export const emptyFeatured = 'No listings yet.'
 
 export const homeListingLimit = 6
@@ -8,13 +10,17 @@ export function homeListingRecords<
     title?: string | null
     robots?: string | null
     availability?: string | null
+    kind?: string | null
+    subscriptionStatus?: string | null
+    verified?: boolean | null
+    published?: boolean | null
   },
 >(listings: T[]) {
   return listings
     .filter(
       (listing) =>
         listing.robots === 'index' &&
-        listing.availability !== 'unavailable' &&
+        !listingUnavailable(listing) &&
         Boolean(listing.slug?.trim()) &&
         Boolean(listing.title?.trim()),
     )
