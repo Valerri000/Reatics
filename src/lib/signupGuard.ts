@@ -12,10 +12,12 @@ export const signupGuard: CollectionBeforeChangeHook = ({ data, originalDoc, ope
       data.adminRole = null
       data.verified = false
       data.dreValidated = false
+      data.subscriptionStatus = null
     } else {
       delete data.adminRole
       delete data.verified
       delete data.dreValidated
+      delete data.subscriptionStatus
     }
   }
 

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { accountBillingStatuses } from '@/lib/accountBilling'
 import { recordDelete, recordRoleChange, recordSignIn } from '@/lib/audit'
 import { canModerate, isOwner, isStaff, ownRecord } from '@/lib/roles'
 import { signupGuard } from '@/lib/signupGuard'
@@ -13,7 +14,7 @@ export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
-    defaultColumns: ['email', 'firstName', 'lastName', 'role', 'adminRole', 'dreValidated', 'verified'],
+    defaultColumns: ['email', 'firstName', 'lastName', 'role', 'adminRole', 'dreValidated', 'verified', 'subscriptionStatus'],
   },
   auth: {
     tokenExpiration: TOKEN_EXPIRATION_SECONDS,
@@ -139,6 +140,19 @@ export const Users: CollectionConfig = {
       name: 'verified',
       type: 'checkbox',
       defaultValue: false,
+      access: {
+        create: ({ req: { user } }) => isOwner(user),
+        update: ({ req: { user } }) => isOwner(user),
+      },
+    },
+    {
+      name: 'subscriptionStatus',
+      type: 'select',
+      label: 'Subscription status',
+      options: accountBillingStatuses.map((value) => ({
+        label: value === 'past_due' ? 'Past due' : value === 'canceled' ? 'Canceled' : value === 'comped' ? 'Comped' : 'Active',
+        value,
+      })),
       access: {
         create: ({ req: { user } }) => isOwner(user),
         update: ({ req: { user } }) => isOwner(user),
