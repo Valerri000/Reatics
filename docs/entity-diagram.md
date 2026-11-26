@@ -7,6 +7,7 @@ erDiagram
   users ||--o{ listings : lists
   users ||--o{ billing : records
   users ||--o{ subscriptions : subscribes
+  users ||--o{ mailbox : notices
   users ||--o{ inquiries : sends
   listings ||--o{ inquiries : receives
   listings }o--o{ media : shows
@@ -75,6 +76,14 @@ erDiagram
     string stripeCustomerId
     string stripeSubscriptionId
     string stripeCheckoutSessionId
+  }
+
+  mailbox {
+    string kind
+    string toAddress
+    string subject
+    string body
+    string status
   }
 
   redirects {
@@ -177,7 +186,7 @@ erDiagram
 
 `company-members` is `company_members` in the drawing. `deal-participants` is `deal_participants`. `screening-requests` is `screening_requests`. `lease-drafts` is `lease_drafts`. `signed-documents` is `signed_documents`.
 
-`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `subscriptions`, `redirects`, `contact-messages`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
+`users`, `pages`, `posts`, `glossary`, `cities`, `property-types`, `listings`, `media`, `billing`, `subscriptions`, `mailbox`, `redirects`, `contact-messages`, and `audit-log` are tables. SEO fields are stored on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`. `inquiries` is named here and is not a table yet. `companies`, `company-members`, `deals`, `deal-participants`, `screening-requests`, `lease-drafts`, and `signed-documents` are Phase 2, empty.
 
 ## Marketing collections
 

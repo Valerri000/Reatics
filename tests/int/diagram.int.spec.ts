@@ -7,6 +7,7 @@ import { Cities } from '@/collections/Cities'
 import { ContactMessages } from '@/collections/ContactMessages'
 import { Glossary } from '@/collections/Glossary'
 import { Listings } from '@/collections/Listings'
+import { Mailbox } from '@/collections/Mailbox'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
 import { Posts } from '@/collections/Posts'
@@ -39,6 +40,7 @@ const present = [
   Media,
   Billing,
   Subscriptions,
+  Mailbox,
   Redirects,
   ContactMessages,
   AuditLog,
