@@ -18,10 +18,11 @@ export function PlanChoice({
   user: AccountUser | null
   state: PlanChoiceState
   onSignIn: () => void
-  onPay: (planId: string) => Promise<{ ok: false; message: string } | void>
+  onPay: (planId: string, coupon?: string) => Promise<{ ok: false; message: string } | void>
 }) {
   const [error, setError] = useState(state === 'error' ? planChoiceCopy.error : '')
   const [pending, setPending] = useState('')
+  const [coupon, setCoupon] = useState('')
   const signedIn = state === 'signed-in' || state === 'error'
   const heading =
     state === 'success'
@@ -32,7 +33,7 @@ export function PlanChoice({
 
   async function pay(planId: string) {
     setPending(planId)
-    const result = await onPay(planId)
+    const result = await onPay(planId, coupon)
     setPending('')
     if (result && result.ok === false) setError(result.message)
   }
@@ -43,6 +44,16 @@ export function PlanChoice({
         <p className="m-0 text-base font-semibold text-ink">{heading}</p>
         {user ? <p className="m-0 mt-2 text-sm font-medium text-slate">{user.email}</p> : null}
         {error ? <p className="m-0 mt-4 text-base font-bold text-ink">{error}</p> : null}
+        {signedIn ? (
+          <label className="mt-6 block text-sm font-bold text-ink">
+            Coupon
+            <input
+              value={coupon}
+              onChange={(event) => setCoupon(event.target.value)}
+              className="mt-2 h-12 w-full rounded-lg border border-line px-4 text-base font-medium text-ink md:max-w-sm"
+            />
+          </label>
+        ) : null}
         <div className={`mt-8 ${planChoiceLayout.grid}`}>
           {plans.map((plan) => (
             <article key={plan.id} className="rounded-2xl border border-line bg-white p-6">

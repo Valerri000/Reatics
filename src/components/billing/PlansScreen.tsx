@@ -15,7 +15,7 @@ export function PlansScreen({ user, state }: { user: AccountUser | null; state: 
       user={user}
       state={state}
       onSignIn={() => auth.openSignIn()}
-      onPay={(planId) => startPlanCheckout(planId)}
+      onPay={(planId, coupon) => startPlanCheckout(planId, coupon || '')}
     />
   )
 }
