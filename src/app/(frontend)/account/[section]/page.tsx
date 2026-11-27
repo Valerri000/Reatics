@@ -3,6 +3,7 @@ import React from 'react'
 
 import { SavedBrokers } from '@/components/account/SavedBrokers'
 import { BillingStates } from '@/components/billing/BillingStates'
+import { PortalButton } from '@/components/billing/PortalButton'
 import { PageBanner } from '@/components/content/PageBanner'
 import { currentAccount } from '@/lib/currentAccount'
 import { accountTitles } from '@/lib/navigation'
@@ -17,7 +18,12 @@ export default async function AccountPage({ params }: { params: Promise<{ sectio
     <div className="flex flex-1 flex-col">
       <PageBanner title={title} />
       {section === 'saved-brokers' ? <SavedBrokers /> : null}
-      {section === 'billing' ? <BillingStates status={account?.subscriptionStatus ?? null} /> : null}
+      {section === 'billing' ? (
+        <>
+          <BillingStates status={account?.subscriptionStatus ?? null} />
+          <PortalButton />
+        </>
+      ) : null}
     </div>
   )
 }

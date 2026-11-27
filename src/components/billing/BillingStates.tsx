@@ -10,6 +10,7 @@ export function BillingStates({ status }: { status: AccountBillingStatus | null 
     <section className={billingStateLayout.frame}>
       <div className="mx-auto w-full max-w-5xl">
         <h2 className="m-0 text-xl font-bold text-ink">Subscription</h2>
+        {status === 'comped' ? <p className="m-0 mt-4 text-base font-bold text-ink">Comped. No charge is made.</p> : null}
         <div className={`mt-8 ${billingStateLayout.phone} ${billingStateLayout.desktop}`}>
           {brokerBillingStates.map((state) => (
             <article key={state} className="rounded-2xl border border-line bg-white p-6">
