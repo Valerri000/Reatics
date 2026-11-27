@@ -10,6 +10,7 @@ import { designPhoto, propertyPhotos } from '@/lib/homeImages'
 import { emptyFeatured, featuredCardClass } from '@/lib/homeListings'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
 import { listingCardFields } from '@/lib/placeList'
+import { saveHeart } from '@/lib/saveHeart'
 
 type FeaturedCard = ReturnType<typeof listingCardFields>
 
@@ -57,7 +58,13 @@ export function FeaturedListings({ listings }: { listings: FeaturedCard[] }) {
                   category={listing.propertyType || listing.title}
                   action={listing.kind === 'coworking' ? 'call' : 'contact'}
                   href={listing.href}
-                  onSave={auth.user ? undefined : auth.openSignIn}
+                  onSave={() => {
+                    if (!auth.user) {
+                      auth.openSignIn()
+                      return
+                    }
+                    void saveHeart(listing.href)
+                  }}
                 />
               </div>
             ))}

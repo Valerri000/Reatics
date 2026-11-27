@@ -8,6 +8,7 @@ import { PhoneNumber } from '@/components/PhoneNumber'
 import { designPhoto, propertyPhotos } from '@/lib/homeImages'
 import { emptyFeatured } from '@/lib/homeListings'
 import { listingCardFields, type PlaceListing } from '@/lib/placeList'
+import { saveHeart } from '@/lib/saveHeart'
 
 const money = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -76,7 +77,11 @@ function HubCard({
           aria-label="Save listing"
           className="absolute right-8 top-8 flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-slate-400 backdrop-blur-md hover:text-brand"
           onClick={() => {
-            if (!auth.user) auth.openSignIn()
+            if (!auth.user) {
+              auth.openSignIn()
+              return
+            }
+            void saveHeart(href)
           }}
         >
           <HeartIcon className="h-6 w-6" />

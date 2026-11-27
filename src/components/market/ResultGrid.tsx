@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-import { ListingCard } from '@/components/listing/ListingCard'
+import { SavedListingCard } from '@/components/listing/SavedListingCard'
 import { designPhoto, propertyPhotos } from '@/lib/homeImages'
 import { emptyFeatured } from '@/lib/homeListings'
 import { listingCardFields, type PlaceListing } from '@/lib/placeList'
@@ -16,7 +16,7 @@ export function ResultGrid({ listings, tone }: { listings: PlaceListing[]; tone?
       {listings.map((listing, index) => {
         const card = listingCardFields(listing)
         return (
-          <ListingCard
+          <SavedListingCard
             key={listing.slug}
             href={card.href}
             imageUrl={designPhoto(card.imageUrl, propertyPhotos, index)}
