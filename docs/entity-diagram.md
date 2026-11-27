@@ -8,6 +8,10 @@ erDiagram
   users ||--o{ billing : records
   users ||--o{ subscriptions : subscribes
   users ||--o{ mailbox : notices
+  users ||--o{ favorite_folders : groups
+  favorite_folders ||--o{ favorites : holds
+  users ||--o{ favorites : saves
+  listings ||--o{ favorites : saved
   users ||--o{ inquiries : sends
   listings ||--o{ inquiries : receives
   listings }o--o{ media : shows
@@ -86,6 +90,17 @@ erDiagram
     string status
   }
 
+  favorite_folders {
+    string name
+    int user
+  }
+
+  favorites {
+    int listing
+    int folder
+    int user
+  }
+
   redirects {
     string fromPath
     string toPath
@@ -99,6 +114,8 @@ erDiagram
     int listing
   }
 ```
+
+`favorite-folders` is `favorite_folders` in the drawing. `favorites` stores the listing, the optional folder, and the member.
 
 `seo` is a set of fields on `pages`, `listings`, `posts`, `glossary`, `cities`, and `property-types`, not its own table. The fields are slug, pageTitle, metaDescription, robots, canonicalUrl, h1, imageAlt, socialTitle, socialDescription, and sitemap. `robots` is index or noindex. `sitemap` says whether the record is included.
 
@@ -231,4 +248,4 @@ pages, posts, glossary, cities, and property-types have a status of draft or pub
 
 ## Not in this diagram
 
-saved-searches, alerts, favorites, prospects, ads, referrals.
+saved-searches, alerts, prospects, ads, referrals.

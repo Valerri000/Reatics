@@ -7,6 +7,8 @@ import { Cities } from '@/collections/Cities'
 import { ContactMessages } from '@/collections/ContactMessages'
 import { Glossary } from '@/collections/Glossary'
 import { Listings } from '@/collections/Listings'
+import { FavoriteFolders } from '@/collections/FavoriteFolders'
+import { Favorites } from '@/collections/Favorites'
 import { Mailbox } from '@/collections/Mailbox'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
@@ -41,6 +43,8 @@ const present = [
   Billing,
   Subscriptions,
   Mailbox,
+  FavoriteFolders,
+  Favorites,
   Redirects,
   ContactMessages,
   AuditLog,
