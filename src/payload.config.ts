@@ -11,6 +11,8 @@ import { Cities } from './collections/Cities'
 import { Companies } from './collections/Companies'
 import { CompanyMembers } from './collections/CompanyMembers'
 import { ContactMessages } from './collections/ContactMessages'
+import { FavoriteFolders } from './collections/FavoriteFolders'
+import { Favorites } from './collections/Favorites'
 import { DealParticipants } from './collections/DealParticipants'
 import { Deals } from './collections/Deals'
 import { Glossary } from './collections/Glossary'
@@ -53,6 +55,8 @@ export default buildConfig({
     Billing,
     Subscriptions,
     Mailbox,
+    FavoriteFolders,
+    Favorites,
     Media,
     Redirects,
     Companies,

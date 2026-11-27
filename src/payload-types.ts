@@ -78,6 +78,8 @@ export interface Config {
     billing: Billing;
     subscriptions: Subscription;
     mailbox: Mailbox;
+    'favorite-folders': FavoriteFolder;
+    favorites: Favorite;
     media: Media;
     redirects: Redirect;
     companies: Company;
@@ -107,6 +109,8 @@ export interface Config {
     billing: BillingSelect<false> | BillingSelect<true>;
     subscriptions: SubscriptionsSelect<false> | SubscriptionsSelect<true>;
     mailbox: MailboxSelect<false> | MailboxSelect<true>;
+    'favorite-folders': FavoriteFoldersSelect<false> | FavoriteFoldersSelect<true>;
+    favorites: FavoritesSelect<false> | FavoritesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     companies: CompaniesSelect<false> | CompaniesSelect<true>;
@@ -514,6 +518,29 @@ export interface Mailbox {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorite-folders".
+ */
+export interface FavoriteFolder {
+  id: number;
+  name: string;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorites".
+ */
+export interface Favorite {
+  id: number;
+  listing: number | Listing;
+  folder?: (number | null) | FavoriteFolder;
+  user: number | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -693,6 +720,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'mailbox';
         value: number | Mailbox;
+      } | null)
+    | ({
+        relationTo: 'favorite-folders';
+        value: number | FavoriteFolder;
+      } | null)
+    | ({
+        relationTo: 'favorites';
+        value: number | Favorite;
       } | null)
     | ({
         relationTo: 'media';
@@ -1019,6 +1054,27 @@ export interface MailboxSelect<T extends boolean = true> {
   subject?: T;
   body?: T;
   status?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorite-folders_select".
+ */
+export interface FavoriteFoldersSelect<T extends boolean = true> {
+  name?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favorites_select".
+ */
+export interface FavoritesSelect<T extends boolean = true> {
+  listing?: T;
+  folder?: T;
   user?: T;
   updatedAt?: T;
   createdAt?: T;
