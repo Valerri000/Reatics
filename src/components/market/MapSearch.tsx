@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useOptionalAuth } from '@/components/auth/AuthProvider'
 import { ContactPanel } from '@/components/listing/ListingCard'
+import { ListingHeart } from '@/components/listing/ListingHeart'
 import { MapStage, type MapHandle } from '@/components/market/MapStage'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { formatListingPrice, type ListingKind } from '@/lib/listingPrice'
@@ -262,10 +263,15 @@ export function MapSearch({
                 return (
                   <article
                     key={listing.href}
-                    className={`overflow-hidden rounded-3xl bg-white ${marked ? 'border-2 border-brand' : 'border border-line'}`}
+                    className={`relative overflow-hidden rounded-3xl bg-white ${marked ? 'border-2 border-brand' : 'border border-line'}`}
                     onMouseEnter={() => setActive(slug)}
                     onMouseLeave={() => setActive(null)}
                   >
+                    <ListingHeart
+                      href={listing.href}
+                      signedIn={!favoriteNeedsSignIn(auth?.user)}
+                      onSignIn={() => auth?.openSignIn()}
+                    />
                     <Link href={listing.href} className="block no-underline">
                       <img src={listing.imageUrl} alt={listing.imageAlt} className="h-44 w-full object-cover" />
                       <div className="p-5">
@@ -278,16 +284,6 @@ export function MapSearch({
                     </Link>
                     <div className="flex items-center justify-between border-t border-line px-5 py-4">
                       {listing.kind === 'coworking' ? <PhoneNumber size="md" /> : <ContactPanel listingHref={listing.href} />}
-                      <button
-                        type="button"
-                        aria-label="Save listing"
-                        className="text-sm font-bold text-brand"
-                        onClick={() => {
-                          if (favoriteNeedsSignIn(auth?.user)) auth?.openSignIn()
-                        }}
-                      >
-                        Save
-                      </button>
                     </div>
                   </article>
                 )

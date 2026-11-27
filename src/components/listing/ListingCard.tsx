@@ -8,6 +8,7 @@ import { TextField } from '@/components/auth/TextField'
 import { CloseIcon, HeartIcon } from '@/components/icons'
 import { PhoneNumber } from '@/components/PhoneNumber'
 import { formatListingPrice, formatRate, type ListingKind } from '@/lib/listingPrice'
+import { listingHeartClass } from '@/lib/listingHeart'
 
 const labels: Record<ListingKind, string> = {
   sale: 'For sale',
@@ -85,7 +86,7 @@ export function ListingCard({
       <button
         type="button"
         aria-label={saved ? 'Saved' : 'Save listing'}
-        className={`absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-sm ${red ? 'text-red-600' : 'text-brand'}`}
+        className={`${listingHeartClass} ${red ? 'text-red-600' : 'text-brand'}`}
         onClick={saveListing}
       >
         <HeartIcon filled={saved} />
