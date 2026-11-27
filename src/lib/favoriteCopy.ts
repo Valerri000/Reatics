@@ -1,0 +1,17 @@
+export const favoriteCopy = {
+  empty: 'No saved listings yet.',
+  folders: 'Folders',
+  saved: 'Saved listings',
+  newFolder: 'New folder',
+  move: 'Move',
+  remove: 'Remove',
+  print: 'Print favorites',
+  estimated: 'Estimated before it is added.',
+  signIn: 'Sign in to save a listing.',
+  savedNotice: 'Saved.',
+  folderCreated: 'Folder created.',
+  moved: 'Moved.',
+  removed: 'Removed.',
+  missing: 'That listing was not found.',
+  folderMissing: 'That folder was not found.',
+}
